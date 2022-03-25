@@ -1,0 +1,13 @@
+{
+  "name": "chess-opening-book",
+  "version": "0.1.0",
+  "private": true,
+  "author": "Jack Heaton",
+  "description": "A Chess opening book and move frequency app.",
+  "main": "index.js",
+  "workspaces": [
+    "web/*",
+    "server/*"
+  ],
+  "license": "MIT"
+}
