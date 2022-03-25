@@ -4,10 +4,9 @@
   "private": true,
   "author": "Jack Heaton",
   "description": "A Chess opening book and move frequency app.",
-  "main": "index.js",
   "workspaces": [
-    "web/*",
-    "server/*"
+    "web",
+    "server"
   ],
   "license": "MIT"
 }
