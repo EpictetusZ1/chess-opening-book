@@ -5,7 +5,8 @@
   "author": "Jack Heaton",
   "description": "A Chess opening book and move frequency app.",
   "scripts": {
-    "web-start": "npm run start -w web"
+    "web-start": "npm run start -w web",
+    "server-start": "npm run devstart -w server"
   },
   "workspaces": [
     "web",
