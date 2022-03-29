@@ -21,3 +21,6 @@ npm-debug.log*
 # environment
 .idea/
 
+# project
+**.pgn
+

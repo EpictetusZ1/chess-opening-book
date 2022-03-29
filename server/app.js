@@ -1,11 +1,14 @@
 const express = require("express");
-const path = require("path");
 const bodyParser = require("body-parser");
 const { graphqlHTTP } = require("express-graphql");
-const { buildSchema } = require("graphql");
+const mongoose = require("mongoose");
+const graphQlSchema = require("./graphql/schema/index");
+const graphQlResolvers = require("./graphql/resolvers/index");
+const multer  = require('multer');
+const upload = multer({ dest: 'uploads/' });
+const myFile = require("./utils/gameController");
 
-// Mock opening data, move to MongoDB Atlas later
-const matrix = []
+require("dotenv").config()
 
 
 const app = express()
@@ -13,54 +16,21 @@ const app = express()
 app.use(bodyParser.json())
 
 app.use("/graphql", graphqlHTTP({
-        schema: buildSchema(`
-            type Game {
-                _id: ID!
-                event: String
-                site: String
-                date: String
-                round: Int 
-                title: String
-                white: String!
-                black: String!
-                result: String!
-                currentPosition: String
-                ECO: String
-                whiteElo: Int 
-                blackElo: Int 
-                timeControl: Int 
-                endTime: String
-                termination: String
-                moves: [String!]!
-            }
-        
-            type RootQuery {
-                openings: [String!]!
-            }
-        
-            type RootMutation {
-                createMatrix(move: [String!]): String
-            }
-        
-            schema {
-                query: RootQuery
-                mutation: RootMutation
-            }
-        `),
-        rootValue: {
-            openings: () => {
-                return ["1. e4", "1. d4", "1. Nf3", "1. c4"]
-            },
-            createMatrix: (args) => {
-                const myMatrix = {
-                    info: "this is a mock of a later result",
-                    matrixTarget: `This matrix will run with ${args.move} as input`
-                }
-                return myMatrix.matrixTarget
-            }
-        },
-        graphiql: true
-    }))
+    schema: graphQlSchema,
+    rootValue: graphQlResolvers,
+    graphiql: true
+}))
+
+app.get("/upload", (req, res, next) => {
+    res.sendFile("/Users/jackheaton/Documents/code_projects/chess-opening-book/server/index.html")
+})
+
+app.post('/upload', upload.single("chessGame"), myFile.fileUpload)
+
+const mongoDB = `mongodb+srv://${process.env.MONGO_CLIENT_USER}:${process.env.MONGO_CLIENT_PASS}@cluster0.s0mtx.mongodb.net/${process.env.MONGO_CLIENT_DB}?retryWrites=true&w=majority`
+
+mongoose.connect(mongoDB).catch(error => console.log(error))
+mongoose.connection.on('error', console.error.bind(console, "MongoDB connection error:"))
+
 
 app.listen(3000)
-
