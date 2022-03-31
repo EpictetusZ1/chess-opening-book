@@ -28,7 +28,7 @@ module.exports = buildSchema(`
         
             type RootMutation {
                 createMatrix(move: [String!]): String
-                createGame(gameFile: String): String
+                createGame(gameFile: String!): String
             }
         
             schema {

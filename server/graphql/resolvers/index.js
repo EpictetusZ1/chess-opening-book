@@ -1,3 +1,7 @@
+const Game = require("../../models/game")
+const { fileUpload } = require("../../utils/gameController")
+
+
 module.exports = {
     game: () => {
         return "I am Game Data"
