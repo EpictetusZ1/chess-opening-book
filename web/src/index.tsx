@@ -1,11 +1,16 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
 import App from './App';
 
-ReactDOM.render(
+
+// Migration to React v18.0.0
+import { createRoot } from 'react-dom/client'
+const container = document.getElementById('root')
+if (!container) throw new Error('Failed to find the root element')
+const root = createRoot(container!)
+
+root.render(
   <React.StrictMode>
     <App />
-  </React.StrictMode>,
-  document.getElementById('root')
+  </React.StrictMode>
 );
 

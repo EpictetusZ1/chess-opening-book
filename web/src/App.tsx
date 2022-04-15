@@ -3,9 +3,10 @@ import UploadGame from "./components/UploadGame";
 
 function App() {
   return (
-    <div className="App">
-      <UploadGame/>
-    </div>
+      <div className="App">
+        <h1>Hello World - From App.tsx</h1>
+        <UploadGame/>
+      </div>
   );
 }
 

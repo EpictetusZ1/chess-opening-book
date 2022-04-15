@@ -1,9 +1,8 @@
 import "dotenv/config"
 import express, { Application, Request, Response, NextFunction} from "express";
-import multer from "multer";
-import { handleFileUpload } from "./controllers/handleGameUpload";
 import mongoose from "mongoose";
-import {getGame} from "./controllers/gameController";
+import {apiRoute} from "./routes/apiRouter";
+import path from "path";
 
 
 const main = async () => {
@@ -16,22 +15,12 @@ const main = async () => {
     const app: Application = express()
 
     app.get("/", (req: Request, res: Response) => {
-        res.send("Hello World!")
+       res.sendFile(path.join(__dirname, '../web/public', 'index.html'))
     })
 
-    app.get("/gameOne", getGame)
+    app.use("/game-db", apiRoute)
 
-    app.get("/upload", (req: Request, res: Response, next: NextFunction) => {
-        res.sendFile("/Users/jackheaton/Documents/code_projects/chess-opening-book/server/index.html")
-    })
-
-    const upload = multer({ storage: multer.memoryStorage() })
-
-    // Perhaps I should use upload.none()???
-    app.post("/upload", upload.single("chessGame"), handleFileUpload)
-
-
-    app.listen(3000, () => {
+    app.listen(3001, () => {
         console.log("Server started on: http://localhost:3000/")
     })
 }

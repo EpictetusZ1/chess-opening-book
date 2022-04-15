@@ -39,13 +39,14 @@ const GameSchema = new Schema<IGame>(
         timecontrol: {type: String, maxLength: 25},
         termination: {type: String, maxLength: 240},
         moves: [{type: String, required: true, maxLength: 15}],
-        otherTags: {type: [{name: String, value: String}]},
+        otherTags: {type: [{name: String, value: String, _id: false}]},
     }, {versionKey: false}
 )
 
 GameSchema
     .virtual("title")
-    .get( function() { // @ts-ignore
+    .get( function() {
+            // @ts-ignore
         return `${this.white}_vs_${this.black}`
     } )
 
