@@ -2,26 +2,26 @@ import { Schema, model } from 'mongoose';
 
 
 interface ITag {
-        name: string
-        value: string
+    name: string
+    value: string
 }
 
 interface IGame {
-        _id: string
-        event: string
-        site: string
-        round?: number
-        white: string
-        black: string
-        result: string
-        currentposition?: string
-        eco?: string
-        whiteelo?: number
-        blackelo?: number
-        timecontrol: string
-        termination?: string
-        moves: [string]
-        otherTags?: [ITag]
+    _id: string
+    event: string
+    site: string
+    round?: number
+    white: string
+    black: string
+    result: string
+    currentposition?: string
+    eco?: string
+    whiteelo?: number
+    blackelo?: number
+    timecontrol: string
+    termination?: string
+    moves: [string]
+    otherTags?: [ITag]
 }
 
 const GameSchema = new Schema<IGame>(
@@ -43,12 +43,11 @@ const GameSchema = new Schema<IGame>(
     }, {versionKey: false}
 )
 
-GameSchema
-    .virtual("title")
-    .get( function() {
-            // @ts-ignore
-        return `${this.white}_vs_${this.black}`
-    } )
+// GameSchema
+//     .virtual("title")
+//     .get( function() {
+//         // @ts-ignore
+//         return `${this.white}_vs_${this.black}`
+//     } )
 
 export const Game = model<IGame>('Game', GameSchema)
-

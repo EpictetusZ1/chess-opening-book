@@ -1,9 +1,11 @@
-import {Game} from "../models/game";
+import { Game } from "../../../lib/models/game"
+
 
 export const handleFileUpload = async (data: string) => {
 
     const initGameFormatting = () => {
         const tagPattern = /\[(?<tagName>\w*)\s"(?<tagValue>[^"]*)/gm
+        // @ts-ignore
         const tagTitles = [...data.matchAll(tagPattern)]
             .map( (tag) => {
                 if (tag.groups) return [tag.groups.tagName.toLowerCase(), tag.groups.tagValue]
@@ -15,6 +17,7 @@ export const handleFileUpload = async (data: string) => {
 
         const movePattern = /(?<moves>[0-9]+\.\s(?<plys>([Oo]-[Oo]-[Oo]|[Oo]-[Oo]\s?){0,2}|[KQBNR]?x?\+?[a-h]?[1-8]?x?\+?\s?[KQBNR]?x?[a-h]x?[a-h]?[1-8]\s?x?[+#]?\s?(\s?[0-9]-[0-9])?)*)/gm
 
+        // @ts-ignore
         let moveArr = [...data.matchAll(movePattern)]
             .map( (item) => item.groups!.moves!.replace(/(?<lineBreaks>\r?\n|\r)/gm, " ")!.trim())
 
@@ -75,6 +78,7 @@ export const handleFileUpload = async (data: string) => {
     formatRound()
     checkAdditionalTags()
 
-    return new Game(gameObj)
+    return gameObj
 
+    // return new Game(gameObj)
 }
