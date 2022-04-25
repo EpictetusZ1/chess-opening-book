@@ -1,4 +1,4 @@
-import React, {FormEvent, useState} from 'react';
+import React, { useState } from 'react';
 import axios from "axios"
 
 
@@ -19,7 +19,7 @@ const UploadGame = () => {
             headers: { 'content-type': 'multipart/form-data' }
         }
 
-        return await axios.post('/api/gameUpload/apiRoute', fileData, config)
+        return await axios.post('/api/handleUpload/apiRoute', fileData, config)
             .then( (r) => {
                 setGameData(r.data)
                 setSuccess(true)
@@ -35,9 +35,10 @@ const UploadGame = () => {
             <div>
                 <h3>Your Game: </h3>
                 <ul>
-                    <li>White: {gameObj["white"]}</li>
-                    <li>Black: {gameObj["black"]}</li>
-                    <li>Result: {gameObj["result"]}</li>
+                    <li><strong>White: </strong> {gameObj["white"]}</li>
+                    <li><strong>Black: </strong> {gameObj["black"]}</li>
+                    <li><strong>Result: </strong> {gameObj["result"]}</li>
+                    <li><strong>Termination: </strong> {gameObj["termination"]}</li>
 
                 </ul>
                 <h4>Moves: </h4>
@@ -56,7 +57,6 @@ const UploadGame = () => {
                        id="chessGame"
                        name="chessGame"
                        onChange={handleInputChange}
-
                 />
 
                 <button type="submit">

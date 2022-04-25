@@ -26,11 +26,17 @@ export const handleFileUpload = async (data: string) => {
 
     const gameObj: {[index: string]: any} = initGameFormatting()
 
+    // Functions for handling individual tags that may have type errors if ? is passed.
     const formatRound = () => {
         const roundPattern = /(?<round>[0-9]{1,3})/gm
         const roundValue = gameObj["round"].match(roundPattern)
 
-        roundValue ? gameObj["round"] = parseInt(gameObj["round"]) : gameObj["round"] = "?"
+        roundValue ? gameObj["round"] = parseInt(gameObj["round"]) : gameObj["round"] = 0
+    }
+
+    const formatElo = () => {
+        if (typeof gameObj["whiteelo"] !== typeof 1) gameObj["whiteelo"] = 0
+        if (typeof gameObj["blackelo"] !== typeof 1) gameObj["blackelo"] = 0
     }
 
     interface ITag {
@@ -76,9 +82,10 @@ export const handleFileUpload = async (data: string) => {
     }
 
     formatRound()
+    formatElo()
     checkAdditionalTags()
 
-    return gameObj
+    const myNewGame = new Game(gameObj)
 
-    // return new Game(gameObj)
+    return myNewGame
 }

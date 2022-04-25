@@ -1,4 +1,4 @@
-import { Schema, model } from 'mongoose';
+import mongoose, { Schema, model } from 'mongoose';
 
 
 interface ITag {
@@ -38,7 +38,7 @@ const GameSchema = new Schema<IGame>(
         blackelo: {type: Number, maxLength: 4},
         timecontrol: {type: String, maxLength: 25},
         termination: {type: String, maxLength: 240},
-        moves: [{type: String, required: true, maxLength: 15}],
+        moves: [{type: String, required: true, maxLength: 25}],
         otherTags: {type: [{name: String, value: String, _id: false}]},
     }, {versionKey: false}
 )
@@ -50,4 +50,6 @@ const GameSchema = new Schema<IGame>(
 //         return `${this.white}_vs_${this.black}`
 //     } )
 
-export const Game = model<IGame>('Game', GameSchema)
+
+
+export const Game = mongoose.models.Game || model<IGame>('Game', GameSchema)
