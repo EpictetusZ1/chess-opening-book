@@ -6,7 +6,7 @@ import dbConnect from "../../../lib/dbConnect";
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
 
     const getGame = async () => {
-        return await handleFileUpload(req.body)
+        return  handleFileUpload(req.body)
     }
 
     await dbConnect().then(() => {
@@ -15,17 +15,18 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
     const response = await getGame()
 
-    await response.save( (err: any) => {
-        console.log("Saving game to MongoDB now. ")
-        if (err) {
-            console.log(err)
+    const uploadToMongo = async () => {
+        for (let i = 0; i < response.length; i++) {
+            // @ts-ignore
+            await response[i].save( (err: any) => {
+                if (err) console.log(err)
+            })
         }
-    })
+    }
 
     return getGame()
         .then( (r) => {
-            console.log("---------------------")
-            console.log("No errors Found.")
+            uploadToMongo()
             res.status(200).json(r)
     })
 }

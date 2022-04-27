@@ -1,16 +1,17 @@
 import mongoose, { Schema, model } from 'mongoose';
 
 
-interface ITag {
+export interface ITag {
     name: string
     value: string
 }
 
-interface IGame {
+export interface IGame {
     _id: string
     event: string
     site: string
     round?: number
+    date: string
     white: string
     black: string
     result: string
@@ -29,6 +30,7 @@ const GameSchema = new Schema<IGame>(
         event: {type: String, required: true, maxLength: 240},
         site: {type: String, required: true, maxLength: 100},
         round: {type: Number},
+        date: {type: String, maxlength: 100},
         white: {type: String, required: true, maxLength: 50},
         black: {type: String, required: true, maxLength: 50},
         result: {type: String, required: true, maxLength: 100},

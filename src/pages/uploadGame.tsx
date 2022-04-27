@@ -1,12 +1,14 @@
 import React, { useState } from 'react';
 import axios from "axios"
+import ShowGameData from "../components/ShowGameData/ShowGameData";
+import {IGame} from "../lib/models/game";
 
 
 const UploadGame = () => {
 
     const [fileData, setFileData] = useState()
     const [success, setSuccess] = useState(false)
-    const [gameData, setGameData] = useState({})
+    const [gameData, setGameData] = useState<IGame>()
 
     const handleInputChange = (event: any) => {
         setFileData(event.target.files[0])
@@ -29,23 +31,6 @@ const UploadGame = () => {
             })
     }
 
-    const displayGame = () => {
-        const gameObj: {[index: string]: any} = gameData
-        return (
-            <div>
-                <h3>Your Game: </h3>
-                <ul>
-                    <li><strong>White: </strong> {gameObj["white"]}</li>
-                    <li><strong>Black: </strong> {gameObj["black"]}</li>
-                    <li><strong>Result: </strong> {gameObj["result"]}</li>
-                    <li><strong>Termination: </strong> {gameObj["termination"]}</li>
-
-                </ul>
-                <h4>Moves: </h4>
-                <ul className="moves">{gameObj["moves"].map((item: any) => <li>{item}</li>)}</ul>
-            </div>
-        )
-    }
 
     return (
         <div>
@@ -56,6 +41,7 @@ const UploadGame = () => {
                 <input type="file"
                        id="chessGame"
                        name="chessGame"
+                       required={true}
                        onChange={handleInputChange}
                 />
 
@@ -65,9 +51,7 @@ const UploadGame = () => {
 
             </form>
 
-            <div>
-                { success && displayGame()}
-            </div>
+            { success && <ShowGameData gameData={gameData!} />}
         </div>
     )
 }
