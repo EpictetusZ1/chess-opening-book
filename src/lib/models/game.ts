@@ -6,6 +6,11 @@ export interface ITag {
     value: string
 }
 
+export interface IMove {
+    0: string
+    1?: string // Blacks ply is optional, whites is not
+}
+
 export interface IGame {
     _id: string
     event: string
@@ -21,7 +26,7 @@ export interface IGame {
     blackelo?: number
     timecontrol: string
     termination?: string
-    moves: [string]
+    moves: [IMove]
     otherTags?: [ITag]
 }
 
@@ -40,7 +45,7 @@ const GameSchema = new Schema<IGame>(
         blackelo: {type: Number, maxLength: 4},
         timecontrol: {type: String, maxLength: 25},
         termination: {type: String, maxLength: 240},
-        moves: [{type: String, required: true, maxLength: 25}],
+        moves:   { type: [{0: String, 1: String, _id: false}] },
         otherTags: {type: [{name: String, value: String, _id: false}]},
     }, {versionKey: false}
 )

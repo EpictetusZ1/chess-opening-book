@@ -18,8 +18,9 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     const uploadToMongo = async () => {
         for (let i = 0; i < response.length; i++) {
             // @ts-ignore
-            await response[i].save( (err: any) => {
+            await response[i].save( (err: Error) => {
                 if (err) console.log(err)
+                console.log("Saved to DB")
             })
         }
     }
