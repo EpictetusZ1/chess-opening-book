@@ -2,6 +2,7 @@ import React, {useState} from "react";
 import {IShowGameInfoProps} from "../../types/Main.types";
 import * as S from "./ShowGameData.Styles"
 import {IMove} from "../../lib/models/game";
+import CreateMatrix from "../moveMatrix/createMatrix";
 
 
 const ShowGameData: React.FC<IShowGameInfoProps> = ({gameData}) => {
@@ -48,6 +49,7 @@ const ShowGameData: React.FC<IShowGameInfoProps> = ({gameData}) => {
         )
     }
 
+
     return (
         <S.MainContainer>
             Handle showing multiple uploads later
@@ -65,8 +67,8 @@ const ShowGameData: React.FC<IShowGameInfoProps> = ({gameData}) => {
                     Info
                 </button>
             </S.MenuTabCont>
-
-            { showMoveList ? <ShowMoves /> : <ShowInfo />}
+            {/*@ts-ignore*/}
+            { showMoveList ? <CreateMatrix gameData={gameData} /> : "none"}
 
         </S.MainContainer>
     )

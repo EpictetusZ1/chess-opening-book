@@ -27,7 +27,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
     return getGame()
         .then( (r) => {
-            uploadToMongo()
+            // uploadToMongo()
             res.status(200).json(r)
     })
 }
