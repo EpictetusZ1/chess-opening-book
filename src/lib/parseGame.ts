@@ -1,4 +1,4 @@
-import {Game, IMove, ITag} from "../../../lib/models/game"
+import {Game, IMove, ITag} from "./models/game"
 
 
 /**
