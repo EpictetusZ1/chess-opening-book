@@ -1,7 +1,7 @@
 import {GameState} from "./ChessEngine";
 import * as S from "./ChessGame.styles"
-import {useEffect, useState} from "react";
-import Image, {StaticImageData} from 'next/image'
+import {useState} from "react";
+import {StaticImageData} from 'next/image'
 import bB from "../public/pieceImages/bB.png"
 import bK from "../public/pieceImages/bK.png"
 import bN from "../public/pieceImages/bN.png"
@@ -14,55 +14,67 @@ import wN from "../public/pieceImages/wN.png"
 import wP from "../public/pieceImages/wP.png"
 import wQ from "../public/pieceImages/wQ.png"
 import wR from "../public/pieceImages/wR.png"
+import Tile from "./Tile"
 
 
 const ChessGame = () => {
-    const pieceImages = [
-        bB,
-        bK,
-        bN,
-        bP,
-        bQ,
-        bR,
-        wB,
-        wK,
-        wN,
-        wP,
-        wQ,
-        wR
-    ]
+    const pieceImages: { [index: string]: any } =  {
+        bB: bB,
+        bK: bK,
+        bN: bN,
+        bP: bP,
+        bQ: bQ,
+        bR: bR,
+        wB: wB,
+        wK: wK,
+        wN: wN,
+        wP: wP,
+        wQ: wQ,
+        wR: wR
+    }
 
-    const images: { [index: string]: any } = {}
-    const pieces = ["wP", "wR", "wN", "wB", "wQ", "wK", "bP", "bR", "bN", "bB", "bQ", "bK"]
+    // Y Axis (Vertical Axis)
+    const files = ["a", "b", "c", "d", "e", "f", "g", "h"]
+
+    // X Axis (Horizontal Axis)
+    const ranks = ["1", "2", "3", "4", "5", "6", "7", "8"]
 
     const [selectedPiece, setSelectedPiece] = useState<StaticImageData>(wP)
-    const [doneLoadingImg, setDoneLoadingImg] = useState<boolean>(false)
 
-    const getImages = () => {
-        for (let i = 0; i < pieces.length; i++) {
-            images[pieces[i]] = pieceImages[i]
+    // Inverted for loop so a1 gets output at the correct location on board
+    const loadBoard = () => {
+        let squares = []
+        for (let i = files.length - 1; i >= 0; i--) {
+            for (let j = 0; j < ranks.length; j++) {
+                const number = j + i + 2
+                const tenant = boardAlpha.board[i][j]
+
+                squares.push( <Tile coordinate={`${files[j]}${ranks[i]}`}
+                                    tenant={tenant}
+                                    img={loadImages(tenant)}
+                                    key={`${files[j]}${ranks[i]}`}
+                                    darkSq={(number % 2)}
+                />)
+            }
         }
-        setDoneLoadingImg(true)
-
+        return squares
     }
 
-
-    useEffect(() => {
-        getImages()
-    }, [])
-    const loadImages = () => {
-
+    const loadImages = (piece: string) => {
+        return pieceImages[piece] || undefined
     }
+
 
     const boardAlpha = new GameState()
+    const makeBoardSquares = loadBoard()
     const dimension = 8
     const sqSize = 512 / dimension
 
 
     return (
         <S.BoardContainer>
-            <Image src={selectedPiece} width="100" height="100" />
 
+            {makeBoardSquares.map( (item) => item)}
         </S.BoardContainer>
     );
 }
