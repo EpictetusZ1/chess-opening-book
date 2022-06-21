@@ -1,6 +1,5 @@
 import {Game, IMove, ITag} from "./models/game"
 
-
 /**
  * @param data Array of .pgn file strings from api/handleUpload/apiRoute.ts
  * @returns gameArr2 An Array of Modeled data to be then sent to MongoDB
@@ -26,17 +25,13 @@ export const handleFileUpload =  (data: string) => {
 
         return gamesArr1
     }
-
-
     /**
-     *
      * @type Game
      * @param data A SINGLE text string from the initial import
      * @function createGameObject constructs an instance of Game
      * Accepts a string which is the extracted text from a .pgn file
      * */
     const createGameObject = (data: string) => {
-
 
         const initGameFormatting = () => {
             /**
@@ -60,7 +55,6 @@ export const handleFileUpload =  (data: string) => {
              */
             const variationOrComment = /(?<variation>\s\(\d{1,2}\.{0,3}(.|\s)+?(?=\))\))|(?<comment>{\s(.|\s)+?(?=})})/gmi
 
-
             /**
              * @remark
              * Parse Moves from the game, which are separate from Tags
@@ -81,7 +75,7 @@ export const handleFileUpload =  (data: string) => {
                     const split = moveArr1[i].split(" ")
 
                     moveArr2.push(
-                        { 0: split[1], 1: split[2]}
+                        { w: split[1], b: split[2]}
                     )
                 }
                 return moveArr2

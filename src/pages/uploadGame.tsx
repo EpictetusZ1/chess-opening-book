@@ -36,8 +36,7 @@ const UploadGame = () => {
         <div>
             <h1>Upload a Chess Game</h1>
 
-            <form onSubmit={handleSubmit}
-            >
+            <form onSubmit={handleSubmit}>
                 <input type="file"
                        id="chessGame"
                        name="chessGame"

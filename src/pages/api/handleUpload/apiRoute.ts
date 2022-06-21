@@ -13,16 +13,18 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         console.log("connected to DB")
     })
 
-    const response = await getGame()
+    const response = await getGame().then((data) => {
+        console.log(data)
+    })
 
     const uploadToMongo = async () => {
-        for (let i = 0; i < response.length; i++) {
+       /* for (let i = 0; i < response.length; i++) {
             // @ts-ignore
             await response[i].save( (err: Error) => {
                 if (err) console.log(err)
                 console.log("Saved to DB")
             })
-        }
+        }*/
     }
 
     return getGame()

@@ -7,6 +7,7 @@ import CreateMatrix from "../moveMatrix/createMatrix";
 const ShowGameData: React.FC<IShowGameInfoProps> = ({gameData}) => {
     const [showMoveList, setShowMoveList] = useState<boolean>(true)
     const gameObj: { [index: string]: any } = gameData
+    console.log("Game data in ShowGameData: ", gameData)
 
 
     const ShowInfo = () => {
