@@ -7,8 +7,8 @@ export interface ITag {
 }
 
 export interface IMove {
-    0: string
-    1?: string // Blacks ply is optional, whites is not
+    w: string
+    b?: string // Blacks ply is optional, whites is not
 }
 
 export interface IGame {
@@ -45,7 +45,7 @@ const GameSchema = new Schema<IGame>(
         blackelo: {type: Number, maxLength: 4},
         timecontrol: {type: String, maxLength: 25},
         termination: {type: String, maxLength: 240},
-        moves:   { type: [{0: String, 1: String, _id: false}] },
+        moves:   { type: [{w: String, b: String, _id: false}] },
         otherTags: {type: [{name: String, value: String, _id: false}]},
     }, {versionKey: false}
 )
