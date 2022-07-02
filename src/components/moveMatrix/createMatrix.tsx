@@ -48,7 +48,6 @@ const CreateMatrix: React.FC<IMoveMatrixProps> = ({gameData}) => {
     }
 
     const firstResult = createMatrix(data2)
-    console.log("firstResult: ", firstResult)
 
     return (
         <div>

@@ -8,28 +8,23 @@ import CreateMatrix from "../moveMatrix/createMatrix";
 const ShowGameData: React.FC<IShowGameInfoProps> = ({gameData}) => {
     const [showMoveList, setShowMoveList] = useState<boolean>(true)
     const gameObj: { [index: string]: any } = gameData
-    console.log("Game data in ShowGameData: ", gameData)
-
+    const moves: IMove[] = gameObj[0].moves
 
     const ShowMoves = () => {
-
-        const formatMove = () => {
+        const formatMove = (move: any, index: number) => {
             return (
                 <div className={"singleMoveCont"}>
                     <div className={"singleMove"}>
-                        {/*<span className={"moveIndex"}>{singleMoveArr[0]}</span>*/}
-                        {/*<span className={"ply"}>{singleMoveArr[1]}</span>*/}
-                        {/*<span className={"ply"}>{singleMoveArr[2]}</span>*/}
+                        <span className={"moveIndex"}>{index}.</span>
+                        <span className={"ply"}>{move.w}</span>
+                        <span className={"ply"}>{move.b}</span>
                     </div>
                 </div>
             )
         }
-
         return (
             <S.MovesList>
-                Formatting Bro
-                {/*{ gameData[0]["moves"]*/}
-                {/*    .map( (item: any) => formatMove(item)) }*/}
+                { moves.map( (item: any, index: number) => formatMove(item, index + 1)) }
             </S.MovesList>
         )
     }
@@ -49,8 +44,6 @@ const ShowGameData: React.FC<IShowGameInfoProps> = ({gameData}) => {
             </S.GameInfo>
         )
     }
-
-
     return (
         <S.MainContainer>
             Handle showing multiple uploads later
@@ -58,7 +51,7 @@ const ShowGameData: React.FC<IShowGameInfoProps> = ({gameData}) => {
 
             <S.MenuTabCont>
                 <button
-                    onClick={() => setShowMoveList(prevState => !prevState)}
+                    onClick={() => setShowMoveList(true)}
                 >
                     Moves
                 </button>
@@ -70,6 +63,7 @@ const ShowGameData: React.FC<IShowGameInfoProps> = ({gameData}) => {
             </S.MenuTabCont>
             {/*@ts-ignore*/}
             { showMoveList ? <CreateMatrix gameData={gameData} /> : "none"}
+
 
         </S.MainContainer>
     )
