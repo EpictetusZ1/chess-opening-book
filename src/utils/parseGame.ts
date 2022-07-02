@@ -1,4 +1,9 @@
+<<<<<<<< HEAD:src/utils/parseGame.ts
 import {Game, IMove, ITag} from "../lib/models/game"
+========
+import {Game, IMove, ITag} from "./models/game"
+
+>>>>>>>> main:src/lib/parseGame.ts
 
 /**
  * @param data Array of .pgn file strings from api/handleUpload/apiRoute.ts
