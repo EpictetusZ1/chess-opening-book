@@ -1,14 +1,33 @@
 import React, {useState} from "react";
 import {IShowGameInfoProps} from "../../types/Main.types";
 import * as S from "./ShowGameData.Styles"
+import {IMove} from "../../lib/models/game";
 import CreateMatrix from "../moveMatrix/createMatrix";
 
 
 const ShowGameData: React.FC<IShowGameInfoProps> = ({gameData}) => {
     const [showMoveList, setShowMoveList] = useState<boolean>(true)
     const gameObj: { [index: string]: any } = gameData
-    console.log("Game data in ShowGameData: ", gameData)
+    const moves: IMove[] = gameObj[0].moves
 
+    const ShowMoves = () => {
+        const formatMove = (move: any, index: number) => {
+            return (
+                <div className={"singleMoveCont"}>
+                    <div className={"singleMove"}>
+                        <span className={"moveIndex"}>{index}.</span>
+                        <span className={"ply"}>{move.w}</span>
+                        <span className={"ply"}>{move.b}</span>
+                    </div>
+                </div>
+            )
+        }
+        return (
+            <S.MovesList>
+                { moves.map( (item: any, index: number) => formatMove(item, index + 1)) }
+            </S.MovesList>
+        )
+    }
 
     const ShowInfo = () => {
         const termination = gameData.termination
@@ -25,15 +44,14 @@ const ShowGameData: React.FC<IShowGameInfoProps> = ({gameData}) => {
             </S.GameInfo>
         )
     }
-
-
     return (
         <S.MainContainer>
             Handle showing multiple uploads later
+            <ShowMoves />
 
             <S.MenuTabCont>
                 <button
-                    onClick={() => setShowMoveList(prevState => !prevState)}
+                    onClick={() => setShowMoveList(true)}
                 >
                     Moves
                 </button>
@@ -45,6 +63,7 @@ const ShowGameData: React.FC<IShowGameInfoProps> = ({gameData}) => {
             </S.MenuTabCont>
             {/*@ts-ignore*/}
             { showMoveList ? <CreateMatrix gameData={gameData} /> : "none"}
+
 
         </S.MainContainer>
     )

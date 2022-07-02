@@ -1,5 +1,5 @@
 import type {NextApiRequest, NextApiResponse} from 'next'
-import {handleFileUpload} from "../../../lib/parseGame";
+import {handleFileUpload} from "../../../utils/parseGame";
 import dbConnect from "../../../lib/dbConnect";
 
 
