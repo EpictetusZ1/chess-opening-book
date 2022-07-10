@@ -25,6 +25,7 @@ const CreateMatrix: React.FC<IMoveMatrixProps> = ({gameData}) => {
     const data2 = accessMoves(gameData)
 
     const possibleArrayRefactor = (moveList: any): string[][] => {
+        // TODO: Note this is a temporary solution before refactoring the Interface of the core IGameData and its model
         const newArray: string[][] = []
 
         for (let i = 0; i < moveList.length; i++) {
@@ -39,7 +40,7 @@ const CreateMatrix: React.FC<IMoveMatrixProps> = ({gameData}) => {
         return newArray
     }
 
-    const testMatrixFormat = possibleArrayRefactor(data2)
+    const moveMatrix = possibleArrayRefactor(data2)
 
 
     interface IPlyData {
@@ -102,7 +103,6 @@ const CreateMatrix: React.FC<IMoveMatrixProps> = ({gameData}) => {
             })
 
             return result
-        //     occurrence
         }
 
         const checkIfExists = (index: number, currMove: string, previousMove: string) => {
@@ -126,7 +126,6 @@ const CreateMatrix: React.FC<IMoveMatrixProps> = ({gameData}) => {
              * @param i controls how many games to evaluate
              */
             let moves = moveList[i]
-
             let previousMove: string = ""
 
             for (let p = 0; p <= depth; p++) {
@@ -136,12 +135,12 @@ const CreateMatrix: React.FC<IMoveMatrixProps> = ({gameData}) => {
 
             }
         }
-
         return moveMatrix
     }
 
 
-    console.log("Final Matrix: ", createMatrix(testMatrixFormat, 5))
+    // Now I just need to convey this in a meaningful way
+    const freqMatrix = createMatrix(moveMatrix, 5)
 
     return (
         <div>

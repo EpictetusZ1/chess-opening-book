@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import axios from "axios"
-import ShowGameData from "../ShowGameData/ShowGameData";
-import {IGame} from "../../lib/models/game";
+import ShowGameData from "../components/ShowGameData/ShowGameData";
+import {IGame} from "../lib/models/game";
 
 
 const UploadGame = () => {
