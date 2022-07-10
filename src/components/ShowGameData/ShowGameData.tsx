@@ -1,14 +1,14 @@
 import React, {useState} from "react";
 import {IShowGameInfoProps} from "../../types/Main.types";
 import * as S from "./ShowGameData.Styles"
-import {IMove} from "../../lib/models/game";
+import { IGame } from "../../types/Game.types";
 import CreateMatrix from "../CreateMoveMatrix/createMatrix";
 
 
 const ShowGameData: React.FC<IShowGameInfoProps> = ({gameData}) => {
     const [showMoveList, setShowMoveList] = useState<boolean>(true)
     const gameObj: { [index: string]: any } = gameData
-    const moves: IMove[] = gameObj[0].moves
+    const moves: string[] = gameObj[0].moves
 
     const ShowMoves = () => {
         const formatMove = (move: any, index: number) => {

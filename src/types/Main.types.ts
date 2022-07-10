@@ -1,4 +1,4 @@
-import {IGame} from "../lib/models/game"
+import {IGame} from "./Game.types";
 import {StaticImageData} from "next/image";
 
 export interface IShowGameInfoProps {
