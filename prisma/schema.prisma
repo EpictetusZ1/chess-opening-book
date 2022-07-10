@@ -1,0 +1,35 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mongodb"
+  url      = env("DATABASE_URL")
+}
+
+type ITag {
+  name  String
+  value String
+}
+
+model Game {
+  id              String   @id @default(auto()) @map("_id") @db.ObjectId
+  event           String
+  site            String
+  round           String?
+  date            String
+  white           String
+  black           String
+  result          String
+  currentPosition String?
+  eco             String?
+  whiteElo        Int?
+  blackElo        Int?
+  timeControl     String
+  termination     String?
+  moves           String[]
+  otherTags       ITag[]
+}

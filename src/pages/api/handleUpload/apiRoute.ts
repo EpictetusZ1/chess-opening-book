@@ -1,6 +1,7 @@
 import type {NextApiRequest, NextApiResponse} from 'next'
 import {handleFileUpload} from "../../../utils/parseGame";
-import dbConnect from "../../../lib/dbConnect";
+// import dbConnect from "../../../lib/dbConnect";
+import main from "../../../lib/connect/dbConnect"
 
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
@@ -9,9 +10,19 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         return handleFileUpload(req.body)
     }
 
-    await dbConnect().then(() => {
-        console.log("connected to DB")
-    })
+    // await dbConnect().then(() => {
+    //     console.log("connected to DB")
+    // })
+    main()
+        .then(() => {
+            console.log("connected to prisma, and thus mongodb")
+        })
+        .catch((e) => {
+            throw e
+        })
+        // .finally(async () => {
+        //     await prisma.$disconnect()
+        // })
 
     const response = await getGame().then((data) => {
         // console.log("data from response: ", data)
