@@ -1,5 +1,4 @@
-import {Game, IMove, ITag} from "./models/game"
-
+import {Game, IMove, ITag} from "../lib/models/game"
 
 /**
  * @param data Array of .pgn file strings from api/handleUpload/apiRoute.ts
@@ -10,7 +9,7 @@ import {Game, IMove, ITag} from "./models/game"
 export const handleFileUpload =  (data: string) => {
 
     const getGamesArr = () => {
-        const gamePat = /\[Event ".*"]/gmid
+        const gamePat = /\[Event ".*"]/gmi
         const matches = data.matchAll(gamePat)
 
         let matchIndexes = []
@@ -27,7 +26,6 @@ export const handleFileUpload =  (data: string) => {
         return gamesArr1
     }
 
-
     /**
      *
      * @type Game
@@ -36,7 +34,6 @@ export const handleFileUpload =  (data: string) => {
      * Accepts a string which is the extracted text from a .pgn file
      * */
     const createGameObject = (data: string) => {
-
 
         const initGameFormatting = () => {
             /**
@@ -74,14 +71,13 @@ export const handleFileUpload =  (data: string) => {
                 let moveArr1 = [...data.matchAll(movePattern)]
                     .map( (item) => item.groups!.moves!.replace(/(?<lineBreaks>\r?\n|\r)/gm, " ")!.trim())
 
-                // @ts-ignore
-                let moveArr2: [IMove] = []
+                let moveArr2: IMove[] = []
 
                 for (let i = 0; i < moveArr1.length; i++) {
                     const split = moveArr1[i].split(" ")
 
                     moveArr2.push(
-                        { 0: split[1], 1: split[2]}
+                        { w: split[1], b: split[2]}
                     )
                 }
                 return moveArr2

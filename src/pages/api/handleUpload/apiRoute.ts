@@ -6,7 +6,7 @@ import dbConnect from "../../../lib/dbConnect";
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
 
     const getGame = async () => {
-        return  handleFileUpload(req.body)
+        return handleFileUpload(req.body)
     }
 
     await dbConnect().then(() => {
@@ -14,7 +14,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     })
 
     const response = await getGame().then((data) => {
-        console.log(data)
+        // console.log("data from response: ", data)
     })
 
     const uploadToMongo = async () => {

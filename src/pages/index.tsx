@@ -24,7 +24,7 @@ const Home: NextPage = () => {
 
         <div className={styles.grid}>
 
-          <a href="/src/components/UploadGame/uploadGame" className={styles.card}>
+          <a href="/uploadGame" className={styles.card}>
             <h2>Game Upload &rarr;</h2>
             <p>Upload a Chess Game (.pgn file), to MongoDB and view your game.</p>
           </a>
