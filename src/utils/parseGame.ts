@@ -1,4 +1,4 @@
-import {Game, IMove, ITag} from "../lib/models/game"
+import { IGame, ITag } from "../types/Game.types";
 
 /**
  * @param data Array of .pgn file strings from api/handleUpload/apiRoute.ts
@@ -71,14 +71,12 @@ export const handleFileUpload =  (data: string) => {
                 let moveArr1 = [...data.matchAll(movePattern)]
                     .map( (item) => item.groups!.moves!.replace(/(?<lineBreaks>\r?\n|\r)/gm, " ")!.trim())
 
-                let moveArr2: IMove[] = []
+                let moveArr2: string[] = []
 
                 for (let i = 0; i < moveArr1.length; i++) {
                     const split = moveArr1[i].split(" ")
 
-                    moveArr2.push(
-                        { w: split[1], b: split[2]}
-                    )
+                    moveArr2.push(split[1], split[2])
                 }
                 return moveArr2
 
@@ -141,13 +139,14 @@ export const handleFileUpload =  (data: string) => {
         formatElo()
         checkAdditionalTags()
 
-        return new Game(gameObj)
+        return gameObj
     }
 
     const gamesArr2 = getGamesArr()
 
     const iterateGamesArr = () => {
         for (let i = 0; i < gamesArr2.length; i++) {
+            // @ts-ignore
             gamesArr2[i] = createGameObject(gamesArr2[i])
         }
     }

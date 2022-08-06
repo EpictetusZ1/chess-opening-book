@@ -1,6 +1,6 @@
 import React from 'react';
 import {IMoveMatrixProps} from "../../types/Main.types";
-import {IGame} from "../../lib/models/game";
+import {IGame} from "../../types/Game.types";
 
 /**
  * @summary
@@ -22,26 +22,7 @@ const CreateMatrix: React.FC<IMoveMatrixProps> = ({gameData}) => {
         return allMoveList
     }
 
-    const data2 = accessMoves(gameData)
-
-    const possibleArrayRefactor = (moveList: any): string[][] => {
-        // TODO: Note this is a temporary solution before refactoring the Interface of the core IGameData and its model
-        const newArray: string[][] = []
-
-        for (let i = 0; i < moveList.length; i++) {
-            let subArray: any = []
-            for (let j = 0; j < moveList[i].length; j++) {
-                subArray.push(moveList[i][j].w)
-                subArray.push(moveList[i][j].b)
-            }
-            newArray.push(subArray)
-        }
-
-        return newArray
-    }
-
-    const moveMatrix = possibleArrayRefactor(data2)
-
+    const moveMatrix = accessMoves(gameData)
 
     interface IPlyData {
         [key: string]: {
@@ -49,8 +30,6 @@ const CreateMatrix: React.FC<IMoveMatrixProps> = ({gameData}) => {
             prevMove: string
         }
     }
-
-    // TODO: Later refactor these types to not repeat declarations
 
     interface IVariationsContainer {
         freq: number
@@ -141,6 +120,7 @@ const CreateMatrix: React.FC<IMoveMatrixProps> = ({gameData}) => {
 
     // Now I just need to convey this in a meaningful way
     const freqMatrix = createMatrix(moveMatrix, 5)
+    console.log(freqMatrix)
 
     return (
         <div>
