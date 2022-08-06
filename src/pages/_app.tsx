@@ -2,6 +2,7 @@ import type { AppProps } from 'next/app'
 import {GlobalStyle} from "../styles/GlobalStyle";
 import {ThemeProvider} from "styled-components";
 import {mainTheme} from "../styles/MainTheme";
+import {SessionProvider} from "next-auth/react";
 
 
 function MyApp({ Component, pageProps }: AppProps) {
@@ -9,7 +10,9 @@ function MyApp({ Component, pageProps }: AppProps) {
       <>
           <ThemeProvider theme={mainTheme}>
               <GlobalStyle />
-              <Component {...pageProps} />
+              <SessionProvider>
+                  <Component {...pageProps} />
+              </SessionProvider>
           </ThemeProvider>
       </>
   )

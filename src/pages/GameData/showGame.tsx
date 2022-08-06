@@ -1,4 +1,4 @@
-import ChessGame from "../chessGame/ChessGame";
+import ChessGame from "../../chessGame/ChessGame";
 
 const ShowGame = () => {
     return (
