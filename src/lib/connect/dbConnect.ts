@@ -5,6 +5,9 @@ export default async function main() {
 }
 
 main()
+    .then(() => {
+        console.log("Connected to Prisma")
+    })
     .catch((e) => {
         throw e
     })

@@ -1,15 +1,16 @@
 import * as S from "./SideNav.styles"
 import Link from "next/link";
-import {signIn, signOut, useSession} from "next-auth/react"
+import {GetServerSideProps, NextComponentType} from "next"
+import  { Session } from "next-auth"
+import {signIn, signOut, useSession, getSession} from "next-auth/react"
 
-function SideNav() {
 
-    const { data: session } = useSession()
+export const SideNav: NextComponentType = () => {
 
-    console.log("Session: ", session)
+    const { data: session, status } = useSession()
 
     return (
-        <S.SNAv>
+        <S.SNAv className={`${!session && status ? "loading" : "loaded"}`}>
             { !session && (
                 <Link href={"/api/auth/signIn"}>
                     <a onClick={(e) => {
@@ -21,19 +22,30 @@ function SideNav() {
                 </Link>
             )}
 
+            { session && (
+                <Link href={"/api/auth/signOut"}>
+                    <a onClick={(e) => {
+                        e.preventDefault()
+                        signOut()
+                    }}>
+                        Sign Out &larr;
+                    </a>
 
-
-            <Link href={"/api/auth/signOut"}>
-                <a onClick={(e) => {
-                    e.preventDefault()
-                    signOut()
-                }}>
-                    Sign Out &larr;
-                </a>
-
-            </Link>
+                </Link>
+            )}
         </S.SNAv>
     )
 }
 
-export default SideNav
+
+// Export the `session` prop to use sessions with Server Side Rendering
+export const getServerSideProps: GetServerSideProps<{
+    session: Session | null
+}> = async (context) => {
+    console.log("my stuff")
+    return {
+        props: {
+            session: await getSession(context),
+        },
+    }
+}

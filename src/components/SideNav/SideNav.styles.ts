@@ -10,6 +10,16 @@ export const SNAv = styled.div`
   overflow-x: hidden; /* Disable horizontal scroll */
   padding-top: 60px; /* Place content 60px from the top */
   transition: 0.5s; /* 0.5 second transition effect to slide in the sidenav */
+  
+  .loading {
+    opacity: 0;
+    transition: all 0.2s ease-in;
+  }
+  
+  .loaded {
+    opacity: 1;
+    transition: all 0.2s ease-in;
+  }
 
   a {
     padding: 8px 8px 8px 32px;
