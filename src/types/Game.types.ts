@@ -4,7 +4,7 @@ export interface ITag {
 }
 
 export interface IGame {
-    id: string
+    _id: string
     event: string
     site: string
     round?: number
@@ -13,11 +13,11 @@ export interface IGame {
     black: string
     result: string
     currentPosition?: string
-    eco?: string;
+    eco?: string
     whiteElo?: number
     blackElo?: number
     timeControl: string
     termination?: string
     moves: string[]
-    otherTags?: string[]
+    otherTags: ITag[]
 }
