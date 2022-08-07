@@ -51,6 +51,6 @@ model User {
   userName String    @unique
   password String
   games    String[]
-  stats    IStats[]
+  stats    IStats
   ratings  IRatings?
 }

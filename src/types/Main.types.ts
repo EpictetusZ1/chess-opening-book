@@ -40,7 +40,7 @@ export interface IRatings {
     rapid?: number
 }
 
-export interface User {
+export interface IUser {
     _id: string
     email: string
     userName: string

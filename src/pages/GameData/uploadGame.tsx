@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
+import React, {useState} from 'react';
 import axios from "axios"
 import ShowGameData from "../../components/ShowGameData/ShowGameData";
-import { IGame } from "../../types/Game.types";
+import {IGame} from "../../types/Game.types";
 
 
 const UploadGame = () => {
@@ -14,15 +14,27 @@ const UploadGame = () => {
         setFileData(event.target.files[0])
     }
 
+    const makeGame = async (game: any) => {
+        const data = {
+            data: game
+        }
+        return await axios.post('/api/AddGame', data)
+            .then((r) => {
+                console.log("response: ", r)
+            }).catch((e) => {
+                console.log("error: ", e)
+            })
+    }
+
     const handleSubmit = async (e: any) => {
         e.preventDefault()
-
         const config = {
             headers: { 'content-type': 'multipart/form-data' }
         }
 
-        return await axios.post('/api/handleUpload/apiRoute', fileData, config)
+        return await axios.post('/api/handleUpload/game-data', fileData, config)
             .then( (r) => {
+                makeGame(JSON.stringify(r.data[0]))
                 setGameData(r.data)
                 setSuccess(true)
             })

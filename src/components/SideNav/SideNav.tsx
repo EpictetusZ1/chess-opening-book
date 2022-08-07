@@ -4,9 +4,7 @@ import {GetServerSideProps, NextComponentType} from "next"
 import  { Session } from "next-auth"
 import {signIn, signOut, useSession, getSession} from "next-auth/react"
 
-
 export const SideNav: NextComponentType = () => {
-
     const { data: session, status } = useSession()
 
     return (
@@ -42,7 +40,6 @@ export const SideNav: NextComponentType = () => {
 export const getServerSideProps: GetServerSideProps<{
     session: Session | null
 }> = async (context) => {
-    console.log("my stuff")
     return {
         props: {
             session: await getSession(context),
