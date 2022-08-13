@@ -43,8 +43,6 @@ export interface IRatings {
 export interface IUser {
     id: string
     email: string
-    userName: string
-    password: string
     games: string[]
     stats: IStats
     ratings?: IRatings
