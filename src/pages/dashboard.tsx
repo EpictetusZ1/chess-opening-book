@@ -1,39 +1,46 @@
-import {GetServerSideProps, NextPage} from "next";
-import {getSession, signIn, useSession} from "next-auth/react";
+import { GetServerSideProps, NextPage } from "next";
+import { getSession, signIn, useSession } from "next-auth/react";
 import { useState, useEffect } from "react";
-import {Session} from "next-auth";
-import {InferGetServerSidePropsType} from "next";
-import {PrismaClient} from "@prisma/client";
-// import {getUserById} from "./api/User";
+import { Session } from "next-auth";
+import { InferGetServerSidePropsType } from "next";
+import axios from "axios";
+import { IUserApi } from "../types/Api.types";
+
 
 const Dashboard = ({session, result}: InferGetServerSidePropsType<typeof getServerSideProps>) => {
     // const [loading, setLoading] = useState(true)
     const [myResult, setMyResult] = useState(result)
 
     const getUser = async() => {
-        const response = await fetch("/api/User");
-        const data = await response.json();
-        setMyResult(data)
+        const id = "62effbc443f79c79d7f2c615"
+
+        const req = await axios.get(`/api/users/${id}`)
+            .then((res) => {
+                console.log("Response: ", res)
+            })
+            .catch((err) => {
+                console.log(err)
+            })
+        const response = await req
+
+        setMyResult(response)
     }
 
     useEffect(() => {
         // setMyResult(result)
         getUser()
-            .then((r) => {
-            })
     }, [])
 
-/*    useEffect(() => {
+    useEffect(() => {
         const securePage = async() => {
             if (!session) {
-                signIn()
+                await signIn("github")
             } else {
                 console.log("Session: ", session)
-                setLoading(false)
             }
         }
         securePage()
-    },[])*/
+    },[])
 
     // if (loading) {
     //     return <h2>Loading...</h2>
@@ -41,10 +48,8 @@ const Dashboard = ({session, result}: InferGetServerSidePropsType<typeof getServ
 
     const addUser = async() => {
         const testUser = {
-            _id: "",
+            id: "",
             email: "jack@jack.com",
-            userName: "Epictetus",
-            password: "123456",
             games: ["1", "2", "3"],
             stats: {
                 topFirstMove: "e4",
@@ -62,11 +67,6 @@ const Dashboard = ({session, result}: InferGetServerSidePropsType<typeof getServ
         <div>
             <h1>Dashboard</h1>
             <h2>Welcome to your chess data</h2>
-            <button
-               onClick={addUser}
-            >
-               Test Add user
-            </button>
         </div>
     )
 }
@@ -80,32 +80,11 @@ export const getServerSideProps: GetServerSideProps<{
     result: any | null
 }> = async (context) => {
     const session = await getSession(context)
-    const result = "potato"
-    //
-    // if (!session) {
-    //     return {
-    //         redirect: {
-    //             destination: "/api/auth/signIn",
-    //             permanent: false,
-    //         }
-    //     }
-    // }
-
-    // let prisma = new PrismaClient()
-    // await prisma.$connect()
-    // const data = await prisma.user.findUnique({
-    //     where: {
-    //         id: "62effbc443f79c79d7f2c615"
-    //     }
-    // })
-    // console.log("Data: ", data)
-
 
     return {
         props: {
             session: session,
-            result: result
-            // result: JSON.stringify(data)
+            result: "Placeholder",
         },
     }
 }

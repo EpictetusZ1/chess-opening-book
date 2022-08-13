@@ -1,6 +1,7 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  reactStrictMode: true,
+  // reactStrictMode: true, Turn off for dev
+  reactStrictMode: false,
   compiler: {
     styledComponents: true
   }
