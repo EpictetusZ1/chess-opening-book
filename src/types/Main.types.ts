@@ -41,7 +41,7 @@ export interface IRatings {
 }
 
 export interface IUser {
-    _id: string
+    id: string
     email: string
     userName: string
     password: string
