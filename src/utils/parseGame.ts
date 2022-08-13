@@ -1,10 +1,10 @@
 import { IGame, ITag } from "../types/Game.types";
 
 /**
- * @param data Array of .pgn file strings from api/handleUpload/apiRoute.ts
+ * @param data Array of .pgn file strings from api/handleUpload/game-data.ts
  * @returns gameArr2 An Array of Modeled data to be then sent to MongoDB
- * @summary Uses RegEx to parse out the separate elemments in a chess game file a.ka. .pgn file ( Portable Game Notation)
- * Creates a Mongoose/ TypeScript model for a Chess Game from text data.
+ * @summary Uses RegEx to parse out the separate elements in a chess game file a.k.a. '.pgn file' ( Portable Game Notation)
+ * Creates a Prisma / TypeScript model for a Chess Game from text data.
  * */
 export const handleFileUpload =  (data: string) => {
 
@@ -28,7 +28,7 @@ export const handleFileUpload =  (data: string) => {
 
     /**
      *
-     * @type Game
+     * @type IGame
      * @param data A SINGLE text string from the initial import
      * @function createGameObject constructs an instance of Game
      * Accepts a string which is the extracted text from a .pgn file

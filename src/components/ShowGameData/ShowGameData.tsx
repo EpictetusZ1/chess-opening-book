@@ -1,6 +1,6 @@
 import React, {useState} from "react";
 import {IShowGameInfoProps} from "../../types/Main.types";
-import * as S from "./ShowGameData.Styles"
+import * as S from "./ShowGameData.styles"
 import { IGame } from "../../types/Game.types";
 import CreateMatrix from "../CreateMoveMatrix/createMatrix";
 

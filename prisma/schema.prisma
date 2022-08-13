@@ -1,10 +1,10 @@
-generator client {
-  provider = "prisma-client-js"
-}
-
 datasource db {
   provider = "mongodb"
   url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
 }
 
 type ITag {
@@ -48,9 +48,7 @@ type IRatings {
 model User {
   id       String    @id @default(auto()) @map("_id") @db.ObjectId
   email    String    @unique
-  userName String    @unique
-  password String
   games    String[]
-  stats    IStats[]
+  stats    IStats
   ratings  IRatings?
 }
