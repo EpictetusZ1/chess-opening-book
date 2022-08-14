@@ -14,6 +14,7 @@ const UploadGame = () => {
         setFileData(event.target.files[0])
     }
 
+    // TODO: This is a confusing way of handling the game upload, remove it into one function
     const makeGame = async (game: any) => {
         const data = {
             data: game

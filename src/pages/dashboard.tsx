@@ -1,14 +1,13 @@
 import {GetServerSideProps, GetStaticProps, NextPage} from "next";
-import { getSession, signIn, useSession } from "next-auth/react";
+import { getSession} from "next-auth/react";
 import { useState, useEffect } from "react";
 import { Session } from "next-auth";
 import { InferGetServerSidePropsType } from "next";
 import axios from "axios";
-import { IUserApi } from "../types/Api.types";
 
 
 const Dashboard = ({session, result}: InferGetServerSidePropsType<typeof getServerSideProps>) => {
-    // const [loading, setLoading] = useState(true)
+    const [loading, setLoading] = useState(true)
     const [myResult, setMyResult] = useState(result)
 
     const getUser = async() => {
@@ -16,26 +15,26 @@ const Dashboard = ({session, result}: InferGetServerSidePropsType<typeof getServ
     }
 
     const makeUser = async() => {
-        return await axios.post(`/api/user/${session?.user?.id}`, {
-            gitHubId: session?.user?.id,
-            email: session?.user?.email,
-        })
+        return await axios.get(`/api/userProfile/${session?.user?.id}`)
+        // return await axios.get(`/api/userProfile/${session?.user?.id}`, {
+        //     userId: session?.user.id,
+        //     email: session?.user.email,
+        //     games: [],
+        //     stats: {}
+        // })
     }
 
     useEffect(() => {
-        console.log("session: ", session)
         getUser()
             .then((res) => {
-                if (res.data.hasErrors) {
-                    // Make user here
-                    console.log("data has errors", res)
-                }
-                console.log("No errors: ", res)
             })
             .catch((err) => {
                 console.log(err.code)
             })
         // setMyResult(response)
+        makeUser().then((res) => {
+            console.log("Res", res)
+        })
 
     }, [])
 
@@ -51,7 +50,7 @@ const Dashboard = ({session, result}: InferGetServerSidePropsType<typeof getServ
     //     // getUser()
     //     securePage()
     // },[])
-
+    //
     // if (loading) {
     //     return <h2>Loading...</h2>
     // }

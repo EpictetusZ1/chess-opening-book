@@ -1,9 +1,8 @@
 import { prisma } from "../../../lib/connect/prisma";
 import {NextApiRequest, NextApiResponse} from "next";
-import {IRatings, IStats, UserProfile} from "../../../types/Main.types";
 
 
-export default async function(req: NextApiRequest, res: NextApiResponse) {
+export default function(req: NextApiRequest, res: NextApiResponse) {
     const { id } = req.query as { id: string }
 
     if (req.method === "GET") {

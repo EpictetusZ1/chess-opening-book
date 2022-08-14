@@ -16,7 +16,7 @@ model Game {
   id              String   @id @default(auto()) @map("_id") @db.ObjectId
   event           String
   site            String
-  round           String?
+  round           Int?
   date            String
   white           String
   black           String
@@ -29,6 +29,7 @@ model Game {
   termination     String?
   moves           String[]
   otherTags       ITag[]
+  userId          String?  @unique
 }
 
 type IStats {
