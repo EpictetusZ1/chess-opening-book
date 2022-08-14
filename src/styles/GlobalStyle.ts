@@ -5,8 +5,7 @@ export const GlobalStyle = createGlobalStyle`
   body {
     padding: 0;
     margin: 0;
-    font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
-    Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+    font-family: Tahoma, Geneva, sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     vertical-align: baseline;
@@ -25,6 +24,8 @@ export const GlobalStyle = createGlobalStyle`
 
   .container {
     padding: 0 2rem;
+    background-color: ${props => props.theme.primary};
+    color: ${props => props.theme.secondary};
   }
 
   .main {
@@ -41,7 +42,7 @@ export const GlobalStyle = createGlobalStyle`
     display: flex;
     flex: 1;
     padding: 2rem 0;
-    border-top: 1px solid #eaeaea;
+    border-top: 1px solid ${props => props.theme.secondary};;
     justify-content: center;
     align-items: center;
   }
@@ -51,11 +52,6 @@ export const GlobalStyle = createGlobalStyle`
     justify-content: center;
     align-items: center;
     flex-grow: 1;
-  }
-
-  .title a {
-    color: #0070f3;
-    text-decoration: none;
   }
 
   .title a:hover,
@@ -81,15 +77,6 @@ export const GlobalStyle = createGlobalStyle`
     font-size: 1.5rem;
   }
 
-  .code {
-    background: #fafafa;
-    border-radius: 5px;
-    padding: 0.75rem;
-    font-size: 1.1rem;
-    font-family: Menlo, Monaco, Lucida Console, Liberation Mono, DejaVu Sans Mono,
-    Bitstream Vera Sans Mono, Courier New, monospace;
-  }
-
   .grid {
     display: flex;
     align-items: center;
@@ -104,7 +91,7 @@ export const GlobalStyle = createGlobalStyle`
     text-align: left;
     color: inherit;
     text-decoration: none;
-    border: 1px solid #eaeaea;
+    border: 1px solid ${props => props.theme.secondary};
     border-radius: 10px;
     transition: color 0.15s ease, border-color 0.15s ease;
     max-width: 300px;
@@ -113,8 +100,8 @@ export const GlobalStyle = createGlobalStyle`
   .card:hover,
   .card:focus,
   .card:active {
-    color: #0070f3;
-    border-color: #0070f3;
+    color: ${props => props.theme.highlightPrimary};
+    border-color:  ${props => props.theme.highlightPrimary};
   }
 
   .card h2 {

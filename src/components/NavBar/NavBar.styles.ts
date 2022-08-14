@@ -1,15 +1,18 @@
 import styled from "styled-components";
 
-export const SNAv = styled.div`
-  height: 100%; /* 100% Full-height */
-  width: 200px; /* 0 width - change this with JavaScript */
-  position: absolute; /* Stay in place */
-  z-index: 1; /* Stay on top */
-  top: 0; /* Stay at the top */
-  left: 0;
-  overflow-x: hidden; /* Disable horizontal scroll */
-  padding-top: 60px; /* Place content 60px from the top */
-  transition: 0.5s; /* 0.5 second transition effect to slide in the sidenav */
+export const NavBar = styled.div`
+  position: fixed;
+  top: 0;
+  right: 0;
+  height: 10vh;
+  width: 100%;
+  background-color: ${props => props.theme.secondary};
+  color: ${props => props.theme.primary};
+  z-index: 99;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
   
   .loading {
     opacity: 0;
@@ -20,23 +23,29 @@ export const SNAv = styled.div`
     opacity: 1;
     transition: all 0.2s ease-in;
   }
-
+  
+  ul {
+    display: flex;
+    flex-direction: row;
+    list-style: none;
+  }
+  
+  li:hover {
+    border-bottom: 3px solid ${props => props.theme.highlightSecondary};
+  } 
+  
   a {
     padding: 8px 8px 8px 32px;
     text-decoration: none;
     font-size: 25px;
-    color: #2a49ad;
+    color: ${props => props.theme.tertiary};
     display: block;
     transition: 0.3s;
   }
 
-  /* When you mouse over the navigation links, change their color */
-
   a:hover {
-    color: #f1f1f1;
+    color: ${props => props.theme.highlightSecondary};
   }
-
-  /* Position and style the close button (top right corner) */
 
   .sidenav .closebtn {
     position: absolute;
