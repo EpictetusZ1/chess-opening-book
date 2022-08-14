@@ -1,6 +1,7 @@
 import {NextApiRequest, NextApiResponse} from "next";
 import { prisma } from "../../../lib/connect/prisma";
 import {IGame} from "../../../types/Game.types";
+import {handleFileUpload} from "../../../utils/parseGame";
 
 
 export default function (req: NextApiRequest, res: NextApiResponse) {
@@ -33,14 +34,21 @@ export default function (req: NextApiRequest, res: NextApiResponse) {
     }
 
     async function handlePOST(req: NextApiRequest, res: NextApiResponse) {
-        const game = JSON.parse(req.body.data)
-
-        const data = await prisma.game.create({
-            data: {
-                ...game
-            }
+        const { id } = req.query as { id: string }
+        const gameArr = handleFileUpload(req.body)
+        const game = res
+        const user = await prisma.userProfile.findUnique({
+            where: {
+                id: "62effbc443f79c79d7f2c615"
+            },
         })
 
-        res.status(200).json({ message: "Game successfully created",  data, hasErrors: false })
+        // const data = await prisma.game.create({
+        //     data: {
+        //         ...gameArr
+        //     }
+        // })
+
+        res.status(200).json({ message: "This route needs refining", hasErrors: true })
     }
 }
