@@ -33,7 +33,7 @@ model Game {
 
 type IStats {
   topFirstMove          String?
-  mostSuccessfulOpening  String?
+  mostSuccessfulOpening String?
   mostPlayedTimeControl String?
   WLD                   Int[]
 }
@@ -45,9 +45,11 @@ type IRatings {
   rapid  Int?
 }
 
+
 model User {
-  id       String    @id @default(auto()) @map("_id") @db.ObjectId
-  email    String    @unique
+  id       String          @id @default(auto()) @map("_id") @db.ObjectId
+  email    String          @unique
+  gitHubId String?         @unique
   games    String[]
   stats    IStats
   ratings  IRatings?
