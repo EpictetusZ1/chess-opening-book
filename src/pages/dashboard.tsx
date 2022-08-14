@@ -1,67 +1,60 @@
-import { GetServerSideProps, NextPage } from "next";
-import { getSession, signIn, useSession } from "next-auth/react";
+import {GetServerSideProps, GetStaticProps, NextPage} from "next";
+import { getSession} from "next-auth/react";
 import { useState, useEffect } from "react";
 import { Session } from "next-auth";
 import { InferGetServerSidePropsType } from "next";
 import axios from "axios";
-import { IUserApi } from "../types/Api.types";
 
 
 const Dashboard = ({session, result}: InferGetServerSidePropsType<typeof getServerSideProps>) => {
-    // const [loading, setLoading] = useState(true)
+    const [loading, setLoading] = useState(true)
     const [myResult, setMyResult] = useState(result)
 
     const getUser = async() => {
-        const id = "62effbc443f79c79d7f2c615"
+        return await axios.get(`/api/user/${session?.user?.id}`)
+    }
 
-        const req = await axios.get(`/api/users/${id}`)
-            .then((res) => {
-                console.log("Response: ", res)
-            })
-            .catch((err) => {
-                console.log(err)
-            })
-        const response = await req
-
-        setMyResult(response)
+    const makeUser = async() => {
+        return await axios.get(`/api/userProfile/${session?.user?.id}`)
+        // return await axios.get(`/api/userProfile/${session?.user?.id}`, {
+        //     userId: session?.user.id,
+        //     email: session?.user.email,
+        //     games: [],
+        //     stats: {}
+        // })
     }
 
     useEffect(() => {
-        // setMyResult(result)
         getUser()
+            .then((res) => {
+            })
+            .catch((err) => {
+                console.log(err.code)
+            })
+        // setMyResult(response)
+        makeUser().then((res) => {
+            console.log("Res", res)
+        })
+
     }, [])
 
-    useEffect(() => {
-        const securePage = async() => {
-            if (!session) {
-                await signIn("github")
-            } else {
-                console.log("Session: ", session)
-            }
-        }
-        securePage()
-    },[])
-
+    // useEffect(() => {
+    //     const securePage = async() => {
+    //         if (!session) {
+    //             await signIn("github")
+    //         } else {
+    //             console.log("Session: ", session)
+    //         }
+    //
+    //     }
+    //     // getUser()
+    //     securePage()
+    // },[])
+    //
     // if (loading) {
     //     return <h2>Loading...</h2>
     // }
 
-    const addUser = async() => {
-        const testUser = {
-            id: "",
-            email: "jack@jack.com",
-            games: ["1", "2", "3"],
-            stats: {
-                topFirstMove: "e4",
-                mostSuccessfulOpening: "Vienna Game",
-                mostPlayedTimeControl: "Blitz",
-            },
-            ratings: {
-                blitz: 1602,
-                bullet: 1200,
-            },
-        }
-    }
 
     return (
         <div>
@@ -72,7 +65,6 @@ const Dashboard = ({session, result}: InferGetServerSidePropsType<typeof getServ
 }
 
 export default Dashboard;
-
 
 
 export const getServerSideProps: GetServerSideProps<{

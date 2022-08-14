@@ -20,4 +20,5 @@ export interface IGame {
     termination?: string
     moves: string[]
     otherTags: ITag[]
+    userId?: string
 }
