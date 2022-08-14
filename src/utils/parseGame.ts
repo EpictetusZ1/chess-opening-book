@@ -1,7 +1,7 @@
 import { IGame, ITag } from "../types/Game.types";
 
 /**
- * @param data Array of .pgn file strings from api/handleUpload/game-data.ts
+ * @param data Array of .pgn file strings from api/game/game-data.ts
  * @returns gameArr2 An Array of Modeled data to be then sent to MongoDB
  * @summary Uses RegEx to parse out the separate elements in a chess game file a.k.a. '.pgn file' ( Portable Game Notation)
  * Creates a Prisma / TypeScript model for a Chess Game from text data.

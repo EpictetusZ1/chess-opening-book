@@ -46,12 +46,12 @@ type IRatings {
 }
 
 model UserProfile {
-  id       String    @id @default(auto()) @map("_id") @db.ObjectId
-  email    String    @unique
-  gitHubId String?   @unique
-  games    String[]
-  stats    IStats
-  ratings  IRatings?
+  id      String    @id @default(auto()) @map("_id") @db.ObjectId
+  userId  String?   @unique
+  email   String    @unique
+  games   String[]
+  stats   IStats
+  ratings IRatings?
 }
 
 // SCHEMA FOR PRISMA NextAuth ADAPTER

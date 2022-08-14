@@ -39,8 +39,8 @@ export interface IRatings {
 }
 
 
-export interface UserProfile {
-  id: string
+export interface IUserProfile {
+  userId: string
   email: string
   games: string[]
   stats: IStats
