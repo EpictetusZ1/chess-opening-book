@@ -1,49 +1,45 @@
 import { prisma } from "../../../lib/connect/prisma";
 import {NextApiRequest, NextApiResponse} from "next";
-import {IRatings, IStats, IUser} from "../../../types/Main.types";
+import {IRatings, IStats, UserProfile} from "../../../types/Main.types";
 
 
-export default async(req: NextApiRequest, res: NextApiResponse) => {
+export default async function(req: NextApiRequest, res: NextApiResponse) {
     const { id } = req.query as { id: string }
-    console.log("REQUEST METHOD")
-    console.log(req.method)
 
-    switch (req.method) {
-        case "POST":
-            const { email, gitHubId } = req.body as { email: string, gitHubId: string }
-            const newUser = await prisma.user.create({
-                data: {
-                    email: email,
-                    gitHubId: gitHubId,
-                    games: [],
-                    stats: {},
-                    ratings: {}
-                }
-            })
+    if (req.method === "GET") {
+         return handleGET(id, res)
+    } else if (req.method === "POST") {
+         return handlePOST(id, res)
+    } else {
+        throw new Error(`The HTTP method ${req.method} is not supported at this route.`)
+    }
 
-            return res.status(200).json(newUser)
-        case "GET":
-            let data = await prisma.user.findUnique({
-                where: {
-                    gitHubId: id
-                }
-            })
-            const idk = await data
-
-            if (idk === null) {
-                console.log("THERE IS NO FUCKING USER")
-                const noUser = {
-                    message: "No user found with that id",
-                    hasErrors: true
-                }
-                return res.status(200).json(noUser)
-            } else {
-                console.log("THERE IS aUSER")
-                return res.status(200).json(data)
+    async function handleGET(id: string, res: NextApiResponse) {
+        let data = await prisma.user.findUnique({
+            where: {
+                id: id
             }
+        })
 
+        if (data === null) {
+             res.status(200).json({ message: "No user found with that id", hasErrors: true})
+        } else {
+             res.status(200).json(data)
+        }
+    }
 
-        default:
-            break
+    async function handlePOST(id: string, res: NextApiResponse) {
+        // TODO: Add logic to create a model of UserProfile if no record exists
+        const { email } = req.body as { email: string }
+        const newUser = await prisma.userProfile.create({
+            data: {
+                email: email,
+                games: [],
+                stats: {},
+                ratings: {}
+            }
+        })
+
+         res.status(200).json(newUser)
     }
 }

@@ -39,10 +39,9 @@ export interface IRatings {
 }
 
 
-export interface IUser {
+export interface UserProfile {
   id: string
   email: string
-  gitHubId?: string
   games: string[]
   stats: IStats
   ratings?: IRatings

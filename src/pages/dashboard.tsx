@@ -23,16 +23,14 @@ const Dashboard = ({session, result}: InferGetServerSidePropsType<typeof getServ
     }
 
     useEffect(() => {
+        console.log("session: ", session)
         getUser()
             .then((res) => {
                 if (res.data.hasErrors) {
-                    makeUser()
-                        .then((res) => {
-                            console.log("Response: ", res)
-                        }).catch((err) => {
-                        console.log("Error: ", err)
-                    })
+                    // Make user here
+                    console.log("data has errors", res)
                 }
+                console.log("No errors: ", res)
             })
             .catch((err) => {
                 console.log(err.code)
