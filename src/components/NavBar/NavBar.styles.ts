@@ -10,10 +10,11 @@ export const NavBar = styled.div`
   color: ${props => props.theme.primary};
   z-index: 99;
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
+  list-style: none;
   justify-content: center;
   align-items: center;
-  
+
   .loading {
     opacity: 0;
     transition: all 0.2s ease-in;
@@ -22,12 +23,6 @@ export const NavBar = styled.div`
   .loaded {
     opacity: 1;
     transition: all 0.2s ease-in;
-  }
-  
-  ul {
-    display: flex;
-    flex-direction: row;
-    list-style: none;
   }
   
   li:hover {

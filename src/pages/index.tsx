@@ -6,10 +6,13 @@ const Home: NextPage = () => {
     <div className={"container"}>
       <Head>
         <title>Chess Opening Book</title>
-        <meta name="description" content="A chess analysis app for the visually imapired" />
+        <meta name="description" content="A chess analysis app for the visually impaired"
+              aria-label={"A chess analysis app for the visually impaired"}
+        />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <main className={"main"}>
+      <main className={"main"}
+            aria-label={`Main content`}>
 
         <h1 className={"title"}>
           Welcome to Arcadia Chess
@@ -20,7 +23,6 @@ const Home: NextPage = () => {
         </p>
 
         <div className={"grid"}>
-
             <a href="/dashboard" className={"card"}>
               <h2> Dashboard &rarr; </h2>
               <p>Understand your chess data in a meaningful way</p>
@@ -39,7 +41,8 @@ const Home: NextPage = () => {
         </div>
       </main>
 
-      <footer className={"footer"}>
+      <footer className={"footer"}
+              aria-hidden={"false"}>
 
       </footer>
     </div>

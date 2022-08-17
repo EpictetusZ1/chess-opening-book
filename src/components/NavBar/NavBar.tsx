@@ -7,56 +7,56 @@ import {signIn, signOut, useSession, getSession} from "next-auth/react"
 export const NavBar: NextComponentType = () => {
     const { data: session, status } = useSession()
 
-    // TODO: Add aria tags to all components
-    // TODO: Set HTML indent level to 2 spaces
-
     return (
-        <S.NavBar className={`${!session && status ? "loading" : "loaded"}`}>
-            <ul>
-                <li>
-                    <Link href={"/dashboard"}>
-                        <a>
-                             Dashboard &rarr;
+        <S.NavBar
+            className={`${!session && status ? "loading" : "loaded"}`}
+            aria-label={"Main menu"}
+        >
+            <li className={"menu-item"}>
+                <Link href={"/dashboard"}
+                      className={"menu-link"}>
+                    <a>
+                        Dashboard &rarr;
+                    </a>
+                </Link>
+            </li>
+
+            <li className={"menu-item"}>
+                <Link href="/GameData/uploadGame"
+                      className={"menu-link"}>
+                    <a>
+                        Game Upload &rarr;
+                    </a>
+                </Link>
+            </li>
+
+            <li className={"menu-item"}>
+                { !session && (
+                    <Link href={"/api/auth/signIn"}
+                          className={"menu-link"}>
+                        <a onClick={(e) => {
+                            e.preventDefault()
+                            signIn("github")
+                        }}>
+                            Sign In &rarr;
                         </a>
                     </Link>
-                </li>
+                )}
 
-                <li>
-                    <Link href="/GameData/uploadGame">
-                        <a>
-                          Game Upload &rarr;
+                { session && (
+                    <Link href={"/api/auth/signOut"}
+                          className={"menu-link"}>
+                        <a onClick={(e) => {
+                            e.preventDefault()
+                            signOut()
+                        }}>
+                            Sign Out &larr;
                         </a>
+
                     </Link>
-                </li>
+                )}
 
-                <li>
-                    { !session && (
-                        <Link href={"/api/auth/signIn"}>
-                            <a onClick={(e) => {
-                                e.preventDefault()
-                                signIn("github")
-                            }}>
-                                Sign In &rarr;
-                            </a>
-                        </Link>
-                    )}
-
-                    { session && (
-                        <Link href={"/api/auth/signOut"}>
-                            <a onClick={(e) => {
-                                e.preventDefault()
-                                signOut()
-                            }}>
-                                Sign Out &larr;
-                            </a>
-
-                        </Link>
-                    )}
-
-                </li>
-
-
-            </ul>
+            </li>
         </S.NavBar>
     )
 }
