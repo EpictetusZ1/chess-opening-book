@@ -37,9 +37,9 @@ export default function(req: NextApiRequest, res: NextApiResponse) {
         })
 
         if (data === null) {
-            res.status(200).json({ message: `No user found with id: ${id}`, hasErrors: true })
+            res.status(200).json({ message: `No userProfile found with id: ${id}`, hasErrors: true })
         } else {
-            res.status(200).json({ message: "User found" , data, hasErrors: false })
+            res.status(200).json({ message: "userProfile already exists" , data, hasErrors: false })
         }
     }
 

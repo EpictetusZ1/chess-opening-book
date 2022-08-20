@@ -30,14 +30,15 @@ const Home: NextPage = () => {
                 </div>
             </Link>
 
-            <Link href="/GameData/uploadGame" className={"card"}>
+            {/* Temp assign these two hrefs until structure is more built out*/}
+            <Link href="#" className={"card"}>
                 <div className={"card"}>
                     <h2> Game Upload &rarr; </h2>
                     <p>Upload a Chess Game (.pgn file) to start getting insights</p>
                 </div>
             </Link>
 
-            <Link href="/GameData/showGame" className={"card"}>
+            <Link href="#" className={"card"}>
                 <div className={"card"}>
                     <h2> Chess Game &rarr; </h2>
                     <p>View the Chess Board</p>

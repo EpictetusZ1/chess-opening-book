@@ -9,6 +9,7 @@ const ShowGameData: React.FC<IShowGameInfoProps> = ({gameData}) => {
     const [showMoveList, setShowMoveList] = useState<boolean>(true)
     const gameObj: { [index: string]: any } = gameData
     const moves: string[] = gameObj[0].moves
+    // TODO: This should be a "card" in a time kinda, that can display a list of your games
 
     const ShowMoves = () => {
         const formatMove = (move: any, index: number) => {

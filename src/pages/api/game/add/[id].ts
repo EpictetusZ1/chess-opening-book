@@ -1,7 +1,7 @@
 import {NextApiRequest, NextApiResponse} from "next";
-import { prisma } from "../../../lib/connect/prisma";
-import {IGame} from "../../../types/Game.types";
-import {handleFileUpload} from "../../../utils/parseGame";
+import { prisma } from "../../../../lib/connect/prisma";
+import {IGame} from "../../../../types/Game.types";
+import {handleFileUpload} from "../../../../utils/parseGame";
 
 
 export default function (req: NextApiRequest, res: NextApiResponse) {
@@ -26,6 +26,8 @@ export default function (req: NextApiRequest, res: NextApiResponse) {
             }
         })
 
+        // TODO: This is where I will find the user to upload the game to
+
         if (data === null) {
             res.status(200).json({ message: `No game found with id: ${id}`, hasErrors: true })
         } else {
@@ -33,22 +35,34 @@ export default function (req: NextApiRequest, res: NextApiResponse) {
         }
     }
 
+    // TODO: Implement the ability to add an array of games at once
     async function handlePOST(req: NextApiRequest, res: NextApiResponse) {
         const { id } = req.query as { id: string }
         const gameArr = handleFileUpload(req.body)
-        const game = res
-        const user = await prisma.userProfile.findUnique({
-            where: {
-                id: "62effbc443f79c79d7f2c615"
-            },
+        const newGame = await prisma.game.create({
+            data: {
+                ...gameArr[0],
+                userId: id
+            }
         })
 
-        // const data = await prisma.game.create({
-        //     data: {
-        //         ...gameArr
-        //     }
-        // })
+        if  (newGame !== null) {
+            const updateUserProfile = await prisma.userProfile.update({
+                where: {
+                    userId: id
+                }, data: {
+                    games: {
+                        push: newGame.id
+                    }
+                }
+            })
 
-        res.status(200).json({ message: "This route needs refining", hasErrors: true })
+
+            if (updateUserProfile !== null) {
+                res.status(200).json({ message: "Game saved", newGame, hasErrors: false })
+            } else  {
+                res.status(200).json({ message: "The game object is defined", newGame, hasErrors: true })
+            }
+        }
     }
 }

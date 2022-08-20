@@ -22,7 +22,7 @@ export const NavBar: NextComponentType = () => {
             </li>
 
             <li className={"menuItem"}>
-                <Link href="/GameData/uploadGame"
+                <Link href="/src/components/UploadGameForm/UploadGameForm"
                       className={"menu-link"}>
                     <S.NavBtn>
                         Game Upload &rarr;
@@ -50,7 +50,7 @@ export const NavBar: NextComponentType = () => {
                             e.preventDefault()
                             signOut()
                         }}>
-                            Sign Out &larr;
+                            Sign Out
                         </S.NavBtn>
 
                     </Link>
@@ -62,12 +62,12 @@ export const NavBar: NextComponentType = () => {
 
 
 // Export the `session` prop to use sessions with Server Side Rendering
-export const getServerSideProps: GetServerSideProps<{
-    session: Session | null
-}> = async (context) => {
-    return {
-        props: {
-            session: await getSession(context),
-        },
-    }
-}
+// export const getServerSideProps: GetServerSideProps<{
+//     session: Session | null
+// }> = async (context) => {
+//     return {
+//         props: {
+//             session: await getSession(context),
+//         },
+//     }
+// }
