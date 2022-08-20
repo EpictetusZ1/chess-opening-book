@@ -49,7 +49,6 @@ const Home: NextPage = () => {
 
       <footer className={"footer"}
               aria-hidden={"false"}>
-
       </footer>
     </div>
   )
