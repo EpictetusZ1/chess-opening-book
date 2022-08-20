@@ -26,8 +26,6 @@ const Dashboard = ({session, result}: InferGetServerSidePropsType<typeof getServ
 
     useEffect(() => {
         getUser()
-            .then((res) => {
-            })
             .catch((err) => {
                 console.log(err.code)
             })
@@ -57,7 +55,8 @@ const Dashboard = ({session, result}: InferGetServerSidePropsType<typeof getServ
 
 
     return (
-        <div>
+        <div className={"main"}
+             aria-label={"Main content"}>
             <h1>Dashboard</h1>
             <h2>Welcome to your chess data</h2>
         </div>
