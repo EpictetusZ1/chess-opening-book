@@ -4,11 +4,11 @@ export const NavBar = styled.div`
   position: fixed;
   top: 0;
   right: 0;
-  height: 10vh;
+  height: 8vh;
   width: 100%;
   background-color: ${props => props.theme.secondary};
   color: ${props => props.theme.primary};
-  z-index: 99;
+  z-index: 10;
   display: flex;
   flex-direction: row;
   list-style: none;
@@ -24,23 +24,6 @@ export const NavBar = styled.div`
     opacity: 1;
     transition: all 0.2s ease-in;
   }
-  
-  li:hover {
-    border-bottom: 3px solid ${props => props.theme.highlightSecondary};
-  } 
-  
-  a {
-    padding: 8px 8px 8px 32px;
-    text-decoration: none;
-    font-size: 25px;
-    color: ${props => props.theme.tertiary};
-    display: block;
-    transition: 0.3s;
-  }
-
-  a:hover {
-    color: ${props => props.theme.highlightSecondary};
-  }
 
   .sidenav .closebtn {
     position: absolute;
@@ -50,14 +33,26 @@ export const NavBar = styled.div`
     margin-left: 50px;
   }
 
-
-  /* On smaller screens, where height is less than 450px, change the style of the sidenav (less padding and a smaller font size) */
-  @media screen and (max-height: 450px) { {
-    padding-top: 15px;
-  }
-    a {
-      font-size: 18px;
-    }
+  .menuItem {
+    //  add bottom highlight on hover later
   }
 
+`
+
+export const NavBtn = styled.button`
+  position: center;
+  border: none;
+  background-color: transparent;
+  padding: 8px 8px 8px 32px;
+  text-decoration: none;
+  font-size: 25px;
+  color: ${props => props.theme.tertiary};
+  transition: 0.3s;
+
+  :hover {
+    color: ${props => props.theme.highlightSecondary};
+    font-size: 26px;
+    transition: all 0.2s ease-in;
+    cursor: pointer;
+  }
 `

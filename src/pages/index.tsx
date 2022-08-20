@@ -1,14 +1,13 @@
 import type { NextPage } from 'next'
 import Head from 'next/head'
+import Link from "next/link";
 
 const Home: NextPage = () => {
   return (
     <div className={"container"}>
       <Head>
         <title>Accessibility first chess game analysis - Arcadia Chess</title>
-        <meta name="description" content="A chess game analysis app for the visually impaired"
-              aria-label={"A chess game analysis app for the visually impaired"}
-        />
+        <meta name="description" content="A chess game analysis app for the visually impaired"/>
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main className={"main"}
@@ -24,20 +23,26 @@ const Home: NextPage = () => {
         </p>
 
         <div className={"grid"}>
-            <a href="/dashboard" className={"card"}>
-              <h2> Dashboard &rarr; </h2>
-              <p>Understand your chess data in a meaningful way</p>
-            </a>
+            <Link href="/dashboard">
+                <div className={"card"}>
+                    <h2> Dashboard &rarr; </h2>
+                    <p>Understand your chess data in a meaningful way</p>
+                </div>
+            </Link>
 
-            <a href="/GameData/uploadGame" className={"card"}>
-              <h2> Game Upload &rarr; </h2>
-              <p>Upload a Chess Game (.pgn file) to start getting insights</p>
-            </a>
+            <Link href="/GameData/uploadGame" className={"card"}>
+                <div className={"card"}>
+                    <h2> Game Upload &rarr; </h2>
+                    <p>Upload a Chess Game (.pgn file) to start getting insights</p>
+                </div>
+            </Link>
 
-            <a href="/GameData/showGame" className={"card"}>
-              <h2> Chess Game &rarr; </h2>
-              <p>View the Chess Board</p>
-            </a>
+            <Link href="/GameData/showGame" className={"card"}>
+                <div className={"card"}>
+                    <h2> Chess Game &rarr; </h2>
+                    <p>View the Chess Board</p>
+                </div>
+            </Link>
 
         </div>
       </main>

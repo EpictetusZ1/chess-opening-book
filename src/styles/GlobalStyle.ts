@@ -115,11 +115,6 @@ export const GlobalStyle = createGlobalStyle`
     line-height: 1.5;
   }
 
-  .logo {
-    height: 1em;
-    margin-left: 0.5rem;
-  }
-
   @media (max-width: 600px) {
     .grid {
       width: 100%;

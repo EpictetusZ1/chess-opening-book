@@ -4,9 +4,11 @@ export const DefaultHighVis = {
     primary: "#003B49",
     secondary: "#D6D2C4",
     tertiary: "#000",
-    // highlight: "#F2C75C",
     highlightPrimary: "#00e099",
-    highlightSecondary: "#0e0066",
+    highlightSecondary: "#5d3754",
+    highlightTertiary: "#00bfb2",
+    btnPrimary: "#D0D3D4",
+    btnSecondary: "#FfC845",
 }
 
 export const darkTheme = {

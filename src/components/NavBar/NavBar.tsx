@@ -12,50 +12,49 @@ export const NavBar: NextComponentType = () => {
             className={`${!session && status ? "loading" : "loaded"}`}
             aria-label={"Main menu"}
         >
-            <li className={"menu-item"}>
+            <li className={"menuItem"}>
                 <Link href={"/dashboard"}
                       className={"menu-link"}>
-                    <a>
+                    <S.NavBtn>
                         Dashboard &rarr;
-                    </a>
+                    </S.NavBtn>
                 </Link>
             </li>
 
-            <li className={"menu-item"}>
+            <li className={"menuItem"}>
                 <Link href="/GameData/uploadGame"
                       className={"menu-link"}>
-                    <a>
+                    <S.NavBtn>
                         Game Upload &rarr;
-                    </a>
+                    </S.NavBtn>
                 </Link>
             </li>
 
-            <li className={"menu-item"}>
+            <li className={"menuItem"}>
                 { !session && (
                     <Link href={"/api/auth/signIn"}
                           className={"menu-link"}>
-                        <a onClick={(e) => {
+                        <S.NavBtn onClick={(e) => {
                             e.preventDefault()
                             signIn("github")
                         }}>
                             Sign In &rarr;
-                        </a>
+                        </S.NavBtn>
                     </Link>
                 )}
 
                 { session && (
                     <Link href={"/api/auth/signOut"}
                           className={"menu-link"}>
-                        <a onClick={(e) => {
+                        <S.NavBtn onClick={(e) => {
                             e.preventDefault()
                             signOut()
                         }}>
                             Sign Out &larr;
-                        </a>
+                        </S.NavBtn>
 
                     </Link>
                 )}
-
             </li>
         </S.NavBar>
     )
