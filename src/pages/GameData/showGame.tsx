@@ -1,10 +1,9 @@
-import ChessGame from "../../chessGame/ChessGame";
 
 const ShowGame = () => {
     return (
         <div>
-            <h1>The Board</h1>
-            <ChessGame />
+            <h1>The Game Board</h1>
+            <p>...To be implemented</p>
         </div>
     );
 }

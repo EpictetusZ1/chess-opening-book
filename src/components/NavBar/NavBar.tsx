@@ -1,8 +1,8 @@
 import * as S from "./NavBar.styles"
 import Link from "next/link";
-import {GetServerSideProps, NextComponentType} from "next"
+import { GetServerSideProps, NextComponentType } from "next"
 import  { Session } from "next-auth"
-import {signIn, signOut, useSession, getSession} from "next-auth/react"
+import { signIn, signOut, useSession, getSession } from "next-auth/react"
 
 export const NavBar: NextComponentType = () => {
     const { data: session, status } = useSession()

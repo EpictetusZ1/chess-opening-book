@@ -5,14 +5,15 @@ const Home: NextPage = () => {
   return (
     <div className={"container"}>
       <Head>
-        <title>Chess Opening Book</title>
-        <meta name="description" content="A chess analysis app for the visually impaired"
-              aria-label={"A chess analysis app for the visually impaired"}
+        <title>Accessibility first chess game analysis - Arcadia Chess</title>
+        <meta name="description" content="A chess game analysis app for the visually impaired"
+              aria-label={"A chess game analysis app for the visually impaired"}
         />
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main className={"main"}
-            aria-label={`Main content`}>
+            aria-label={`Main content`}
+      >
 
         <h1 className={"title"}>
           Welcome to Arcadia Chess
