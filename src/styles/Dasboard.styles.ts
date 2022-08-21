@@ -2,30 +2,36 @@ import styled from "styled-components";
 
 
 export const Dashboard = styled.div`
-   padding: 8vh 2rem 0 2rem;
-   width: 100%;
-   min-height: 100vh;
-   background-color: ${props => props.theme.primary};
-   color: ${props => props.theme.secondary};
+  padding-top: 12vh;
+  width: 100%;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  background-color: ${props => props.theme.primary};
+  color: ${props => props.theme.secondary};
 
-   .dashboard {
-      padding: 2rem;
-      display: grid;
-      grid-template-columns: 1fr 1.1fr 0.9fr;
-      grid-template-rows: 0.5fr 0.5fr 1.7fr;
-      gap: 2px 1px;
-      grid-auto-flow: row;
-      grid-template-areas:
-      "userWelcome userWelcome uploadGame"
-      ". . ."
-      ". . .";
-   }
+  .dashboard {
+    width: 95%;
+    display: grid;
+    grid-template-columns: 1fr 1.1fr 0.9fr;
+    grid-template-rows: 0.2fr 0.6fr 1.7fr;
+    gap: 0 0;
+    grid-auto-flow: row;
+    grid-template-areas:
+    "userWelcome userWelcome uploadGame"
+    "userGameInfo userGameInfo ."
+    "userGameInfo userGameInfo .";
+  }
 
-   .userWelcome { grid-area: userWelcome; }
+  .userWelcome { grid-area: userWelcome; }
 
-   .uploadGame { grid-area: uploadGame; }
+  .uploadGame { grid-area: uploadGame; }
 
-   .uploadGameBtn {
+  .userGameInfo { 
+    grid-area: userGameInfo; 
+  }
+
+  .uploadGameBtn {
       backface-visibility: hidden;
       font-family: Tahoma, Geneva, sans-serif;
       font-size: 18px;
@@ -62,5 +68,4 @@ export const Dashboard = styled.div`
    .button-9:focus {
       box-shadow: rgba(50, 50, 93, .1) 0 0 0 1px inset, rgba(50, 50, 93, .2) 0 6px 15px 0, rgba(0, 0, 0, .1) 0 2px 2px 0, rgba(50, 151, 211, .3) 0 0 0 4px;
    }
-
 `

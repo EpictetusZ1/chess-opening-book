@@ -1,47 +1,40 @@
-import {GetServerSideProps, NextPage} from "next";
-import {getSession, useSession, signIn } from "next-auth/react";
+import { NextPage } from "next";
+import { useSession } from "next-auth/react";
 import { useState, useEffect } from "react";
-import { Session } from "next-auth";
-import { InferGetServerSidePropsType } from "next";
-import axios from "axios";
+
+import axios, {AxiosResponse} from "axios";
 import UploadGameForm from "../components/UploadGameForm/UploadGameForm";
 import * as S from "../styles/Dasboard.styles"
+import {IGame} from "../types/Game.types";
+import GamesTable from "../components/GamesView/GamesTable";
 
 
 const Dashboard: NextPage = () => {
+
     const { data: session, status } = useSession()
     const [loading, setLoading] = useState(true)
-    const [myResult, setMyResult] = useState()
+    const [games, setGames] = useState<IGame[]>([])
     const [openUploadGame, setOpenUploadGame] = useState(false)
-
-    const findOrCreateProfile = async() => {
-        // return await axios.get(`/api/userProfile/${session?.user?.id}`)
-        return await axios.post(`/api/userProfile/${session?.user?.id}`, {
-            userId: session?.user.id,
-            email: session?.user.email,
-            games: [],
-            stats: {}
-        })
+    const getGames = async () => {
+       const res = await axios.get(`/api/game/add/${session?.user?.id}`)
+        if (res) {
+            console.log("res", res)
+            setGames(res.data.data)
+        }
     }
 
     useEffect(() => {
-        if (status !== "loading") {
-            findOrCreateProfile().then((res) => {
-                console.log("Res from attempting to find user profile ", res)
-            })
-        }
-    }, [status])
-
-
+        //TODO: Convert this to get serverSideProps
+        getGames()
+    } , [])
 
     return (
         <S.Dashboard
             aria-label={"Main content"}>
             <div className="dashboard">
-                {openUploadGame && <UploadGameForm />}
+                {openUploadGame && <UploadGameForm closeForm={() => setOpenUploadGame(false)}/>}
                 <div className="userWelcome">
-                    <h1>Dashboard</h1>
-                    <h2>Welcome to your chess data</h2>
+                    <h2>Welcome back, {session?.user?.name}</h2>
                 </div>
                 <div className="uploadGame">
                     <button className={"uploadGameBtn"}
@@ -49,6 +42,11 @@ const Dashboard: NextPage = () => {
                     >
                         Upload games
                     </button>
+                </div>
+
+                <div className="userGameInfo">
+                    <h2>Your games</h2>
+                    {games  && <GamesTable games={games} />}
                 </div>
 
             </div>

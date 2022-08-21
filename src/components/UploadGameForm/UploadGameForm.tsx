@@ -4,30 +4,20 @@ import ShowGameData from "../ShowGameData/ShowGameData";
 import { IGame } from "../../types/Game.types";
 import { NextComponentType } from "next";
 import * as S from "./UploadGameForm.styles"
-import {useSession} from "next-auth/react";
+import { useSession } from "next-auth/react";
+
+type TProps = {
+    closeForm: () => void
+}
 
 
-const UploadGameForm: NextComponentType = () => {
+const UploadGameForm = ({closeForm}: TProps) => {
     const { data: session, status } = useSession()
     const [fileData, setFileData] = useState()
-    const [success, setSuccess] = useState(false)
     const [gameData, setGameData] = useState<IGame>()
 
     const handleInputChange = (event: any) => {
         setFileData(event.target.files[0])
-    }
-
-    // TODO: This is a confusing way of handling the game upload, remove it into one function
-    const makeGame = async (game: any) => {
-        const data = {
-            data: game
-        }
-        return await axios.post('/api/AddGame', data)
-            .then((r) => {
-                console.log("response: ", r)
-            }).catch((e) => {
-                console.log("error: ", e)
-            })
     }
 
     const handleSubmit = async (e: any) => {
@@ -38,8 +28,8 @@ const UploadGameForm: NextComponentType = () => {
 
         // @ts-ignore
         const gameObjRaw = await axios.post(`/api/game/add/${session.user.id}`, fileData, config)
-        setGameData(gameObjRaw.data)
-        setSuccess(true)
+        setGameData(gameObjRaw.data) // May need to pass the newly added game back into the dasboard component
+        closeForm()
     }
 
 

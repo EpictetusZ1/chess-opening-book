@@ -26,12 +26,10 @@ export default function (req: NextApiRequest, res: NextApiResponse) {
             }
         })
 
-        // TODO: This is where I will find the user to upload the game to
-
         if (data === null) {
-            res.status(200).json({ message: `No game found with id: ${id}`, hasErrors: true })
+            res.status(200).json({ message: `No games found for user profile with id: ${id}`, hasErrors: true })
         } else {
-            res.status(200).json({ message: "Game found" , data, hasErrors: false })
+            res.status(200).json({ message: "Games found" , data, hasErrors: false })
         }
     }
 
@@ -39,6 +37,7 @@ export default function (req: NextApiRequest, res: NextApiResponse) {
     async function handlePOST(req: NextApiRequest, res: NextApiResponse) {
         const { id } = req.query as { id: string }
         const gameArr = handleFileUpload(req.body)
+
         const newGame = await prisma.game.create({
             data: {
                 ...gameArr[0],
@@ -56,13 +55,10 @@ export default function (req: NextApiRequest, res: NextApiResponse) {
                     }
                 }
             })
-
-
             if (updateUserProfile !== null) {
-                res.status(200).json({ message: "Game saved", newGame, hasErrors: false })
-            } else  {
-                res.status(200).json({ message: "The game object is defined", newGame, hasErrors: true })
+                return res.status(200).json({ message: "Game saved", newGame, hasErrors: false })
             }
+            res.status(200).json({ message: "The game object is defined", newGame, hasErrors: true })
         }
     }
 }
