@@ -47,13 +47,22 @@ export default function(req: NextApiRequest, res: NextApiResponse) {
     async function handlePOST(req: NextApiRequest, res: NextApiResponse) {
         const { body } = req
         const userProfile = formatUserProfile(body)
-        const newUser = await prisma.userProfile.create({
-            data: {
-                ...userProfile
+        const findUserProfile = await prisma.userProfile.findUnique({
+            where: {
+                userId: req.body.userId
             }
         })
 
-        res.status(200).json({ message: "UserProfile successfully created",  newUser, hasErrors: false })
+        if (findUserProfile === null) {
+            const newUserProfile = await prisma.userProfile.create({
+                data: {
+                    ...userProfile
+                }
+            })
+            return res.status(200).json({ message: "UserProfile successfully created", newUserProfile, hasErrors: false })
+        }
+
+        res.status(200).json({ message: "UserProfile already exists", findUserProfile, hasErrors: false })
     }
 }
 

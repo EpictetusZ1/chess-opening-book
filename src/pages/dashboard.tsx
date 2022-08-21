@@ -14,34 +14,21 @@ const Dashboard: NextPage = () => {
     const [myResult, setMyResult] = useState()
     const [openUploadGame, setOpenUploadGame] = useState(false)
 
-    const getUser = async() => {
-        return await axios.get(`/api/user/${session?.user?.id}`)
-    }
-
-    const makeUser = async() => {
-        return await axios.get(`/api/userProfile/${session?.user?.id}`)
-        // return await axios.get(`/api/userProfile/${session?.user?.id}`, {
-        //     userId: session?.user.id,
-        //     email: session?.user.email,
-        //     games: [],
-        //     stats: {}
-        // })
+    const findOrCreateProfile = async() => {
+        // return await axios.get(`/api/userProfile/${session?.user?.id}`)
+        return await axios.post(`/api/userProfile/${session?.user?.id}`, {
+            userId: session?.user.id,
+            email: session?.user.email,
+            games: [],
+            stats: {}
+        })
     }
 
     useEffect(() => {
         if (status !== "loading") {
-            getUser()
-                .then((res) => {
-                    console.log("Res from getUser: ", res)
-                })
-                .catch((err) => {
-                    console.log(err.code)
-                })
-            // TODO: Implement this check later or somewhere else
-            // makeUser()
-            //     .then((res) => {
-            //         console.log("Res from MAKE USER", res)
-            //     })
+            findOrCreateProfile().then((res) => {
+                console.log("Res from attempting to find user profile ", res)
+            })
         }
     }, [status])
 

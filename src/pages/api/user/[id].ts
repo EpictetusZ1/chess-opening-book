@@ -7,8 +7,6 @@ export default function(req: NextApiRequest, res: NextApiResponse) {
 
     if (req.method === "GET") {
          return handleGET(id, res)
-    } else if (req.method === "POST") {
-         return handlePOST(id, res)
     } else {
         throw new Error(`The HTTP method ${req.method} is not supported at this route.`)
     }
@@ -25,20 +23,5 @@ export default function(req: NextApiRequest, res: NextApiResponse) {
         } else {
              res.status(200).json(data)
         }
-    }
-
-    async function handlePOST(id: string, res: NextApiResponse) {
-        // TODO: Add logic to create a model of UserProfile if no record exists
-        const { email } = req.body as { email: string }
-        const newUser = await prisma.userProfile.create({
-            data: {
-                email: email,
-                games: [],
-                stats: {},
-                ratings: {}
-            }
-        })
-
-         res.status(200).json(newUser)
     }
 }
