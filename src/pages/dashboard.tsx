@@ -23,8 +23,21 @@ const Dashboard: NextPage = () => {
         }
     }
 
-    useEffect(() => {
-        //TODO: Convert this to get serverSideProps
+    const upsertUserProfile = async() => {
+        return await axios.post(`/api/userProfile/${session?.user?.id}`, {
+            userId: session?.user.id,
+            email: session?.user.email,
+            stats: {}
+        })
+    }
+
+
+        useEffect(() => {
+            upsertUserProfile()
+                .then((res) => {
+                console.log("res", res)
+            })
+
         getGames()
     } , [])
 

@@ -47,12 +47,13 @@ export default function(req: NextApiRequest, res: NextApiResponse) {
     async function handlePOST(req: NextApiRequest, res: NextApiResponse) {
         const { body } = req
         const userProfile = formatUserProfile(body)
+
         const findUserProfile = await prisma.userProfile.findUnique({
             where: {
                 userId: req.body.userId
             }
         })
-
+        
         if (findUserProfile === null) {
             const newUserProfile = await prisma.userProfile.create({
                 data: {
@@ -63,6 +64,7 @@ export default function(req: NextApiRequest, res: NextApiResponse) {
         }
 
         res.status(200).json({ message: "UserProfile already exists", findUserProfile, hasErrors: false })
+
     }
 }
 

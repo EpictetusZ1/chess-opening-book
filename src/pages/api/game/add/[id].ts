@@ -1,5 +1,5 @@
 import {NextApiRequest, NextApiResponse} from "next";
-import { prisma } from "../../../../lib/connect/prisma";
+import {prisma} from "../../../../lib/connect/prisma";
 import {IGame} from "../../../../types/Game.types";
 import {handleFileUpload} from "../../../../utils/parseGame";
 
@@ -33,6 +33,57 @@ export default function (req: NextApiRequest, res: NextApiResponse) {
         }
     }
 
+    async function handleMultiGamePOST(id: string, gameArr: IGame[]) {
+        // Note to self, I broke this
+        // TODO: This is a terrible way of doing this, I need a better solution, but games has to be optional.
+        const myGameMap = gameArr.map(game => ({
+            ...game,
+            userId: id
+        }))
+
+        const newGames = await prisma.game.createMany({
+            data: myGameMap,
+        })
+
+        if (newGames !== null) {
+            const targetUser = await prisma.userProfile.findUnique({
+                where: {
+                    userId: id
+                }
+            })
+
+            if (targetUser !== null) {
+                let tempIds = [...targetUser.games]
+                const gameIds = await prisma.game.findMany({
+                    where: {
+                        userId: id
+                    },
+                    select: {
+                        id: true
+                    }
+                })
+
+                if (gameIds !== null) {
+                    console.log("GAME IDS", gameIds)
+                    const actualIds = gameIds.map(game => game.id)
+                    let existingIds = [...actualIds]
+                    tempIds.concat(existingIds)
+                }
+
+                return await prisma.userProfile.update({
+                    where: {
+                        userId: id
+                    },
+                    data: {
+                        games: {
+                            set: [...tempIds]
+                        }
+                    }
+                })
+            }
+        }
+    }
+
     // TODO: Implement the ability to add an array of games at once
     async function handlePOST(req: NextApiRequest, res: NextApiResponse) {
         const { id } = req.query as { id: string }
@@ -42,10 +93,16 @@ export default function (req: NextApiRequest, res: NextApiResponse) {
             data: {
                 ...gameArr[0],
                 userId: id
-            }
+            },
         })
 
-        if  (newGame !== null) {
+
+        if (newGame !== null) {
+            const testNewGame = await handleMultiGamePOST(id, gameArr)
+            console.log("testNewGame", testNewGame)
+        }
+
+        if (newGame !== null) {
             const updateUserProfile = await prisma.userProfile.update({
                 where: {
                     userId: id
@@ -58,7 +115,7 @@ export default function (req: NextApiRequest, res: NextApiResponse) {
             if (updateUserProfile !== null) {
                 return res.status(200).json({ message: "Game saved", newGame, hasErrors: false })
             }
-            res.status(200).json({ message: "The game object is defined", newGame, hasErrors: true })
+            res.status(200).json({ message: "The game object is defined", hasErrors: true })
         }
     }
 }

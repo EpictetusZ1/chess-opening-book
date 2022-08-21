@@ -29,7 +29,7 @@ model Game {
   termination     String?
   moves           String[]
   otherTags       ITag[]
-  userId          String?
+  userId          String
 }
 
 type IStats {

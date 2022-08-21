@@ -66,6 +66,7 @@ export const handleFileUpload =  (data: string): IGame[] => {
              * @example 1. e4 c5 2. Nf3 d6 3. d4 cxd4 4. Nxd4 Nf6 5. Bd3 a6 6. O-O g6 7. Ne2 Bg7 8. Be3
              */
             const formatMoveArr = () => {
+                //NOTE: This regex does not pick up pawn promotions
                 const movePattern = /(?<moves>[0-9]+\.\s(?<plys>([Oo]-[Oo]-[Oo]{0,2}\s?|[Oo]-[Oo]\s?){0,2}|[KQBNR]?x?\+?[a-h]?[1-8]?x?\+?\s?[KQBNR]?x?[a-h]x?[a-h]?[1-8]\s?x?[+#]?\s?(\s?[0-9]-[0-9]|(1\/2-?){0,2})?)*)/gm
 
                 let moveArr1 = [...data.matchAll(movePattern)]
