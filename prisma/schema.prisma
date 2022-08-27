@@ -12,8 +12,23 @@ type ITag {
   value String
 }
 
+enum IWinner {
+  white
+  black
+  draw
+}
+
+type IGameMeta {
+  wElo            Int?
+  wProfileId      String?
+  bElo            Int?
+  bProfileId      String?
+  winner          IWinner @default(draw)
+  winnerProfileId String?
+}
+
 model Game {
-  id              String   @id @default(auto()) @map("_id") @db.ObjectId
+  id              String    @id @default(auto()) @map("_id") @db.ObjectId
   event           String
   site            String
   round           Int?
@@ -30,6 +45,7 @@ model Game {
   moves           String[]
   otherTags       ITag[]
   profileId       String?
+  gameMeta        IGameMeta
 }
 
 type IStats {
@@ -46,13 +62,19 @@ type IRatings {
   rapid  Int?
 }
 
+type IUserNames {
+  liChess  String?
+  chessCom String?
+}
+
 model UserProfile {
-  id      String    @id @default(auto()) @map("_id") @db.ObjectId
-  userId  String    @unique
-  email   String    @unique
-  games   String[]
-  stats   IStats
-  ratings IRatings?
+  id        String      @id @default(auto()) @map("_id") @db.ObjectId
+  userId    String      @unique
+  email     String      @unique
+  games     String[]
+  stats     IStats
+  ratings   IRatings?
+  userNames IUserNames?
 }
 
 // SCHEMA FOR PRISMA NextAuth ADAPTER

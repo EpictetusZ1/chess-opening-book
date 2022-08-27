@@ -24,6 +24,8 @@ export interface ITileProps {
 USER related data 
 */
 
+// TODO: Add fields to this interface
+// consider adding "C" to WLD for count of games played
 export interface IStats {
   topFirstMove?: string
   mostSuccessfulOpening?: string
@@ -38,6 +40,10 @@ export interface IRatings {
   rapid?: number
 }
 
+export interface IUserNames {
+  liChess: string | undefined
+  chessCom: string | undefined
+}
 
 export interface IUserProfile {
   userId: string
@@ -45,4 +51,5 @@ export interface IUserProfile {
   games: string[]
   stats: IStats
   ratings?: IRatings
+  userNames?: IUserNames
 }
