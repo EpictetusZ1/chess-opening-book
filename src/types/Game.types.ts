@@ -21,14 +21,14 @@ export interface IGame {
     moves: string[]
     otherTags: ITag[]
     profileId?: string
-    _gameMeta?: IGameMeta
+    gameMeta: IGameMeta
 }
 
 export interface IGameMeta {
-    wElo: number | undefined
-    wProfileId: string | undefined
-    bElo: number | undefined
-    bProfileId: string | undefined
+    wElo: number | null
+    wProfileId: string | null
+    bElo: number | null
+    bProfileId: string | null
     winner: "white" | "black" | "draw"
-    winnerProfileId: string | undefined
+    winnerProfileId: string | null
 }

@@ -6,7 +6,6 @@ type TProps = {
 }
 
 const GamesTable = ({games}: TProps) => {
-    console.log("games", games)
     return (
         <S.GamesTable>
             <thead>

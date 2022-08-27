@@ -10,8 +10,12 @@ export default function (req: NextApiRequest, res: NextApiResponse) {
     if (req.method === "GET") {
         return handleGET(req, res)
     } else if (req.method === "POST") {
-        return handlePOST(req, res)
-        // return handleMultiGamePOST(req, res)
+        const gameArr = handleFileUpload(req.body)
+        if (gameArr.length > 0) {
+            return handleMultiGamePOST(req, res, gameArr)
+        } else {
+            return handlePOST(req, res, gameArr)
+        }
     } else {
         throw new Error(`The HTTP method ${req.method} is not supported at this route.`)
     }
@@ -36,19 +40,14 @@ export default function (req: NextApiRequest, res: NextApiResponse) {
     }
 
     // TODO: Implement the ability to add an array of games at once
-    async function handlePOST(req: NextApiRequest, res: NextApiResponse) {
+    async function handlePOST(req: NextApiRequest, res: NextApiResponse, gameArr: IGame[]) {
         const {id} = req.query as { id: string }
-        const gameArr = handleFileUpload(req.body)
-        console.log("id", id)
 
-        // Need to check the users 'userNames' to get the 2nd arg for createMetaData
-        const testyOne = createMetaData(gameArr[0], "EpictetusZ1", id)
-        console.log("Meta test", testyOne)
-        console.log("----------------------------")
         const newGame = await prisma.game.create({
             data: {
                 ...gameArr[0],
-                profileId: id
+                profileId: id,
+                gameMeta: createMetaData(gameArr[0], "EpictetusZ1", id)
             },
         })
         if (newGame !== null) {
@@ -69,54 +68,54 @@ export default function (req: NextApiRequest, res: NextApiResponse) {
 
     }
 
+    async function handleMultiGamePOST(req: NextApiRequest, res: NextApiResponse, gameArr: IGame[]) {
+        const { id } = req.query as { id: string }
 
-    //     async function handleMultiGamePOST(req: NextApiRequest, res: NextApiResponse) {
-    //     const { id } = req.query as { id: string }
-    //     const gameArr = handleFileUpload(req.body)
-    //
-    //
-    //     const myGameMap = gameArr.map(game => ({
-    //         ...game,
-    //         profileId: id
-    //     }))
-    //     const newGames = await prisma.game.createMany({
-    //         data: myGameMap,
-    //     })
-    //     const targetUser = await prisma.userProfile.findUnique({
-    //         where: {
-    //             userId: id
-    //         }
-    //     })
-    //
-    //     let tempIds = [...targetUser?.games || []]
-    //     const gameIds = await prisma.game.findMany({
-    //         where: {
-    //             profileId: id
-    //         },
-    //         select: {
-    //             id: true
-    //         }
-    //     })
-    //
-    //     if (gameIds !== null) {
-    //         const actualIds = gameIds.map(game => game.id)
-    //         let existingIds = [...actualIds]
-    //         tempIds.concat(existingIds)
-    //     }
-    //
-    //      const updatedProfile = await prisma.userProfile.update({
-    //         where: {
-    //             userId: id
-    //         },
-    //         data: {
-    //             games: {
-    //                 set: [...tempIds]
-    //             }
-    //         }
-    //     })
-    //     if (updatedProfile !== null) {
-    //         return res.status(200).json({ message: "Game saved to user profile", hasErrors: false })
-    //     }
-    //     res.status(200).json({ message: "There was a problem adding the games to the user profile", hasErrors: true })
-    // }
+        const myGameMap = gameArr.map(game => ({
+            ...game,
+            profileId: id,
+            gameMeta: createMetaData(game, "EpictetusZ1", id)
+        }))
+
+        const newGames = await prisma.game.createMany({
+            data: myGameMap,
+        })
+
+        const targetUser = await prisma.userProfile.findUnique({
+            where: {
+                userId: id
+            }
+        })
+
+        let tempIds = [...targetUser?.games || []]
+        const gameIds = await prisma.game.findMany({
+            where: {
+                profileId: id
+            },
+            select: {
+                id: true
+            }
+        })
+
+        if (gameIds !== null) {
+            const actualIds = gameIds.map(game => game.id)
+            let existingIds = [...actualIds]
+            tempIds.concat(existingIds)
+        }
+
+        const updatedProfile = await prisma.userProfile.update({
+            where: {
+                userId: id
+            },
+            data: {
+                games: {
+                    set: [...tempIds]
+                }
+            }
+        })
+        if (updatedProfile !== null) {
+            return res.status(200).json({ message: "Game saved to user profile", hasErrors: false })
+        }
+        res.status(200).json({ message: "There was a problem adding the games to the user profile", hasErrors: true })
+    }
 }

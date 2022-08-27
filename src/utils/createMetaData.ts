@@ -1,10 +1,10 @@
-import { IGame, IGameMeta } from "../types/Game.types";
+import {IGame, IGameMeta} from "../types/Game.types";
 
 export const createMetaData = (data: IGame, targetUserName: string, id: string): IGameMeta => {
     const determinePlayer = (player: string) => {
         if (player === targetUserName) {
             return id
-        } else return undefined
+        } else return null
     }
 
     const determineWinner = (result: string) => {
@@ -20,20 +20,17 @@ export const createMetaData = (data: IGame, targetUserName: string, id: string):
             return determinePlayer(data.white)
         } else if (winner === "black") {
             return determinePlayer(data.black)
-        } else return undefined
+        } else return null
     }
 
     const winner = determineWinner(data.result)
 
-    const newMeta: IGameMeta = {
-        wElo: data.whiteElo,
+    return {
+        wElo: data.whiteElo || null,
         wProfileId: determinePlayer(data.white),
-        bElo: data.blackElo,
+        bElo: data.blackElo || null,
         bProfileId: determinePlayer(data.black),
         winner: winner,
         winnerProfileId: assignWinner(winner)
     }
-    console.log("newMeta", newMeta)
-
-   return newMeta
 }
