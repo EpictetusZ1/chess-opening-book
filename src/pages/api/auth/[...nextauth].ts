@@ -14,6 +14,8 @@ export default NextAuth({
     ],
     callbacks: {
         async session({ session, user }) {
+            console.log("this might be where I should check if a user profile exists")
+            console.log("user: ", user)
             return Promise.resolve({
                 ...session,
                 user: {

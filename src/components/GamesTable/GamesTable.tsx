@@ -19,7 +19,7 @@ const GamesTable = ({games}: TProps) => {
             </thead>
             <tbody>
             {games.map((game: IGame) => (
-                <tr key={game._id} >
+                <tr key={game._id}>
                     <td>
                         <div className={"playerNames"}>
                             <span>{game.white}</span>

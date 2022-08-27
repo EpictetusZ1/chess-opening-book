@@ -6,7 +6,7 @@ import axios, {AxiosResponse} from "axios";
 import UploadGameForm from "../components/UploadGameForm/UploadGameForm";
 import * as S from "../styles/Dasboard.styles"
 import {IGame} from "../types/Game.types";
-import GamesTable from "../components/GamesView/GamesTable";
+import GamesTable from "../components/GamesTable/GamesTable";
 
 
 const Dashboard: NextPage = () => {
@@ -16,7 +16,7 @@ const Dashboard: NextPage = () => {
     const [games, setGames] = useState<IGame[]>([])
     const [openUploadGame, setOpenUploadGame] = useState(false)
     const getGames = async () => {
-       const res = await axios.get(`/api/game/add/${session?.user?.id}`)
+        const res = await axios.get(`/api/game/add/${session?.user?.id}`)
         if (res) {
             console.log("res", res)
             setGames(res.data.data)
@@ -32,9 +32,9 @@ const Dashboard: NextPage = () => {
     }
 
 
-        useEffect(() => {
-            upsertUserProfile()
-                .then((res) => {
+    useEffect(() => {
+        upsertUserProfile()
+            .then((res) => {
                 console.log("res", res)
             })
 
@@ -57,7 +57,7 @@ const Dashboard: NextPage = () => {
                     </button>
                 </div>
 
-                <div className="userGameInfo">
+                <div className="gameInfo">
                     <h2>Your games</h2>
                     {games  && <GamesTable games={games} />}
                 </div>

@@ -29,7 +29,7 @@ model Game {
   termination     String?
   moves           String[]
   otherTags       ITag[]
-  userId          String
+  profileId       String?
 }
 
 type IStats {
@@ -48,7 +48,7 @@ type IRatings {
 
 model UserProfile {
   id      String    @id @default(auto()) @map("_id") @db.ObjectId
-  userId  String?   @unique
+  userId  String    @unique
   email   String    @unique
   games   String[]
   stats   IStats

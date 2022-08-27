@@ -28,7 +28,8 @@ const UploadGameForm = ({closeForm}: TProps) => {
 
         // @ts-ignore
         const gameObjRaw = await axios.post(`/api/game/add/${session.user.id}`, fileData, config)
-        setGameData(gameObjRaw.data) // May need to pass the newly added game back into the dasboard component
+        console.log("gameObjRaw", gameObjRaw)
+        setGameData(gameObjRaw.data) // May need to pass the newly added game back into the dashboard component
         closeForm()
     }
 

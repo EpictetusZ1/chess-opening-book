@@ -11,25 +11,46 @@ export const Dashboard = styled.div`
   color: ${props => props.theme.secondary};
 
   .dashboard {
-    width: 95%;
+    width: 100%;
     display: grid;
-    grid-template-columns: 1fr 1.1fr 0.9fr;
-    grid-template-rows: 0.2fr 0.6fr 1.7fr;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
+    grid-template-rows: auto 1.2fr 1fr;
     gap: 0 0;
-    grid-auto-flow: row;
     grid-template-areas:
-    "userWelcome userWelcome uploadGame"
-    "userGameInfo userGameInfo ."
-    "userGameInfo userGameInfo .";
+    ". userWelcome userWelcome . uploadGame ."
+    ". gameInfo gameInfo gameInfo gameInfo ."
+    ". gameInfo gameInfo gameInfo gameInfo .";
+    align-content: start;
+    align-items: start;
   }
 
   .userWelcome { grid-area: userWelcome; }
 
   .uploadGame { grid-area: uploadGame; }
 
-  .userGameInfo { 
-    grid-area: userGameInfo; 
-  }
+  .gameInfo { grid-area: gameInfo; }
+
+
+  //.dashboard {
+  //  width: 95%;
+  //  display: grid;
+  //  grid-template-columns: 1fr 1.1fr 0.9fr;
+  //  grid-template-rows: 0.2fr 0.6fr;
+  //  gap: 0 0;
+  //  grid-auto-flow: row;
+  //  grid-template-areas:
+  //  "userWelcome userWelcome uploadGame"
+  //  "userGameInfo userGameInfo ."
+  //  "userGameInfo userGameInfo .";
+  //}
+  //
+  //.userWelcome { grid-area: userWelcome; }
+  //
+  //.uploadGame { grid-area: uploadGame; }
+  //
+  //.userGameInfo { 
+  //  grid-area: userGameInfo; 
+  //}
 
   .uploadGameBtn {
       backface-visibility: hidden;

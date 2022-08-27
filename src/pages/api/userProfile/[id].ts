@@ -53,11 +53,13 @@ export default function(req: NextApiRequest, res: NextApiResponse) {
                 userId: req.body.userId
             }
         })
-        
+
+        // TODO: Change this to the connectOrCreate api method
         if (findUserProfile === null) {
             const newUserProfile = await prisma.userProfile.create({
                 data: {
-                    ...userProfile
+                    ...userProfile,
+                    userId: req.body.userId
                 }
             })
             return res.status(200).json({ message: "UserProfile successfully created", newUserProfile, hasErrors: false })
