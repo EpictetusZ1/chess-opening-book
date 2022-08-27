@@ -27,7 +27,7 @@ const GamesTable = ({games}: TProps) => {
                         </div>
                     </td>
                     <td>{game.result}</td>
-                    <td>{game.moves.length}</td>
+                    <td>{Math.floor(game.moves.length / 2)}</td>
                     <td>{game.date}</td>
                 </tr>
             ))}

@@ -20,5 +20,15 @@ export interface IGame {
     termination?: string
     moves: string[]
     otherTags: ITag[]
-    userId?: string
+    profileId?: string
+    _gameMeta?: IGameMeta
+}
+
+export interface IGameMeta {
+    wElo: number | undefined
+    wProfileId: string | undefined
+    bElo: number | undefined
+    bProfileId: string | undefined
+    winner: "white" | "black" | "draw"
+    winnerProfileId: string | undefined
 }

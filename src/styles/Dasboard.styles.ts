@@ -30,28 +30,6 @@ export const Dashboard = styled.div`
 
   .gameInfo { grid-area: gameInfo; }
 
-
-  //.dashboard {
-  //  width: 95%;
-  //  display: grid;
-  //  grid-template-columns: 1fr 1.1fr 0.9fr;
-  //  grid-template-rows: 0.2fr 0.6fr;
-  //  gap: 0 0;
-  //  grid-auto-flow: row;
-  //  grid-template-areas:
-  //  "userWelcome userWelcome uploadGame"
-  //  "userGameInfo userGameInfo ."
-  //  "userGameInfo userGameInfo .";
-  //}
-  //
-  //.userWelcome { grid-area: userWelcome; }
-  //
-  //.uploadGame { grid-area: uploadGame; }
-  //
-  //.userGameInfo { 
-  //  grid-area: userGameInfo; 
-  //}
-
   .uploadGameBtn {
       backface-visibility: hidden;
       font-family: Tahoma, Geneva, sans-serif;
@@ -80,7 +58,7 @@ export const Dashboard = styled.div`
       -webkit-user-select: none;
       touch-action: manipulation;
       width: 100%;
-   }
+  }
 
    .button-9:disabled {
       cursor: default;

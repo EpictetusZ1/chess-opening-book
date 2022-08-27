@@ -38,6 +38,10 @@ export interface IRatings {
   rapid?: number
 }
 
+export interface IUserNames {
+  liChess: string | undefined
+  chessCom: string | undefined
+}
 
 export interface IUserProfile {
   userId: string
@@ -45,4 +49,5 @@ export interface IUserProfile {
   games: string[]
   stats: IStats
   ratings?: IRatings
+  userNames?: IUserNames
 }

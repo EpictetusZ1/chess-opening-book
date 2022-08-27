@@ -21,8 +21,6 @@ export const GamesTable = styled.table`
     padding: 10px 0;
     background-color: ${props => props.theme.highlightSecondary};
     border-bottom: 1px solid ${props => props.theme.primary};
-    text-align: center;
-    vertical-align: middle;
   }
   
   .playerNames {
