@@ -38,8 +38,29 @@ export default function (req: NextApiRequest, res: NextApiResponse) {
                     return Math.max(acc, curr.gameMeta.wElo || 0)
                 }
             }, 0)
+            const winDrawLoss = data.reduce((acc, curr) => {
+                if (curr.gameMeta.winnerProfileId === id) {
+                    return {
+                        win: acc.win + 1,
+                        draw: acc.draw,
+                        loss: acc.loss
+                    }
+                } else if (curr.gameMeta.winnerProfileId === null) {
+                    return {
+                        win: acc.win,
+                        draw: acc.draw,
+                        loss: acc.loss + 1
+                    }
+                } else {
+                    return {
+                        win: acc.win,
+                        draw: acc.draw + 1,
+                        loss: acc.loss
+                    }
+                }
+            }, { win: 0, draw: 0, loss: 0 })
 
-            res.status(200).json({ bestWin, peakRating, hasErrors: false })
+            res.status(200).json({ bestWin, peakRating, WLD: winDrawLoss, hasErrors: false })
         } else {
             res.status(200).json({message: `No stats found for user profile with id: ${id}`, hasErrors: true})
         }

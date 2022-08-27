@@ -32,13 +32,16 @@ const Dashboard: NextPage = () => {
         })
     }
 
-    const getHighestOpponent = async () => {
+    const getStats = async () => {
         const res = await axios.get(`/api/stats/${session?.user?.id}`)
         if (res) {
+            console.log("RES: ", res.data.data)
             setStats({
                 bestWin: res.data.bestWin,
-                peakRating: res.data.peakRating
+                peakRating: res.data.peakRating,
+                WLD: res.data.WLD
             })
+            setLoading(false)
         }
     }
 
@@ -47,7 +50,7 @@ const Dashboard: NextPage = () => {
         upsertUserProfile()
         if (status === "authenticated") {
             getGames()
-            getHighestOpponent()
+            getStats()
         }
 
     } , [status])
@@ -69,7 +72,7 @@ const Dashboard: NextPage = () => {
                 </div>
 
                 <div className="playerInfo">
-                    <PlayerStats stats={stats}/>
+                    { !loading && <PlayerStats stats={stats}/> }
 
                 </div>
                 <div className="gameInfo">

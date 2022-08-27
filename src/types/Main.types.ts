@@ -25,6 +25,7 @@ USER related data
 */
 
 // TODO: Add fields to this interface
+// consider adding "C" to WLD for count of games played
 export interface IStats {
   topFirstMove?: string
   mostSuccessfulOpening?: string
