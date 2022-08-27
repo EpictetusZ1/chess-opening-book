@@ -1,81 +1,70 @@
-import {GetServerSideProps, GetStaticProps, NextPage} from "next";
-import { getSession} from "next-auth/react";
+import { NextPage } from "next";
+import { useSession } from "next-auth/react";
 import { useState, useEffect } from "react";
-import { Session } from "next-auth";
-import { InferGetServerSidePropsType } from "next";
-import axios from "axios";
+
+import axios, {AxiosResponse} from "axios";
+import UploadGameForm from "../components/UploadGameForm/UploadGameForm";
+import * as S from "../styles/Dasboard.styles"
+import {IGame} from "../types/Game.types";
+import GamesTable from "../components/GamesTable/GamesTable";
 
 
-const Dashboard = ({session, result}: InferGetServerSidePropsType<typeof getServerSideProps>) => {
+const Dashboard: NextPage = () => {
+
+    const { data: session, status } = useSession()
     const [loading, setLoading] = useState(true)
-    const [myResult, setMyResult] = useState(result)
-
-    const getUser = async() => {
-        return await axios.get(`/api/user/${session?.user?.id}`)
+    const [games, setGames] = useState<IGame[]>([])
+    const [openUploadGame, setOpenUploadGame] = useState(false)
+    const getGames = async () => {
+        const res = await axios.get(`/api/game/add/${session?.user?.id}`)
+        if (res) {
+            console.log("res", res)
+            setGames(res.data.data)
+        }
     }
 
-    const makeUser = async() => {
-        return await axios.get(`/api/userProfile/${session?.user?.id}`)
-        // return await axios.get(`/api/userProfile/${session?.user?.id}`, {
-        //     userId: session?.user.id,
-        //     email: session?.user.email,
-        //     games: [],
-        //     stats: {}
-        // })
+    const upsertUserProfile = async() => {
+        return await axios.post(`/api/userProfile/${session?.user?.id}`, {
+            userId: session?.user.id,
+            email: session?.user.email,
+            stats: {}
+        })
     }
+
 
     useEffect(() => {
-        getUser()
-            .catch((err) => {
-                console.log(err.code)
+        upsertUserProfile()
+            .then((res) => {
+                console.log("res", res)
             })
-        // setMyResult(response)
-        makeUser().then((res) => {
-            console.log("Res", res)
-        })
 
-    }, [])
-
-    // useEffect(() => {
-    //     const securePage = async() => {
-    //         if (!session) {
-    //             await signIn("github")
-    //         } else {
-    //             console.log("Session: ", session)
-    //         }
-    //
-    //     }
-    //     // getUser()
-    //     securePage()
-    // },[])
-    //
-    // if (loading) {
-    //     return <h2>Loading...</h2>
-    // }
-
+        getGames()
+    } , [])
 
     return (
-        <div className={"main"}
-             aria-label={"Main content"}>
-            <h1>Dashboard</h1>
-            <h2>Welcome to your chess data</h2>
-        </div>
+        <S.Dashboard
+            aria-label={"Main content"}>
+            <div className="dashboard">
+                {openUploadGame && <UploadGameForm closeForm={() => setOpenUploadGame(false)}/>}
+                <div className="userWelcome">
+                    <h2>Welcome back, {session?.user?.name}</h2>
+                </div>
+                <div className="uploadGame">
+                    <button className={"uploadGameBtn"}
+                            onClick={() => setOpenUploadGame(true)}
+                    >
+                        Upload games
+                    </button>
+                </div>
+
+                <div className="gameInfo">
+                    <h2>Your games</h2>
+                    {games  && <GamesTable games={games} />}
+                </div>
+
+            </div>
+        </S.Dashboard>
     )
 }
 
 export default Dashboard;
-
-
-export const getServerSideProps: GetServerSideProps<{
-    session: Session | null
-    result: any | null
-}> = async (context) => {
-    const session = await getSession(context)
-
-    return {
-        props: {
-            session: session,
-            result: "Placeholder",
-        },
-    }
-}

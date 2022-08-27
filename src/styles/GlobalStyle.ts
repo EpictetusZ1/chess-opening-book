@@ -42,7 +42,7 @@ export const GlobalStyle = createGlobalStyle`
     display: flex;
     flex: 1;
     padding: 2rem 0;
-    border-top: 1px solid ${props => props.theme.secondary};;
+    border-top: 1px solid ${props => props.theme.secondary};
     justify-content: center;
     align-items: center;
   }
@@ -102,6 +102,7 @@ export const GlobalStyle = createGlobalStyle`
   .card:active {
     color: ${props => props.theme.highlightPrimary};
     border-color:  ${props => props.theme.highlightPrimary};
+    cursor: pointer;
   }
 
   .card h2 {

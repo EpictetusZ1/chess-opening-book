@@ -37,9 +37,9 @@ export default function(req: NextApiRequest, res: NextApiResponse) {
         })
 
         if (data === null) {
-            res.status(200).json({ message: `No user found with id: ${id}`, hasErrors: true })
+            res.status(200).json({ message: `No userProfile found with id: ${id}`, hasErrors: true })
         } else {
-            res.status(200).json({ message: "User found" , data, hasErrors: false })
+            res.status(200).json({ message: "userProfile already exists" , data, hasErrors: false })
         }
     }
 
@@ -47,13 +47,26 @@ export default function(req: NextApiRequest, res: NextApiResponse) {
     async function handlePOST(req: NextApiRequest, res: NextApiResponse) {
         const { body } = req
         const userProfile = formatUserProfile(body)
-        const newUser = await prisma.userProfile.create({
-            data: {
-                ...userProfile
+
+        const findUserProfile = await prisma.userProfile.findUnique({
+            where: {
+                userId: req.body.userId
             }
         })
 
-        res.status(200).json({ message: "UserProfile successfully created",  newUser, hasErrors: false })
+        // TODO: Change this to the connectOrCreate api method
+        if (findUserProfile === null) {
+            const newUserProfile = await prisma.userProfile.create({
+                data: {
+                    ...userProfile,
+                    userId: req.body.userId
+                }
+            })
+            return res.status(200).json({ message: "UserProfile successfully created", newUserProfile, hasErrors: false })
+        }
+
+        res.status(200).json({ message: "UserProfile already exists", findUserProfile, hasErrors: false })
+
     }
 }
 

@@ -6,7 +6,7 @@ import { IGame, ITag } from "../types/Game.types";
  * @summary Uses RegEx to parse out the separate elements in a chess game file a.k.a. '.pgn file' ( Portable Game Notation)
  * Creates a Prisma / TypeScript model for a Chess Game from text data.
  * */
-export const handleFileUpload =  (data: string) => {
+export const handleFileUpload =  (data: string): IGame[] => {
 
     const getGamesArr = () => {
         const gamePat = /\[Event ".*"]/gmi
@@ -66,6 +66,7 @@ export const handleFileUpload =  (data: string) => {
              * @example 1. e4 c5 2. Nf3 d6 3. d4 cxd4 4. Nxd4 Nf6 5. Bd3 a6 6. O-O g6 7. Ne2 Bg7 8. Be3
              */
             const formatMoveArr = () => {
+                //NOTE: This regex does not pick up pawn promotions
                 const movePattern = /(?<moves>[0-9]+\.\s(?<plys>([Oo]-[Oo]-[Oo]{0,2}\s?|[Oo]-[Oo]\s?){0,2}|[KQBNR]?x?\+?[a-h]?[1-8]?x?\+?\s?[KQBNR]?x?[a-h]x?[a-h]?[1-8]\s?x?[+#]?\s?(\s?[0-9]-[0-9]|(1\/2-?){0,2})?)*)/gm
 
                 let moveArr1 = [...data.matchAll(movePattern)]
@@ -84,7 +85,10 @@ export const handleFileUpload =  (data: string) => {
             return {...tags, moves: formatMoveArr()}
         }
 
-        const gameObj: {[index: string]: any} = initGameFormatting()
+        const gameObjUpper: {[index: string]: any} = initGameFormatting()
+        const gameObj: {[index: string]: any} = Object.fromEntries(
+            Object.entries(gameObjUpper).map(([k, v]) => [k.toLowerCase(), v])
+        )
 
         const formatRound = () => {
             const roundPattern = /(?<round>[0-9]{1,3})/gm
@@ -93,9 +97,13 @@ export const handleFileUpload =  (data: string) => {
             roundValue ? gameObj["round"] = parseInt(gameObj["round"]) : gameObj["round"] = 0
         }
 
-        const formatElo = () => {
-            if (!parseInt(gameObj["whiteelo"])) gameObj["whiteelo"] = 0
-            if (!parseInt(gameObj["blackelo"])) gameObj["blackelo"] = 0
+        const formatElo = (color: string) => {
+            if (color === "white") {
+                gameObj["whiteElo"] =  parseInt(gameObj["whiteelo"]) || 0
+            }
+            if (color === "black") {
+                gameObj["blackElo"] =  parseInt(gameObj["blackelo"]) || 0
+            }
         }
 
         const handleAdditionalTags = (tag: ITag) => {
@@ -115,6 +123,23 @@ export const handleFileUpload =  (data: string) => {
                         handleAdditionalTags(newTag)
                         delete gameObj[tagName[i]]
                         break
+                    case "whiteelo":
+                        formatElo("white")
+                        delete gameObj["whiteelo"]
+                        break
+                    case "blackelo":
+                        formatElo("black")
+                        delete gameObj["blackelo"]
+                        break
+                    case "currentposition":
+                        gameObj["currentPosition"] = gameObj["currentposition"]
+                        delete gameObj["currentposition"]
+                        break
+                    case "timecontrol":
+                        gameObj["timeControl"] = gameObj["timecontrol"]
+                        delete gameObj["timecontrol"]
+                        break
+                    case "eco":
                     case "event":
                     case "site":
                     case "date":
@@ -123,11 +148,6 @@ export const handleFileUpload =  (data: string) => {
                     case "white":
                     case "black":
                     case "result":
-                    case "currentposition":
-                    case "eco":
-                    case "whiteelo":
-                    case "blackelo":
-                    case "timecontrol":
                     case "termination":
                     case "moves":
                         break
@@ -136,14 +156,13 @@ export const handleFileUpload =  (data: string) => {
         }
 
         formatRound()
-        formatElo()
         checkAdditionalTags()
 
         return gameObj
     }
 
+    // TODO: Fix type suppression for this whole file
     const gamesArr2 = getGamesArr()
-
     const iterateGamesArr = () => {
         for (let i = 0; i < gamesArr2.length; i++) {
             // @ts-ignore
@@ -152,6 +171,6 @@ export const handleFileUpload =  (data: string) => {
     }
 
     iterateGamesArr()
-
+    // @ts-ignore
     return gamesArr2
 }
