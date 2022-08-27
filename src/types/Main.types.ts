@@ -24,6 +24,7 @@ export interface ITileProps {
 USER related data 
 */
 
+// TODO: Add fields to this interface
 export interface IStats {
   topFirstMove?: string
   mostSuccessfulOpening?: string

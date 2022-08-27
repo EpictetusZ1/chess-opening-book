@@ -23,7 +23,7 @@ export const GamesTable = styled.table`
     border-bottom: 1px solid ${props => props.theme.primary};
   }
   
-  .playerNames {
+  .playerInfo {
     display: grid;
     grid-template-columns: 1fr;
     grid-template-rows: 1fr 1fr;

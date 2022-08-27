@@ -14,10 +14,11 @@ export const Dashboard = styled.div`
     width: 100%;
     display: grid;
     grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
-    grid-template-rows: auto 1.2fr 1fr;
+    grid-template-rows: auto auto 1fr 1fr 1fr;
     gap: 0 0;
     grid-template-areas:
     ". userWelcome userWelcome . uploadGame ."
+    ". playerInfo playerInfo playerInfo playerInfo ."
     ". gameInfo gameInfo gameInfo gameInfo ."
     ". gameInfo gameInfo gameInfo gameInfo .";
     align-content: start;
@@ -29,6 +30,8 @@ export const Dashboard = styled.div`
   .uploadGame { grid-area: uploadGame; }
 
   .gameInfo { grid-area: gameInfo; }
+  
+  .playerInfo { grid-area: playerInfo; }
 
   .uploadGameBtn {
       backface-visibility: hidden;

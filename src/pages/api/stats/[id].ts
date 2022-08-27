@@ -23,22 +23,25 @@ export default function (req: NextApiRequest, res: NextApiResponse) {
         })
 
         if (data !== null) {
-            const highestElo = data.reduce((acc, curr) => {
+            const bestWin = data.reduce((acc, curr) => {
+                if (curr.gameMeta.winnerProfileId !== id) {
+                    return Math.max(acc, curr.gameMeta.bElo || 0)
+                } else {
+                    return Math.max(acc, curr.gameMeta.wElo || 0)
+                }
+            }, 0)
+
+            const peakRating = data.reduce((acc, curr) => {
                 if (curr.gameMeta.winnerProfileId === id) {
                     return Math.max(acc, curr.gameMeta.bElo || 0)
                 } else {
                     return Math.max(acc, curr.gameMeta.wElo || 0)
                 }
             }, 0)
-            res.status(200).json({ message: `The highest elo win was ${highestElo}`, hasErrors: false })
-        }
 
-
-        if (data === null) {
-            res.status(200).json({ message: `No stats found for user profile with id: ${id}`, hasErrors: true })
+            res.status(200).json({ bestWin, peakRating, hasErrors: false })
         } else {
-            res.status(200).json({ message: "Stats found",  hasErrors: false })
+            res.status(200).json({message: `No stats found for user profile with id: ${id}`, hasErrors: true})
         }
     }
-
 }

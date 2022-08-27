@@ -7,7 +7,7 @@ import UploadGameForm from "../components/UploadGameForm/UploadGameForm";
 import * as S from "../styles/Dasboard.styles"
 import {IGame} from "../types/Game.types";
 import GamesTable from "../components/GamesTable/GamesTable";
-
+import PlayerStats from "../components/PlayerStats/PlayerStats";
 
 const Dashboard: NextPage = () => {
 
@@ -15,10 +15,11 @@ const Dashboard: NextPage = () => {
     const [loading, setLoading] = useState(true)
     const [games, setGames] = useState<IGame[]>([])
     const [openUploadGame, setOpenUploadGame] = useState(false)
+    const [stats, setStats] = useState({})
+
     const getGames = async () => {
         const res = await axios.get(`/api/game/add/${session?.user?.id}`)
         if (res) {
-            console.log("res", res)
             setGames(res.data.data)
         }
     }
@@ -31,15 +32,25 @@ const Dashboard: NextPage = () => {
         })
     }
 
+    const getHighestOpponent = async () => {
+        const res = await axios.get(`/api/stats/${session?.user?.id}`)
+        if (res) {
+            setStats({
+                bestWin: res.data.bestWin,
+                peakRating: res.data.peakRating
+            })
+        }
+    }
+
 
     useEffect(() => {
         upsertUserProfile()
-            .then((res) => {
-                console.log("res", res)
-            })
+        if (status === "authenticated") {
+            getGames()
+            getHighestOpponent()
+        }
 
-        getGames()
-    } , [])
+    } , [status])
 
     return (
         <S.Dashboard
@@ -57,6 +68,10 @@ const Dashboard: NextPage = () => {
                     </button>
                 </div>
 
+                <div className="playerInfo">
+                    <PlayerStats stats={stats}/>
+
+                </div>
                 <div className="gameInfo">
                     <h2>Your games</h2>
                     {games  && <GamesTable games={games} />}
