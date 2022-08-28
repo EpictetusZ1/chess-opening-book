@@ -17,6 +17,18 @@ export const PlayerStats = styled.div`
   p {
     margin: 0;
   }
+
+  .gameCountCont {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+  }
+  
+  .accentText {
+    padding-left: 10px;
+    font-size: 1rem;
+    line-height: 1.75rem;
+  }
   
   .inlineStats {
     display: flex;
