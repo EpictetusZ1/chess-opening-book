@@ -35,7 +35,7 @@ const Dashboard: NextPage = () => {
     const getStats = async () => {
         const res = await axios.get(`/api/stats/${session?.user?.id}`)
         if (res) {
-            console.log("RES: ", res.data.data)
+            console.log("RES: ", res.data)
             setStats({
                 bestWin: res.data.bestWin,
                 peakRating: res.data.peakRating,
@@ -77,7 +77,7 @@ const Dashboard: NextPage = () => {
                 </div>
                 <div className="gameInfo">
                     <h2>Your games</h2>
-                    {games  && <GamesTable games={games} />}
+                    {games  && <GamesTable games={games} /> }
                 </div>
 
             </div>

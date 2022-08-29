@@ -9,6 +9,7 @@ export const DefaultHighVis = {
     highlightTertiary: "#00bfb2",
     btnPrimary: "#D0D3D4",
     btnSecondary: "#FfC845",
+    modalPrimary: "#94a596",
 }
 
 export const darkTheme = {

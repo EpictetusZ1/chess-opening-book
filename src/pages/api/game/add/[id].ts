@@ -39,7 +39,6 @@ export default function (req: NextApiRequest, res: NextApiResponse) {
         }
     }
 
-    // TODO: Implement the ability to add an array of games at once
     async function handlePOST(req: NextApiRequest, res: NextApiResponse, gameArr: IGame[]) {
         const {id} = req.query as { id: string }
 
