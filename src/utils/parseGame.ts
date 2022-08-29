@@ -68,7 +68,7 @@ export const handleFileUpload =  (data: string): IGame[] => {
             const formatMoveArr = () => {
                 //TODO: This does not match moves if there is no space between the ply number and the move,
                 // it will not match: 1.e4 e5
-                const noSpacesPattern = /(?<addASpace>(?<=\d)\.(?!\s|\d)|\[Date.*])/gmi
+                const noSpacesPattern = /(?<addASpace>(?<=\d)\.(?!\s|\d)|.*Date.*])/gmi
 
                 const movePattern = /(?<moves>[0-9]+\.\s?(?<plys>([Oo]-[Oo]-[Oo]{0,2}\s?|[Oo]-[Oo]\s?){0,2}|[KQBNR]?x?\+?[a-h]?[1-8]?x?\+?\s?[KQBNR]?x?[a-h]x?[a-h]?[1-8]=?[QBNR]?\s?x?[+#]?\s?(\s?[0-9]-[0-9]|(1\/2-?){0,2})?)*)/gm
 

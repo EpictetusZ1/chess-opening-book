@@ -77,7 +77,7 @@ const Dashboard: NextPage = () => {
                 </div>
                 <div className="gameInfo">
                     <h2>Your games</h2>
-                    {games  && <GamesTable games={games} />}
+                    {games  && <GamesTable games={games} /> }
                 </div>
 
             </div>
