@@ -7,7 +7,6 @@ type PSProps = {
 }
 
 const PlayerStats = ({stats}: PSProps) => {
-    console.log("win loss draw rate: ", stats.WLD)
 
     let sum = stats.WLD.win + stats.WLD.loss + stats.WLD.draw
     let winRate = ((stats.WLD.win / sum) * 100).toFixed(2)
