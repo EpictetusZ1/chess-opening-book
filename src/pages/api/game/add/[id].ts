@@ -32,10 +32,10 @@ export default function (req: NextApiRequest, res: NextApiResponse) {
             }
         })
 
-        if (data === null) {
+        if (data === null || data === undefined) {
             res.status(200).json({ message: `No games found for user profile with id: ${id}`, hasErrors: true })
         } else {
-            res.status(200).json({ message: "Games found" , data, hasErrors: false })
+            res.status(200).json({ message: "Games found", data, hasErrors: false })
         }
     }
 
