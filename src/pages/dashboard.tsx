@@ -26,7 +26,8 @@ const Dashboard = ({gameArr, session, stats}: Props ) => {
             <div className="dashboard">
                 {openUploadGame && <UploadGameForm closeForm={() => setOpenUploadGame(false)}/>}
                 <div className="userWelcome">
-                    <h2>Welcome back, {session?.user?.name}</h2>
+                    {/*<h2>Welcome back, {session?.user?.name}</h2>*/}
+                    <h2>{`Welcome back, ${session?.user.name}`}</h2>
                 </div>
                 <div className="uploadGame">
                     <button className={"uploadGameBtn"}
