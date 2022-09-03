@@ -1,59 +1,24 @@
-import { NextPage } from "next";
-import { useSession } from "next-auth/react";
-import { useState, useEffect } from "react";
-
-import axios, {AxiosResponse} from "axios";
+import {GetServerSideProps} from "next";
+import {getSession} from "next-auth/react";
+import {useState} from "react";
+import axios from "axios";
 import UploadGameForm from "../components/UploadGameForm/UploadGameForm";
 import * as S from "../styles/Dasboard.styles"
 import {IGame} from "../types/Game.types";
 import GamesTable from "../components/GamesTable/GamesTable";
 import PlayerStats from "../components/PlayerStats/PlayerStats";
+import {Session} from "next-auth";
 
-const Dashboard: NextPage = () => {
+type Props = {
+    gameArr: IGame[]
+    stats: any
+    session: Session | null
+}
 
-    const { data: session, status } = useSession()
+const Dashboard = ({gameArr, session, stats}: Props ) => {
     const [loading, setLoading] = useState(true)
-    const [games, setGames] = useState<IGame[]>([])
+    const [games, setGames] = useState<IGame[]>(gameArr)
     const [openUploadGame, setOpenUploadGame] = useState(false)
-    const [stats, setStats] = useState({})
-
-    const getGames = async () => {
-        const res = await axios.get(`/api/game/add/${session?.user?.id}`)
-        if (res) {
-            setGames(res.data.data)
-        }
-    }
-
-    const upsertUserProfile = async() => {
-        return await axios.post(`/api/userProfile/${session?.user?.id}`, {
-            userId: session?.user.id,
-            email: session?.user.email,
-            stats: {}
-        })
-    }
-
-    const getStats = async () => {
-        const res = await axios.get(`/api/stats/${session?.user?.id}`)
-        if (res) {
-            console.log("RES: ", res.data)
-            setStats({
-                bestWin: res.data.bestWin,
-                peakRating: res.data.peakRating,
-                WLD: res.data.WLD
-            })
-            setLoading(false)
-        }
-    }
-
-
-    useEffect(() => {
-        upsertUserProfile()
-        if (status === "authenticated") {
-            getGames()
-            getStats()
-        }
-
-    } , [status])
 
     return (
         <S.Dashboard
@@ -61,7 +26,8 @@ const Dashboard: NextPage = () => {
             <div className="dashboard">
                 {openUploadGame && <UploadGameForm closeForm={() => setOpenUploadGame(false)}/>}
                 <div className="userWelcome">
-                    <h2>Welcome back, {session?.user?.name}</h2>
+                    {/*<h2>Welcome back, {session?.user?.name}</h2>*/}
+                    <h2>{`Welcome back, ${session?.user.name}`}</h2>
                 </div>
                 <div className="uploadGame">
                     <button className={"uploadGameBtn"}
@@ -72,12 +38,11 @@ const Dashboard: NextPage = () => {
                 </div>
 
                 <div className="playerInfo">
-                    { !loading && <PlayerStats stats={stats}/> }
-
+                    <PlayerStats stats={stats}/>
                 </div>
                 <div className="gameInfo">
                     <h2>Your games</h2>
-                    {games  && <GamesTable games={games} /> }
+                    {games && <GamesTable games={games} /> }
                 </div>
 
             </div>
@@ -86,3 +51,50 @@ const Dashboard: NextPage = () => {
 }
 
 export default Dashboard;
+
+
+export const getServerSideProps: GetServerSideProps<{
+    session: Session | null
+    gameArr: IGame[]
+    stats: any
+}> = async (context) => {
+    type TGameResponse = {
+        message: string
+        data: IGame[]
+        hasErrors: boolean
+    }
+
+    const session = await getSession(context)
+
+    const getGames = async() => {
+        const res = await axios.get<TGameResponse>(`${process.env.BASE_URL}/api/game/add/${session?.user?.id}`)
+        return res.data.data
+    }
+
+    // CHECK IF userProfile EXISTS
+    const upsertUserProfile = async() => {
+        await axios.post(`${process.env.BASE_URL}/api/userProfile/${session?.user?.id}`, {
+            userId: session?.user.id,
+            email: session?.user.email,
+            stats: {}
+        })
+    }
+
+    const getStats = async () => {
+        const res = await axios.get(`${process.env.BASE_URL}/api/stats/${session?.user?.id}`)
+        return res.data
+    }
+
+    await upsertUserProfile()
+    const gameData = await getGames()
+    const stats = await getStats()
+
+    return {
+        props: {
+            session: session,
+            gameArr: gameData,
+            stats: stats
+        },
+    }
+
+}

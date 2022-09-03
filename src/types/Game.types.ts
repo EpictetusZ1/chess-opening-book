@@ -4,7 +4,7 @@ export interface ITag {
 }
 
 export interface IGame {
-    _id: string
+    id: string
     event: string
     site: string
     round?: number

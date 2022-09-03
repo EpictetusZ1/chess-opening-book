@@ -56,7 +56,6 @@ const UploadGameForm = ({closeForm}: TProps) => {
 
                 </form>
 
-                {/*{ success && <ShowGameData gameData={gameData!} />}*/}
             </div>
 
         </S.UploadGameForm>

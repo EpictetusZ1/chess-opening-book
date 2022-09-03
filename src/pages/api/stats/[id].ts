@@ -7,6 +7,8 @@ export default function (req: NextApiRequest, res: NextApiResponse) {
     if (req.method === "GET") {
         return handleGET(req, res)
     } else if (req.method === "POST") {
+        //TODO: Handle POST, the stats object should be kept in the userProfile, and if it hasn't been updated since the LENGTH of
+        // the games array has changed, then update the stats object
     } else {
         throw new Error(`The HTTP method ${req.method} is not supported at this route.`)
     }
