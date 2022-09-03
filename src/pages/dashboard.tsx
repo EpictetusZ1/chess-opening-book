@@ -8,6 +8,7 @@ import {IGame} from "../types/Game.types";
 import GamesTable from "../components/GamesTable/GamesTable";
 import PlayerStats from "../components/PlayerStats/PlayerStats";
 import {Session} from "next-auth";
+import GetChessCom from "../components/GetChessCom/GetChessCom";
 
 type Props = {
     gameArr: IGame[]
@@ -26,7 +27,6 @@ const Dashboard = ({gameArr, session, stats}: Props ) => {
             <div className="dashboard">
                 {openUploadGame && <UploadGameForm closeForm={() => setOpenUploadGame(false)}/>}
                 <div className="userWelcome">
-                    {/*<h2>Welcome back, {session?.user?.name}</h2>*/}
                     <h2>{`Welcome back, ${session?.user.name}`}</h2>
                 </div>
                 <div className="uploadGame">
@@ -35,7 +35,9 @@ const Dashboard = ({gameArr, session, stats}: Props ) => {
                     >
                         Upload games
                     </button>
+                    <GetChessCom />
                 </div>
+
 
                 <div className="playerInfo">
                     <PlayerStats stats={stats}/>
