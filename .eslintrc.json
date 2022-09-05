@@ -1,5 +1,5 @@
 {
   "extends": ["next/core-web-vitals", "plugin:jsx-a11y/recommended"],
-  "ignorePatterns": ["**/Seeder.Openings.ts", "**/Seeder.*.ts"],
+  "ignorePatterns": ["**/Seeder.Openings.ts"],
   "plugins": ["jsx-a11y"]
 }

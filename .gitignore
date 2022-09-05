@@ -39,3 +39,4 @@ yarn-error.log*
 
 # project related
 *.pgn
+*.tsv
