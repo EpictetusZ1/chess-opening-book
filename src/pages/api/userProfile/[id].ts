@@ -10,7 +10,8 @@ const formatUserProfile = (body: NextApiRequest["body"]): IUserProfile => {
             email: body.email,
             games: body.games,
             stats: body.stats,
-            ratings: body.ratings
+            ratings: body.ratings,
+            userNames: body.userNames || {},
         }
     } else {
         throw new Error(`The body of the request is not valid.`)
@@ -24,6 +25,8 @@ export default function(req: NextApiRequest, res: NextApiResponse) {
         return handleGET(req, res)
     } else if (req.method === "POST") {
         return handlePOST(req, res)
+    } else if (req.method === "PATCH") {
+        return handlePATCH(req, res)
     } else {
         throw new Error(`The HTTP method ${req.method} is not supported at this route.`)
     }
@@ -66,6 +69,33 @@ export default function(req: NextApiRequest, res: NextApiResponse) {
         }
 
         res.status(200).json({ message: "UserProfile already exists", findUserProfile, hasErrors: false })
+
+    }
+
+    async function handlePATCH(req: NextApiRequest, res: NextApiResponse) {
+        const { id } = req.query as { id: string }
+        const { body } = req
+        const userProfile = formatUserProfile(body)
+        const findUserProfile = await prisma.userProfile.findUnique({
+            where: {
+                userId: id
+            }
+        })
+
+        if (findUserProfile !== null) {
+            const updateUserProfile = await prisma.userProfile.update({
+                where: {
+                    userId: id
+                },
+                data: {
+                    ...userProfile,
+                    userId: id
+                }
+            })
+            return res.status(200).json({ message: "UserProfile successfully updated", updateUserProfile, hasErrors: false })
+        }
+
+        res.status(200).json({ message: "UserProfile does not exist", findUserProfile, hasErrors: false })
 
     }
 }
