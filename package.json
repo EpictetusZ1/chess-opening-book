@@ -8,6 +8,9 @@
     "start": "next start",
     "lint": "next lint"
   },
+  "prisma": {
+    "seed": "node prisma/seed.ts"
+  },
   "repository": {
     "type": "git",
     "url": "https://github.com/EpictetusZ1/chess-opening-book.git"

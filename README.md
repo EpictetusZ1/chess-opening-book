@@ -29,3 +29,8 @@ yarn dev
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
 
+## Acknowledgements
+
+#### Opening book data:
+
+[LiChess - chess openings](https://github.com/lichess-org/chess-openings)
