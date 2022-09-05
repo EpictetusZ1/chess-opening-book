@@ -23,8 +23,6 @@ export default function(req: NextApiRequest, res: NextApiResponse) {
             }
         })
 
-        // This still returns the first match, but instead of making tons of database calls
-        // it just filters the results from a single call.
         const getClosestMatch = (opening: any) => {
             let isMatch = true
             for (let i = 0; i < length; i++) {
