@@ -13,17 +13,31 @@ export default function(req: NextApiRequest, res: NextApiResponse) {
 
     async function handlePOST(req: NextApiRequest, res: NextApiResponse) {
         const reqData = req.body
+        const length = reqData.sequence.length
 
-        const data = await prisma.opening.findFirst({
+        const data = await prisma.opening.findMany({
             where: {
                 sequence: {
-                    equals: reqData.sequence
+                    hasEvery: reqData.sequence
                 }
             }
         })
 
-        if (data !== null) {
-            res.status(200).json({ data })
+        // This still returns the first match, but instead of making tons of database calls
+        // it just filters the results from a single call.
+        const getClosestMatch = (opening: any) => {
+            let isMatch = true
+            for (let i = 0; i < length; i++) {
+                isMatch = opening.sequence[i] === reqData.sequence[i];
+            }
+            return isMatch
+        }
+
+        const closestMatch = data.find(getClosestMatch)
+
+        if (closestMatch !== null) {
+
+            res.status(200).json({ data: closestMatch })
         } else {
             res.status(200).json({ message: `No opening found with sequence: ${reqData.sequence}`, hasErrors: true })
         }
