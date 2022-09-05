@@ -22,6 +22,26 @@ const Dashboard = ({gameArr, session, stats}: Props ) => {
     const [games, setGames] = useState<IGame[]>(gameArr)
     const [openUploadGame, setOpenUploadGame] = useState(false)
 
+    const testOpeningAPI = async () => {
+        const res = await axios.post('/api/opening', {
+            sequence: ["e4", "c5"]
+            // sequence: [ "Nh3",
+            //             "d5",
+            //             "g3",
+            //             "e5",
+            //             "f4",
+            //             "Bxh3",
+            //             "Bxh3",
+            //             "exf4",
+            //             "O-O",
+            //             "fxg3",
+            //             "hxg3"
+            // ]
+        })
+        console.log("Res, ", res)
+    }
+    testOpeningAPI()
+
     return (
         <S.Dashboard
             aria-label={"Main content"}>
