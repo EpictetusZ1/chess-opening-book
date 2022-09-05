@@ -27,6 +27,8 @@ type IGameMeta {
   winnerProfileId String?
 }
 
+// TODO: Add opening relation into Game model 
+
 model Game {
   id              String    @id @default(auto()) @map("_id") @db.ObjectId
   event           String
@@ -46,6 +48,14 @@ model Game {
   otherTags       ITag[]
   profileId       String?
   gameMeta        IGameMeta
+  opening         String?   @db.ObjectId
+}
+
+model Opening {
+  id       String   @id @default(auto()) @map("_id") @db.ObjectId
+  eco      String
+  name     String
+  sequence String[]
 }
 
 type IStats {

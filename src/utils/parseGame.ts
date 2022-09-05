@@ -89,8 +89,11 @@ export const handleFileUpload =  (data: string): IGame[] => {
 
                 for (let i = 0; i < moveArr1.length; i++) {
                     const split = moveArr1[i].split(" ")
-
-                    moveArr2.push(split[1], split[2])
+                    if (split[2]) {
+                        moveArr2.push(split[1], split[2])
+                    } else {
+                        moveArr2.push(split[1])
+                    }
                 }
                 return moveArr2
 
