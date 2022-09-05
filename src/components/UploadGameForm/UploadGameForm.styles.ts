@@ -1,17 +1,17 @@
 import styled from 'styled-components';
 
-export const UploadGameForm = styled.div`
-    position: fixed;
-    top: 0;
-    left: 0;
-    width:100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.6);
-  
+export const UploadGameFormCont = styled.div`
+  position: fixed;
+  top: 0;
+  left: 0;
+  width:100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.6);
+
   h1 {
     margin: 0.5rem;
   }
-  
+
   .modal-main {
     position:fixed;
     background: ${props => props.theme.modalPrimary};
@@ -26,20 +26,20 @@ export const UploadGameForm = styled.div`
     justify-content: space-evenly;
     align-items: center;
     border-radius: 1.1rem;
-    
-    form {
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-    }
   }
-  
+`
+
+export const UploadGameForm = styled.form`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
   input[type="file"] {
     width: 100%;
     padding: 15px 0;
   }
-  
+
   // TODO: Extract these into components later, and don't forget to build an invisible button, an invisible context button, and an invisible close button.
   input[type="file"]::-webkit-file-upload-button,
   button {
@@ -71,15 +71,9 @@ export const UploadGameForm = styled.div`
     touch-action: manipulation;
     width: 100%;
   }
-  
-  button {
-    width: 120%;
-  }
 
   input[type="file"]::-webkit-file-upload-button {
     background-color: ${props => props.theme.highlightSecondary};
     color: ${props => props.theme.secondary};
-    
   }
-
 `

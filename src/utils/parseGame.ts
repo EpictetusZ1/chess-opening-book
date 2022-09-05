@@ -1,4 +1,4 @@
-import { IGame, ITag } from "../types/Game.types";
+import {IGame, ITag} from "../types/Game.types";
 
 /**
  * @param data Array of .pgn file strings from api/game/[id].ts
@@ -7,6 +7,8 @@ import { IGame, ITag } from "../types/Game.types";
  * Creates a Prisma / TypeScript model for a Chess Game from text data.
  * */
 export const handleFileUpload =  (data: string): IGame[] => {
+    // TODO: Would this not work better if I dealt with the tags first? then removed them then parsed the moves?
+    // TODO: answer: yes.
 
     const getGamesArr = () => {
         const gamePat = /\[Event ".*"]/gmi
@@ -57,6 +59,16 @@ export const handleFileUpload =  (data: string): IGame[] => {
              */
             const variationOrComment = /(?<variation>\s\(\d{1,2}\.{0,3}(.|\s)+?(?=\))\))|(?<comment>{\s(.|\s)+?(?=})})/gmi
 
+            const removeClock = (data: string): string => {
+                const clockPattern = /(?<coreClock>{\[%clk\s[\d|:]*\.?\d?]}\s?)(?<trailingMove>\s?\d{1,3}\.{3}\s)?/gmi
+                 return data.replaceAll(clockPattern, "")
+            }
+
+            // This adds a space to the DATE tags, and prevents them from matching in the move pattern
+            const addSpaces = (data: string): string => {
+                const noSpacesPattern = /(?<addASpace>(?<=\d)\.(?!\.)(?!\s|\d)|.*Date.*]|.*Time.*]|.*ECOURL.*])/gmi
+                return data.replaceAll(noSpacesPattern, ". ")
+            }
 
             /**
              * @remark
@@ -68,15 +80,11 @@ export const handleFileUpload =  (data: string): IGame[] => {
             const formatMoveArr = () => {
                 //TODO: This does not match moves if there is no space between the ply number and the move,
                 // it will not match: 1.e4 e5
-                const noSpacesPattern = /(?<addASpace>(?<=\d)\.(?!\s|\d)|.*Date.*])/gmi
-
                 const movePattern = /(?<moves>[0-9]+\.\s?(?<plys>([Oo]-[Oo]-[Oo]{0,2}\s?|[Oo]-[Oo]\s?){0,2}|[KQBNR]?x?\+?[a-h]?[1-8]?x?\+?\s?[KQBNR]?x?[a-h]x?[a-h]?[1-8]=?[QBNR]?\s?x?[+#]?\s?(\s?[0-9]-[0-9]|(1\/2-?){0,2})?)*)/gm
-
-                let addSpaces = data.replaceAll(noSpacesPattern, ". ")
-
-                let moveArr1 = [...addSpaces.matchAll(movePattern)]
+                const moveArr0 = removeClock(data)
+                const clean1 = addSpaces(moveArr0)
+                let moveArr1 = [...clean1.matchAll(movePattern)]
                     .map( (item) => item.groups!.moves!.replace(/(?<lineBreaks>\r?\n|\r)/gm, " ")!.trim())
-
                 let moveArr2: string[] = []
 
                 for (let i = 0; i < moveArr1.length; i++) {

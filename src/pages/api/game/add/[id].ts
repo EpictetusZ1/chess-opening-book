@@ -10,7 +10,14 @@ export default function (req: NextApiRequest, res: NextApiResponse) {
     if (req.method === "GET") {
         return handleGET(req, res)
     } else if (req.method === "POST") {
-        const gameArr = handleFileUpload(req.body)
+        let reqData = req.body
+        // Checking if it is coming from a file or from an api like chessCom
+        if (req.body.data) {
+           reqData = req.body.data
+        }
+
+        const gameArr = handleFileUpload(reqData)
+
         if (gameArr.length > 0) {
             return handleMultiGamePOST(req, res, gameArr)
         } else {

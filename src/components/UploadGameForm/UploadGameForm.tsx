@@ -5,6 +5,7 @@ import { IGame } from "../../types/Game.types";
 import { NextComponentType } from "next";
 import * as S from "./UploadGameForm.styles"
 import { useSession } from "next-auth/react";
+import CloseBtn from "../Inputs/CloseBtn/CloseBtn";
 
 type TProps = {
     closeForm: () => void
@@ -35,11 +36,14 @@ const UploadGameForm = ({closeForm}: TProps) => {
 
 
     return (
-        <S.UploadGameForm>
+        <S.UploadGameFormCont>
             <div className="modal-main">
+                <CloseBtn ariaLabel={"close upload game form"}
+                          onClick={closeForm}
+                />
                 <h1>Upload a Chess Game</h1>
 
-                <form onSubmit={handleSubmit}>
+                <S.UploadGameForm onSubmit={handleSubmit}>
                     <input type="file"
                            id="chessGame"
                            name="chessGame"
@@ -47,18 +51,14 @@ const UploadGameForm = ({closeForm}: TProps) => {
                            required={true}
                            onChange={handleInputChange}
                     />
-
                     <button type="submit"
                             aria-label={"upload now"}
                     >
                         Upload Game
                     </button>
-
-                </form>
-
+                </S.UploadGameForm>
             </div>
-
-        </S.UploadGameForm>
+        </S.UploadGameFormCont>
     )
 }
 

@@ -8,6 +8,8 @@ import {IGame} from "../types/Game.types";
 import GamesTable from "../components/GamesTable/GamesTable";
 import PlayerStats from "../components/PlayerStats/PlayerStats";
 import {Session} from "next-auth";
+import GetChessCom from "../components/GetChessCom/GetChessCom";
+import PrimaryBtn from "../components/Inputs/PrimaryBtn/PrimaryBtn";
 
 type Props = {
     gameArr: IGame[]
@@ -26,16 +28,16 @@ const Dashboard = ({gameArr, session, stats}: Props ) => {
             <div className="dashboard">
                 {openUploadGame && <UploadGameForm closeForm={() => setOpenUploadGame(false)}/>}
                 <div className="userWelcome">
-                    {/*<h2>Welcome back, {session?.user?.name}</h2>*/}
                     <h2>{`Welcome back, ${session?.user.name}`}</h2>
                 </div>
                 <div className="uploadGame">
-                    <button className={"uploadGameBtn"}
-                            onClick={() => setOpenUploadGame(true)}
-                    >
-                        Upload games
-                    </button>
+                    <PrimaryBtn
+                        text={"Upload Game"}
+                        onClick={() => setOpenUploadGame(true)}
+                    />
+                    <GetChessCom />
                 </div>
+
 
                 <div className="playerInfo">
                     <PlayerStats stats={stats}/>
@@ -71,7 +73,6 @@ export const getServerSideProps: GetServerSideProps<{
         return res.data.data
     }
 
-    // CHECK IF userProfile EXISTS
     const upsertUserProfile = async() => {
         await axios.post(`${process.env.BASE_URL}/api/userProfile/${session?.user?.id}`, {
             userId: session?.user.id,
