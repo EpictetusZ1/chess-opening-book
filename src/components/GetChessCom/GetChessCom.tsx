@@ -15,21 +15,32 @@ const GetChessCom = () => {
         }
     }
 
+    const mockDataFormatter = (games: string[]) => {
+        let allGames = ""
+        games.forEach(game => {
+            allGames += game + "\n\n"
+        })
+        return allGames
+    }
+
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault()
-        const res = await axios.get(`/api/chessCom/${username}`)
-        // const gameArr = fakeData.games
-        // const res = await axios.post(`/api/game/add/${session?.user?.id}`,
-        //     { data: gameArr[0].pgn, provider: "chessCom" }
-        // )
-        console.log("res", res)
-        const addChessComUserName = await axios.patch(`/api/userProfile/${session?.user?.id}`, { userNames: { chessCom: username }})
+        // const res = await axios.get(`/api/chessCom/${username}`)
+
+        // This is a mock response
+        const gameArr = fakeData.games
+        const pgnArray = gameArr.map(game => game.pgn)
+        const gameStr = mockDataFormatter(pgnArray)
+
+        const res = await axios.post(`/api/game/add/${session?.user?.id}`,
+            { data: gameStr, provider: "chessCom" }
+        )
+        // const addChessComUserName = await axios.patch(`/api/userProfile/${session?.user?.id}`, { userNames: { chessCom: username }})
     }
 
     return (
         <S.GetChessCom>
             <form onSubmit={handleSubmit}>
-                Note: Entering a user name below will associate it to your account.
                 <input type="text"
                        id="chessComId"
                        name="chessComId"

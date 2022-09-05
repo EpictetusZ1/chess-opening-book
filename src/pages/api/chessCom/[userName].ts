@@ -18,10 +18,14 @@ export default function(req: NextApiRequest, res: NextApiResponse) {
             const lastMonth = chessComData.data.archives[chessComData.data.archives.length - 1]
             const year = lastMonth.slice(-7, -3)
             const month = lastMonth.slice(-2)
+
+            //TODO: This is where to get the last N number of games
+
             const chessComDataMonthly = await axios.get(`https://api.chess.com/pub/player/${userName}/games/${year}/${month}`)
+            // console.log(chessComDataMonthly.data.games)
             res.status(200).json(chessComDataMonthly.data.games)
         } else {
-            res.status(200).json({message: "No games found on chess.com", hasError: true})
+            res.status(200).json({ message: `No games found on chess.com for user ${userName}`, hasError: true })
         }
     }
 }

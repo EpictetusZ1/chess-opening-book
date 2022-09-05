@@ -11,7 +11,7 @@ export default function (req: NextApiRequest, res: NextApiResponse) {
         return handleGET(req, res)
     } else if (req.method === "POST") {
         let reqData = req.body
-        // Checking if it is coming from a file or from an api
+        // Checking if it is coming from a file or from an api like chessCom
         if (req.body.data) {
            reqData = req.body.data
         }

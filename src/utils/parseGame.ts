@@ -7,8 +7,8 @@ import {IGame, ITag} from "../types/Game.types";
  * Creates a Prisma / TypeScript model for a Chess Game from text data.
  * */
 export const handleFileUpload =  (data: string): IGame[] => {
-    //TODO: Would this not work better if I dealt with the tags first? then removed them then parsed the moves?
-    //TODO: answer: yes.
+    // TODO: Would this not work better if I dealt with the tags first? then removed them then parsed the moves?
+    // TODO: answer: yes.
 
     const getGamesArr = () => {
         const gamePat = /\[Event ".*"]/gmi
