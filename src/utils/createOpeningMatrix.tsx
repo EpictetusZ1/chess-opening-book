@@ -1,5 +1,4 @@
 import React from 'react';
-import {IMoveMatrixProps} from "../types/Main.types";
 import {IGame} from "../types/Game.types";
 
 /**
@@ -11,6 +10,29 @@ import {IGame} from "../types/Game.types";
  * @param gameData is an array of the Game objects,
  *
  */
+
+interface IPlyData {
+    [key: string]: {
+        freq: number
+        prevMove: string
+    }
+}
+
+interface IVariationsContainer {
+    id: string
+    freq: number
+    prevMove: string
+    variations: IPlyData
+}
+
+interface IPlyMatrix {
+    // key is the ply number
+    [key: number]: {
+        [key: string]: IVariationsContainer // This is the variations' container, the key is the current move i.e. "e4"
+    }
+}
+
+
 const CreateOpeningMatrix = (gameData: [IGame]) => {
     // TODO: Add ability to accept args, like how many variations to show, the depth, etc.
     // Consider changing this to a class, and then have utilities on it as methods
@@ -26,26 +48,6 @@ const CreateOpeningMatrix = (gameData: [IGame]) => {
     }
 
     const moveMatrix = accessMoves(gameData)
-
-    interface IPlyData {
-        [key: string]: {
-            freq: number
-            prevMove: string
-        }
-    }
-
-    interface IVariationsContainer {
-        freq: number
-        prevMove: string
-        variations: IPlyData
-    }
-
-    interface IPlyMatrix {
-        // key is the ply number
-        [key: number]: {
-            [key: string]: IVariationsContainer // This is the variations' container, the key is the current move i.e. "e4"
-        }
-    }
 
     const createMatrix = (moveList: string[][], depth: number, baseMatrix: IPlyMatrix = {}) => { // data2 is an array of IMove objects
         let moveMatrix = baseMatrix
@@ -92,7 +94,7 @@ const CreateOpeningMatrix = (gameData: [IGame]) => {
                 moveMatrix[index] = {}
             }
             if (moveMatrix[index][currMove] === undefined) {
-                moveMatrix[index][currMove] = {  freq: 1, prevMove: previousMove, variations: {} }
+                moveMatrix[index][currMove] = {  id: currMove, freq: 1, prevMove: previousMove, variations: {} }
                 moveMatrix[index][currMove].variations = makeVariation(index, previousMove, currMove)
             } else if (moveMatrix[index][currMove]) {
                 moveMatrix[index][currMove].freq++
@@ -114,18 +116,27 @@ const CreateOpeningMatrix = (gameData: [IGame]) => {
                 if (p > 0) previousMove = moves[p - 1]
                 let move: string = moves[p]
                 checkIfExists(p, move, previousMove)
-
             }
         }
+
         return moveMatrix
     }
 
 
-    // Now I just need to convey this in a meaningful way
-    const freqMatrix = createMatrix(moveMatrix, 5)
-    // console.log(freqMatrix)
+    const freqMatrix = createMatrix(moveMatrix, 3)
 
-    return freqMatrix
+    const sortByFreq = (obj: IPlyMatrix) => {
+        let sortedObj: {[key: number]: any} = {}
+        for (let key in obj) {
+            sortedObj[key] = Object.values(obj[key]).sort((a, b) => {
+                return b.freq - a.freq
+            })
+        }
+
+        return sortedObj
+    }
+
+    return sortByFreq(freqMatrix)
 }
 
 export default CreateOpeningMatrix;

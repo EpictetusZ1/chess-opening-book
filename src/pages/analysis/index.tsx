@@ -22,25 +22,25 @@ const Analysis = ({gameData, session}: Props) => {
     useEffect(() => {
         const matrix = CreateOpeningMatrix(gameData)
         console.log("Matrix: ", matrix)
-        const first = matrix[0]
-        const firstKeys = Object.keys(first)
-
-        let sortVariations = []
-
-        for (let i = 0; i < 5; i++) {
-            const currVariation = first[firstKeys[i]]
-            sortVariations.push({move: firstKeys[i], freq: currVariation.freq, variations: currVariation.variations })
-        }
-
-        // TODO: Again put this inside of the createOpeningMatrix function,
-        // that whole component is going to need to be refactored. Maybe
-
-        sortVariations.sort((a, b) => {
-            return b.freq - a.freq
-        })
-
-        console.log("sortVariations: ", sortVariations)
-        setPotentialVariations(sortVariations)
+        // const first = matrix[0]
+        // const firstKeys = Object.keys(first)
+        //
+        // let sortVariations = []
+        //
+        // for (let i = 0; i < 5; i++) {
+        //     const currVariation = first[firstKeys[i]]
+        //     sortVariations.push({move: firstKeys[i], freq: currVariation.freq, variations: currVariation.variations })
+        // }
+        //
+        // // TODO: Again put this inside of the createOpeningMatrix function,
+        // // that whole component is going to need to be refactored. Maybe
+        //
+        // sortVariations.sort((a, b) => {
+        //     return b.freq - a.freq
+        // })
+        //
+        // console.log("sortVariations: ", sortVariations)
+        // setPotentialVariations(sortVariations)
     }, [])
 
 
