@@ -1,5 +1,4 @@
 import {NextApiRequest, NextApiResponse} from "next";
-import axios from "axios";
 import {prisma} from "../../../lib/connect/prisma";
 
 
@@ -13,15 +12,39 @@ export default function(req: NextApiRequest, res: NextApiResponse) {
 
     async function handlePOST(req: NextApiRequest, res: NextApiResponse) {
         const reqData = req.body
+        const sequence = reqData.sequence
         const length = reqData.sequence.length
 
         const data = await prisma.opening.findMany({
             where: {
                 sequence: {
-                    hasEvery: reqData.sequence
+                    hasEvery: sequence
                 }
             }
         })
+
+        const analyzer = (prev: any, currMove: any, currIndex: number) => {
+            if (currMove === sequence[currIndex]) {
+                return prev + 1
+            } else {
+                return prev
+            }
+        }
+
+        const result = data.map((opening: any) => {
+            const matches = opening.sequence.reduce(analyzer, 0)
+            return {opening, matches}
+        })
+
+        const bestMatch = result.reduce((prev: any, curr: any) => {
+            if (curr.matches > prev.matches) {
+                return curr
+            } else {
+                return prev
+            }
+
+        })
+
 
         const getClosestMatch = (opening: any) => {
             let isMatch = true

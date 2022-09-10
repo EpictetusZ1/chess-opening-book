@@ -22,13 +22,17 @@ const Dashboard = ({gameArr, session, stats}: Props ) => {
     const [games, setGames] = useState<IGame[]>(gameArr)
     const [openUploadGame, setOpenUploadGame] = useState(false)
 
-    const testOpeningAPI = async () => {
-        const res = await axios.post('/api/opening', {
-            sequence: ["e4", "c5", "Nf3", "d6", "d4", "cxd4", "Nxd4", "Nf6", "Nc3", "d6"]
-        })
-        console.log("Res, ", res)
-    }
-    testOpeningAPI()
+    //TODO: On hold unitl I figure out best way to combine $all and $size in mongo
+
+    // const testOpeningAPI = async () => {
+    //     const res = await axios.post('/api/opening', {
+    //         sequence: ["e4", "c5", "Nf3", "d6", "d4", "cxd4", "Nxd4", "Nf6", "Nc3", "d6", "a4"]
+    //     })
+    //     console.log("Res, ", res)
+    // }
+    // testOpeningAPI()
+
+
 
     return (
         <S.Dashboard
