@@ -11,8 +11,21 @@ import {IGame} from "../types/Game.types";
  *
  */
 
-interface IPlyData {
+    // TODO: Add ability to accept args, like how many variations to show, the depth, etc.
+    // Consider changing this to a class, and then have utilities on it as methods
+    // TODO: Later add a check to see if the next item in the list exists for step 2.
+
+
+interface IPlyDataInput {
     [key: string]: {
+        freq: number
+        prevMove: string
+    }
+}
+
+interface IPlyData {
+    [key: number]: {
+        id: string
         freq: number
         prevMove: string
     }
@@ -34,8 +47,7 @@ interface IPlyMatrix {
 
 
 const CreateOpeningMatrix = (gameData: [IGame]) => {
-    // TODO: Add ability to accept args, like how many variations to show, the depth, etc.
-    // Consider changing this to a class, and then have utilities on it as methods
+
 
     const accessMoves = (data1: [IGame]) => {
         let allMoveList = []
@@ -51,15 +63,27 @@ const CreateOpeningMatrix = (gameData: [IGame]) => {
 
     const createMatrix = (moveList: string[][], depth: number, baseMatrix: IPlyMatrix = {}) => { // data2 is an array of IMove objects
         let moveMatrix = baseMatrix
-        // TODO: Later add a check to see if the next item in the list exists for step 2.
 
-        const makeVariation = (plyIndex: number, prevMove: string, currMove: string) => {
+        const sortAndCleanVariation = (variation: IPlyDataInput) => {
+            let sortedVariation = []
+            const variationKeys = Object.keys(variation)
+            for (let i = 0; i < variationKeys.length; i++) {
+                sortedVariation.push({...variation[variationKeys[i]], id: variationKeys[i]})
+            }
+
+            sortedVariation.sort((a, b) => {
+                return b.freq - a.freq
+            })
+            return sortedVariation
+        }
+
+        const makeVariation = (plyIndex: number, prevMove: string, currMove: string): IPlyData => {
         //    Define a variable called result, this will be all the variations.
         //   1. Check all games in moveList, then access the element at index, to make sure it is === prevMove
         //   2. If it is proceeded with creating/checking the variation: IPlyData and pass it the next move (which is index +1), else break out of the loop because that is not the correct path equality
         //   3. Create / check if the variation - which is referenced by its move name - exists, if it doesn't - create it. Else increment the frequency with which it occurs in that position of the moveList
 
-            let result: IPlyData = {}
+            let result: IPlyDataInput = {}
             moveList.forEach( (game) => {
                 if (game[plyIndex] === currMove) {
                     if (plyIndex > 0) {
@@ -86,7 +110,7 @@ const CreateOpeningMatrix = (gameData: [IGame]) => {
                 }
             })
 
-            return result
+            return sortAndCleanVariation(result)
         }
 
         const checkIfExists = (index: number, currMove: string, previousMove: string) => {
