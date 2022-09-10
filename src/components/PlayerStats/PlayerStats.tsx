@@ -1,5 +1,6 @@
 import * as S from "./PlayerStats.styles";
 import {IGame} from "../../types/Game.types";
+import CreateOpeningMatrix from "../../utils/createOpeningMatrix";
 
 
 type PSProps = {

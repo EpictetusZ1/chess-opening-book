@@ -10,6 +10,7 @@ import PlayerStats from "../components/PlayerStats/PlayerStats";
 import {Session} from "next-auth";
 import GetChessCom from "../components/GetChessCom/GetChessCom";
 import PrimaryBtn from "../components/Inputs/PrimaryBtn/PrimaryBtn";
+import OpeningExplorer from "./analysis";
 
 type Props = {
     gameArr: IGame[]
@@ -22,7 +23,7 @@ const Dashboard = ({gameArr, session, stats}: Props ) => {
     const [games, setGames] = useState<IGame[]>(gameArr)
     const [openUploadGame, setOpenUploadGame] = useState(false)
 
-    //TODO: On hold unitl I figure out best way to combine $all and $size in mongo
+    //TODO: On hold until I figure out best way to combine $all and $size in mongo
 
     // const testOpeningAPI = async () => {
     //     const res = await axios.post('/api/opening', {
@@ -37,6 +38,7 @@ const Dashboard = ({gameArr, session, stats}: Props ) => {
     return (
         <S.Dashboard
             aria-label={"Main content"}>
+
             <div className="dashboard">
                 {openUploadGame && <UploadGameForm closeForm={() => setOpenUploadGame(false)}/>}
                 <div className="userWelcome">

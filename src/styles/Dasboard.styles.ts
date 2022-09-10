@@ -7,6 +7,7 @@ export const Dashboard = styled.div`
   height: auto;
   max-height: fit-content;
   display: flex;
+  flex-direction: column;
   justify-content: center;
   background-color: ${props => props.theme.primary};
   color: ${props => props.theme.secondary};

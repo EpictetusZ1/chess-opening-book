@@ -2,7 +2,7 @@ import React, {useState} from "react";
 import {IShowGameInfoProps} from "../../types/Main.types";
 import * as S from "./ShowGameData.styles"
 import { IGame } from "../../types/Game.types";
-import CreateMatrix from "../CreateMoveMatrix/createMatrix";
+import CreateOpeningMatrix from "../../utils/createOpeningMatrix";
 
 
 const ShowGameData: React.FC<IShowGameInfoProps> = ({gameData}) => {
@@ -62,7 +62,7 @@ const ShowGameData: React.FC<IShowGameInfoProps> = ({gameData}) => {
                 </button>
             </S.MenuTabCont>
             {/*@ts-ignore*/}
-            { showMoveList ? <CreateMatrix gameData={gameData} /> : "none"}
+            { showMoveList ? <CreateOpeningMatrix gameData={gameData} /> : "none"}
 
 
         </S.MainContainer>

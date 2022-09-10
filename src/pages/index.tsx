@@ -31,10 +31,10 @@ const Home: NextPage = () => {
             </Link>
 
             {/* Temp assign these two hrefs until structure is more built out*/}
-            <Link href="#" className={"card"}>
+            <Link href="/analysis" className={"card"}>
                 <div className={"card"}>
-                    <h2> Game Upload &rarr; </h2>
-                    <p>Upload a Chess Game (.pgn file) to start getting insights</p>
+                    <h2> Analysis &rarr; </h2>
+                    <p>Get insight into how your openings play out</p>
                 </div>
             </Link>
 
