@@ -30,7 +30,7 @@ type IGameMeta {
 // TODO: Add opening relation into Game model 
 
 model Game {
-  id              String    @id @default(auto()) @map("_id") @db.ObjectId
+  id              String         @id @default(auto()) @map("_id") @db.ObjectId
   event           String
   site            String
   round           Int?
@@ -48,7 +48,15 @@ model Game {
   otherTags       ITag[]
   profileId       String?
   gameMeta        IGameMeta
-  opening         String?   @db.ObjectId
+  opening         SimpleOpening?
+}
+
+type SimpleOpening {
+  openingId       String? @db.ObjectId
+  openingName     String?
+  // If the opening name were: 'Sicilian Defense: Lasker-Pelikan Variation, Bird Variation',
+  // the simple name would be Sicilian Defense
+  openingBaseName String?
 }
 
 model Opening {

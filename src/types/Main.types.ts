@@ -9,6 +9,7 @@ export interface IShowGameInfoProps {
   gameData: IGame
 }
 
+// gameData is an array of games
 export interface IMoveMatrixProps {
   gameData: [IGame]
 }

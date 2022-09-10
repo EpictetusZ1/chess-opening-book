@@ -3,6 +3,7 @@ import {prisma} from "../../../../lib/connect/prisma";
 import {IGame} from "../../../../types/Game.types";
 import {handleFileUpload} from "../../../../utils/parseGame";
 import {createMetaData} from "../../../../utils/createMetaData";
+import axios from "axios";
 
 
 export default function (req: NextApiRequest, res: NextApiResponse) {
@@ -49,13 +50,28 @@ export default function (req: NextApiRequest, res: NextApiResponse) {
     async function handlePOST(req: NextApiRequest, res: NextApiResponse, gameArr: IGame[]) {
         const {id} = req.query as { id: string }
 
+        const opening = await axios.post(`${process.env.BASE_URL}/api/opening`, {
+            sequence: [...gameArr[0].moves.splice(0,36)],
+            select: {
+                id: true,
+            }
+        })
+        console.log("opening", opening.data)
+
         const newGame = await prisma.game.create({
             data: {
                 ...gameArr[0],
                 profileId: id,
-                gameMeta: createMetaData(gameArr[0], "EpictetusZ1", id)
+                gameMeta: createMetaData(gameArr[0], "EpictetusZ1", id),
+                // @ts-ignore
+                opening: {
+                   openingId: opening.data.id,
+                   openingName: opening.data.name,
+                }
             },
         })
+
+
         if (newGame !== null) {
             const updateUserProfile = await prisma.userProfile.update({
                 where: {
@@ -77,10 +93,20 @@ export default function (req: NextApiRequest, res: NextApiResponse) {
     async function handleMultiGamePOST(req: NextApiRequest, res: NextApiResponse, gameArr: IGame[]) {
         const { id } = req.query as { id: string }
 
+        const opening = await axios.post(`${process.env.BASE_URL}/api/opening`, {
+            sequence: [...gameArr[0].moves.splice(0,36)],
+        })
+        console.log("opening", opening.data)
+
         const myGameMap = gameArr.map(game => ({
             ...game,
             profileId: id,
-            gameMeta: createMetaData(game, "EpictetusZ1", id)
+            gameMeta: createMetaData(game, "EpictetusZ1", id),
+            // @ts-ignore
+            opening: {
+                openingId: opening.data.id,
+                openingName: opening.data.name,
+            }
         }))
 
         const newGames = await prisma.game.createMany({

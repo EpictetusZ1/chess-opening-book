@@ -1,8 +1,9 @@
 import React from 'react';
-import {IMoveMatrixProps} from "../../types/Main.types";
-import {IGame} from "../../types/Game.types";
+import {IMoveMatrixProps} from "../types/Main.types";
+import {IGame} from "../types/Game.types";
 
 /**
+ *
  * @summary
  *  1. Get all the moves at X, then get their frequency
  *  2. Get all the moves at Y where X comes before them in order
@@ -10,7 +11,9 @@ import {IGame} from "../../types/Game.types";
  * @param gameData is an array of the Game objects,
  *
  */
-const CreateMatrix: React.FC<IMoveMatrixProps> = ({gameData}) => {
+const CreateOpeningMatrix = (gameData: [IGame]) => {
+    // TODO: Add ability to accept args, like how many variations to show, the depth, etc.
+    // Consider changing this to a class, and then have utilities on it as methods
 
     const accessMoves = (data1: [IGame]) => {
         let allMoveList = []
@@ -120,17 +123,9 @@ const CreateMatrix: React.FC<IMoveMatrixProps> = ({gameData}) => {
 
     // Now I just need to convey this in a meaningful way
     const freqMatrix = createMatrix(moveMatrix, 5)
-    console.log(freqMatrix)
+    // console.log(freqMatrix)
 
-    return (
-        <div>
-            <br/>
-            <br/>
-            {/*<button onClick={handleGetMatrix}>*/}
-            {/*    Show your Game Matrix*/}
-            {/*</button>*/}
-        </div>
-    );
+    return freqMatrix
 }
 
-export default CreateMatrix;
+export default CreateOpeningMatrix;
