@@ -1,5 +1,6 @@
 import React from 'react';
-import {IGame} from "../types/Game.types";
+import { IGame, IGameMeta } from "../types/Game.types";
+import {firstDefined} from "@typescript-eslint/typescript-estree/dist/node-utils";
 
 /**
  *
@@ -11,11 +12,7 @@ import {IGame} from "../types/Game.types";
  *
  */
 
-    // TODO: Add ability to accept args, like how many variations to show, the depth, etc.
-    // Consider changing this to a class, and then have utilities on it as methods
-    // TODO: Later add a check to see if the next item in the list exists for step 2.
-
-
+// This is the way to keep the move as the key, until export, where the key becomes an index
 interface IPlyDataInput {
     [key: string]: {
         freq: number
@@ -47,19 +44,33 @@ interface IPlyMatrix {
 
 
 const CreateOpeningMatrix = (gameData: [IGame]) => {
+    const length = gameData.length
 
+    // If there is a winnerProfileId that means you won that game
+    const accessGameMeta = (gameArr: [IGame]) => {
+        let gameMeta = []
+
+        for (let i = 0; i < gameArr.length; i++) {
+            gameMeta.push({
+                winnerProfileId: gameArr[i].gameMeta.winnerProfileId,
+                winner: gameArr[i].gameMeta.winner,
+            })
+        }
+        return gameMeta
+    }
 
     const accessMoves = (data1: [IGame]) => {
         let allMoveList = []
 
         for (let i = 0; i < data1.length; i++) {
-            let moves = data1[i]["moves"]
-            allMoveList.push(moves)
+            allMoveList.push(data1[i].moves)
         }
         return allMoveList
     }
 
     const moveMatrix = accessMoves(gameData)
+    const gameMeta = accessGameMeta(gameData)
+
 
     const createMatrix = (moveList: string[][], depth: number, baseMatrix: IPlyMatrix = {}) => { // data2 is an array of IMove objects
         let moveMatrix = baseMatrix
@@ -78,11 +89,6 @@ const CreateOpeningMatrix = (gameData: [IGame]) => {
         }
 
         const makeVariation = (plyIndex: number, prevMove: string, currMove: string): IPlyData => {
-        //    Define a variable called result, this will be all the variations.
-        //   1. Check all games in moveList, then access the element at index, to make sure it is === prevMove
-        //   2. If it is proceeded with creating/checking the variation: IPlyData and pass it the next move (which is index +1), else break out of the loop because that is not the correct path equality
-        //   3. Create / check if the variation - which is referenced by its move name - exists, if it doesn't - create it. Else increment the frequency with which it occurs in that position of the moveList
-
             let result: IPlyDataInput = {}
             moveList.forEach( (game) => {
                 if (game[plyIndex] === currMove) {
@@ -126,11 +132,10 @@ const CreateOpeningMatrix = (gameData: [IGame]) => {
         }
 
 
-        for (let i = 0; i < moveList.length; i++) { // The ONLY purpose of i is to control how many games we look at
+        for (let i = 0; i < moveList.length; i++) {
             /**
-             * @param moves
-             * is the entire list of moves for a single game object
-             *
+             * The ONLY purpose of i is to control how many games we look at
+             * @param moves is the entire list of moves for a single game object
              * @param i controls how many games to evaluate
              */
             let moves = moveList[i]
@@ -145,7 +150,6 @@ const CreateOpeningMatrix = (gameData: [IGame]) => {
 
         return moveMatrix
     }
-
 
     const freqMatrix = createMatrix(moveMatrix, 3)
 

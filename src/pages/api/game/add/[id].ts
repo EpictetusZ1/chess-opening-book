@@ -93,20 +93,20 @@ export default function (req: NextApiRequest, res: NextApiResponse) {
     async function handleMultiGamePOST(req: NextApiRequest, res: NextApiResponse, gameArr: IGame[]) {
         const { id } = req.query as { id: string }
 
-        const opening = await axios.post(`${process.env.BASE_URL}/api/opening`, {
-            sequence: [...gameArr[0].moves.splice(0,36)],
-        })
-        console.log("opening", opening.data)
+        // const opening = await axios.post(`${process.env.BASE_URL}/api/opening`, {
+        //     sequence: [...gameArr[0].moves.splice(0,36)],
+        // })
+        // console.log("opening", opening.data)
 
         const myGameMap = gameArr.map(game => ({
             ...game,
             profileId: id,
             gameMeta: createMetaData(game, "EpictetusZ1", id),
             // @ts-ignore
-            opening: {
-                openingId: opening.data.id,
-                openingName: opening.data.name,
-            }
+            // opening: {
+            //     openingId: opening.data.id,
+            //     openingName: opening.data.name,
+            // }
         }))
 
         const newGames = await prisma.game.createMany({
