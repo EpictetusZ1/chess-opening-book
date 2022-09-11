@@ -17,14 +17,20 @@ const Analysis = ({gameData, session}: Props) => {
     const [moveList, setMoveList] = useState<string[]>([""])
     const [potentialVariations, setPotentialVariations] = useState<any[]>([])
 
-
-
     useEffect(() => {
-        const matrix = CreateOpeningMatrix(gameData)
-        console.log("Matrix: ", matrix)
+        const data = {
+            startIndex: 0,
+            moveList: ["e4", "c5"]
+        }
+
+        const getMoveList = async () => {
+            const res = await axios.post(`/api/game/byMoves`, data)
+            console.log("res: ", res)
+        }
+        getMoveList()
+
 
     }, [])
-
 
 
 
