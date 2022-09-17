@@ -4,10 +4,7 @@ export const formatQuery = (() => {
         [key: string]: string
     }
 
-    // { $setIntersection: [ <array1>, <array2>, ... ] }
-    // TODO: Need to change "sequence" in opening to moveList
-
-    const byMoves = (startIndex: number, moveList: string[]): TQueryByMoves[] => {
+    const openingByMoves = (startIndex: number, moveList: string[]): TQueryByMoves[] => {
         if (moveList.length === 0) {
             throw new Error("moveList must not be empty")
         } else {
@@ -15,13 +12,25 @@ export const formatQuery = (() => {
             for (let i = 0; i < moveList.length; i++) {
                 query.push({ [`sequence.${startIndex + i}`]: moveList[i] })
             }
-            console.log("query", query)
+            return query
+        }
+    }
+
+    // TODO: Incorporate this: { $setIntersection: [ <array1>, <array2>, ... ] } into the query?
+    const gameByMoves = (startIndex: number = 0, moveList: string[]): TQueryByMoves[] => {
+        if (moveList.length === 0) {
+            throw new Error("moveList must not be empty")
+        } else {
+            let query = []
+            for (let i = 0; i < moveList.length; i++) {
+                query.push({ [`moves.${startIndex + i}`]: moveList[i] })
+            }
             return query
         }
     }
 
     return {
-        byMoves
+        openingByMoves,
+        gameByMoves
     }
-
 })();

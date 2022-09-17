@@ -24,16 +24,23 @@ const Analysis = ({gameData, session}: Props) => {
         }
 
         const getMoveList = async () => {
-            // const res = await axios.post(`/api/game/byMoves`, data)
-
-            const res = await axios.post(`/api/opening`, data)
-            console.log("Opening Res: ", res)
+            const res = await axios.post(`/api/game/byMoves`, data)
+            // const res = await axios.post(`/api/opening`, data)
+            if (res.data) {
+                setMoveList(res.data.result)
+            }
         }
         getMoveList()
 
+        // note to self for tomorrow:
+
+        // So when componentMounts we want to have the moveList set to nothing, and show all games
+        // then I want to show the next possible moves as buttons or something,
+
+        // When a user clicks on a "move" it should update the state of the moveList and programmatically render out
+        // onto the screen the new "byMoves" data.
 
     }, [])
-
 
 
     return (
@@ -41,13 +48,13 @@ const Analysis = ({gameData, session}: Props) => {
             <h2>Explore your openings</h2>
             <div>
                 <h3>Move list</h3>
-                {moveList.map((move, i) => {
+          {/*      {moveList.map((move, i) => {
                     return (
                         <div key={move+i}>
                             <p>{move}</p>
                         </div>
                     )
-                })}
+                })}*/}
 
             </div>
             <h3>Variations</h3>
@@ -63,8 +70,6 @@ const Analysis = ({gameData, session}: Props) => {
                         </div>
                     )
                 })}
-
-
 
             </S.VariationContainer>
         </S.OpeningExplorerContainer>

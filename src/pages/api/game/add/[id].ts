@@ -3,7 +3,6 @@ import {prisma} from "../../../../lib/connect/prisma";
 import {IGame} from "../../../../types/Game.types";
 import {handleFileUpload} from "../../../../utils/parseGame";
 import {createMetaData} from "../../../../utils/createMetaData";
-import axios from "axios";
 
 
 export default function (req: NextApiRequest, res: NextApiResponse) {

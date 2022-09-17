@@ -1,9 +1,10 @@
 import {NextApiRequest, NextApiResponse} from "next";
-import {prisma} from "../../lib/connect/prisma";
-import {formatQuery} from "../../utils/formatQuery";
+import {prisma} from "../../../lib/connect/prisma";
+import {IGame} from "../../../types/Game.types";
+import {formatQuery} from "../../../utils/formatQuery";
 
 
-export default function(req: NextApiRequest, res: NextApiResponse) {
+export default function (req: NextApiRequest, res: NextApiResponse) {
 
     if (req.method === "POST") {
         return handlePOST(req, res)
@@ -15,9 +16,9 @@ export default function(req: NextApiRequest, res: NextApiResponse) {
         const { startIndex, moveList } = req.body
 
         const getResult = async () => {
-            const testForCompleteMatch = await prisma.opening.findFirst({
+            const testForCompleteMatch = await prisma.game.findFirst({
                 where: {
-                    sequence: {
+                    moves: {
                         equals: moveList
                     }
                 }
@@ -26,8 +27,8 @@ export default function(req: NextApiRequest, res: NextApiResponse) {
                 return testForCompleteMatch
             } else {
                 for (let i = moveList.length; i >= 0; i--) {
-                    const query = formatQuery.openingByMoves(startIndex, moveList.splice(0, i))
-                    const result = await prisma.opening.findRaw({
+                    const query = formatQuery.gameByMoves(startIndex, moveList.splice(0, i))
+                    const result = await prisma.game.findRaw({
                         filter: {
                             $and: query
                         },
