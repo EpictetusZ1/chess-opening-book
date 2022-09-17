@@ -24,8 +24,10 @@ const Analysis = ({gameData, session}: Props) => {
         }
 
         const getMoveList = async () => {
-            const res = await axios.post(`/api/game/byMoves`, data)
-            console.log("res: ", res)
+            // const res = await axios.post(`/api/game/byMoves`, data)
+
+            const res = await axios.post(`/api/opening`, data)
+            console.log("Opening Res: ", res)
         }
         getMoveList()
 

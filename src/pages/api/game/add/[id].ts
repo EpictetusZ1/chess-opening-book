@@ -50,24 +50,23 @@ export default function (req: NextApiRequest, res: NextApiResponse) {
     async function handlePOST(req: NextApiRequest, res: NextApiResponse, gameArr: IGame[]) {
         const {id} = req.query as { id: string }
 
-        const opening = await axios.post(`${process.env.BASE_URL}/api/opening`, {
-            sequence: [...gameArr[0].moves.splice(0,36)],
-            select: {
-                id: true,
-            }
-        })
-        console.log("opening", opening.data)
+        // const opening = await axios.post(`${process.env.BASE_URL}/api/opening`, {
+        //     sequence: [...gameArr[0].moves.splice(0,36)],
+        //     select: {
+        //         id: true,
+        //     }
+        // })
+        // console.log("opening", opening.data)
 
         const newGame = await prisma.game.create({
             data: {
                 ...gameArr[0],
                 profileId: id,
                 gameMeta: createMetaData(gameArr[0], "EpictetusZ1", id),
-                // @ts-ignore
-                opening: {
-                   openingId: opening.data.id,
-                   openingName: opening.data.name,
-                }
+                // opening: {
+                //    openingECO: opening.data.eco,
+                //    openingName: opening.data.name,
+                // }
             },
         })
 
