@@ -31,7 +31,7 @@ export default function(req: NextApiRequest, res: NextApiResponse) {
                         filter: {
                             $and: query
                         },
-                        // options: { projection: { _id: false } },
+                        options: { projection: { _id: false } },
                     })
                     if (result) {
                         return result
