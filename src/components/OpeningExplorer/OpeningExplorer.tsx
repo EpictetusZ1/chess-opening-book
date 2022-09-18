@@ -9,14 +9,11 @@ type Props = {
 }
 
 const OpeningExplorer = ({gameData}: Props) => {
-    // TODO Note to self:
-    // So when componentMounts we want to have the moveList set to nothing, and show all games
-    // then I want to show the next possible moves as buttons or something,
-    // When a user clicks on a "move" it should update the state of the moveList and programmatically render out
-    // onto the screen the new "byMoves" data.
-
     const [moveList, setMoveList] = useState<string[]>([""])
     const [potentialVariations, setPotentialVariations] = useState<any[]>([])
+
+    //TODO: Fix round parsing
+
 
     useEffect(() => {
         const data = {
@@ -24,10 +21,18 @@ const OpeningExplorer = ({gameData}: Props) => {
             moveList: ["e4", "c5"]
         }
 
+        const data2 = {
+            startIndex: 0,
+            // moveList: ["e4", "c5", "Nc3", "Nc6", "Nf3", "e6", "d4", "cxd4", "Nxd4", "a6", "Nxc6", "bxc6", "Bd3", "Be7", "O-O", "O-O", "Qe2", "d6", "Rfd1", "Qc7", "Qg4", "Rac8", "Qxg7", "Rxc2", "Qh6+", "Kf8", "Qxh7", "Rc1+", "Kg2"]
+            moveList: ["e4", "c5", "Nc3", "Nc6", "Nf3", "e6",]
+
+        }
+
         const getMoveList = async () => {
-            const res = await axios.post(`/api/game/byMoves`, data)
+            const res = await axios.post(`/api/game/byMoves`, data2)
             // const res = await axios.post(`/api/opening`, data)
             if (res.data) {
+                console.log("Res from game by moves: ", res.data.result)
                 setMoveList(res.data.result)
             }
         }

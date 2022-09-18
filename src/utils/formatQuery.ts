@@ -4,6 +4,7 @@ export const formatQuery = (() => {
         [key: string]: string
     }
 
+    // Query Opening Model
     const openingByMoves = (startIndex: number, moveList: string[]): TQueryByMoves[] => {
         if (moveList.length === 0) {
             throw new Error("moveList must not be empty")
@@ -16,6 +17,7 @@ export const formatQuery = (() => {
         }
     }
 
+    // Query Game Model
     // TODO: Incorporate this: { $setIntersection: [ <array1>, <array2>, ... ] } into the query?
     const gameByMoves = (startIndex: number = 0, moveList: string[]): TQueryByMoves[] => {
         if (moveList.length === 0) {

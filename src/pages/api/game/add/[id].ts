@@ -3,6 +3,7 @@ import {prisma} from "../../../../lib/connect/prisma";
 import {IGame} from "../../../../types/Game.types";
 import {handleFileUpload} from "../../../../utils/parseGame";
 import {createMetaData} from "../../../../utils/createMetaData";
+import axios from "axios";
 
 
 export default function (req: NextApiRequest, res: NextApiResponse) {
@@ -45,20 +46,22 @@ export default function (req: NextApiRequest, res: NextApiResponse) {
     async function handlePOST(req: NextApiRequest, res: NextApiResponse, gameArr: IGame[]) {
         const { id } = req.query as { id: string }
 
-        // const opening = await axios.post(`${process.env.BASE_URL}/api/opening`, {
-        //     sequence: [...gameArr[0].moves.splice(0,36)],
-        // })
-        // console.log("opening", opening.data)
-
-        const myGameMap = gameArr.map(game => ({
-            ...game,
-            profileId: id,
-            gameMeta: createMetaData(game, "EpictetusZ1", id),
-            // opening: {
-            //     openingId: opening.data.id,
-            //     openingName: opening.data.name,
-            // }
-        }))
+        const myGameMap = gameArr.map((game, index) => {
+            // const opening = await axios.post(`${process.env.BASE_URL}/api/opening`,
+            //     {
+            //         startIndex: 0,
+            //         moveList: game.moves
+            //     })
+            return {
+                ...game,
+                profileId: id,
+                gameMeta: createMetaData(game, "EpictetusZ1", id),
+                // opening: {
+                //     openingId: opening.data.id,
+                //     openingName: opening.data.name,
+                // }
+            }
+        })
 
         const newGames = await prisma.game.createMany({
             data: myGameMap,

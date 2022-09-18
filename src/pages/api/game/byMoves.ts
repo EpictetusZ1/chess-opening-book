@@ -14,6 +14,7 @@ export default function (req: NextApiRequest, res: NextApiResponse) {
 
     async function handlePOST(req: NextApiRequest, res: NextApiResponse) {
         const { startIndex, moveList } = req.body
+        const limit = (moveList.length > 28) ? 28 : moveList.length
 
         const getResult = async () => {
             const testForCompleteMatch = await prisma.game.findFirst({
@@ -23,10 +24,11 @@ export default function (req: NextApiRequest, res: NextApiResponse) {
                     }
                 }
             })
+
             if (testForCompleteMatch) {
                 return testForCompleteMatch
             } else {
-                for (let i = moveList.length; i >= 0; i--) {
+                for (let i = limit; i >= 0; i--) {
                     const query = formatQuery.gameByMoves(startIndex, moveList.splice(0, i))
                     const result = await prisma.game.findRaw({
                         filter: {
