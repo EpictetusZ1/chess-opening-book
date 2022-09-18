@@ -2,10 +2,10 @@ import * as S from "./analysis.styles"
 import CreateOpeningMatrix from "../../utils/createOpeningMatrix";
 import {IGame} from "../../types/Game.types";
 import {Session} from "next-auth";
-import {useState, useEffect} from "react";
 import {GetServerSideProps} from "next";
 import {getSession} from "next-auth/react";
 import axios from "axios";
+import OpeningExplorer from "../../components/OpeningExplorer/OpeningExplorer";
 
 
 type Props = {
@@ -14,70 +14,20 @@ type Props = {
 }
 
 const Analysis = ({gameData, session}: Props) => {
-    const [moveList, setMoveList] = useState<string[]>([""])
-    const [potentialVariations, setPotentialVariations] = useState<any[]>([])
-
-    useEffect(() => {
-        const data = {
-            startIndex: 0,
-            moveList: ["e4", "c5"]
-        }
-
-        const getMoveList = async () => {
-            const res = await axios.post(`/api/game/byMoves`, data)
-            // const res = await axios.post(`/api/opening`, data)
-            if (res.data) {
-                setMoveList(res.data.result)
-            }
-        }
-        getMoveList()
-
-        // note to self for tomorrow:
-
-        // So when componentMounts we want to have the moveList set to nothing, and show all games
-        // then I want to show the next possible moves as buttons or something,
-
-        // When a user clicks on a "move" it should update the state of the moveList and programmatically render out
-        // onto the screen the new "byMoves" data.
-
-    }, [])
 
 
     return (
-        <S.OpeningExplorerContainer>
-            <h2>Explore your openings</h2>
-            <div>
-                <h3>Move list</h3>
-          {/*      {moveList.map((move, i) => {
-                    return (
-                        <div key={move+i}>
-                            <p>{move}</p>
-                        </div>
-                    )
-                })}*/}
-
-            </div>
-            <h3>Variations</h3>
-
-            <S.VariationContainer>
-                {potentialVariations.map((variation, i) => {
-                    return (
-                        <div key={variation + i} className={"variationItem"}>
-                            <p>{variation.move} </p>
-                            &nbsp;
-                            <p>{variation.freq}</p>
-                            {/*<p>{variation.variations}</p>*/}
-                        </div>
-                    )
-                })}
-
-            </S.VariationContainer>
-        </S.OpeningExplorerContainer>
+        <S.AnalysisCont>
+            <h2>Meaningful insights about your chess games</h2>
+            <OpeningExplorer gameData={gameData} />
+        </S.AnalysisCont>
     );
 };
 
 export default Analysis;
 
+
+// TODO: Make this api call client side. Data load is too big for page load
 
 export const getServerSideProps: GetServerSideProps<{
     session: Session | null
