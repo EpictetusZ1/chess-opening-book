@@ -3,13 +3,11 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import {IGame} from "../../types/Game.types";
 import CreateOpeningMatrix from "../../utils/createOpeningMatrix";
-import {StyledComponent, StyledComponentBase, StyledInterface} from "styled-components";
 
 
 type Props = {
     gameData: IGame[]
 }
-
 
 const OpeningExplorer = ({gameData}: Props) => {
     type TNextMove = {
@@ -22,17 +20,20 @@ const OpeningExplorer = ({gameData}: Props) => {
     type TExplorerData = {
         possibleNextMoves: TNextMove[]
         currIndex: number
+        currMove: string
     }
 
     const initialExplorerData: TExplorerData = {
         possibleNextMoves: [],
-        currIndex: 0
+        currIndex: 0,
+        currMove: ""
     }
-    // const [moveList, setMoveList] = useState<string[]>([""])
-    // const [nextMoves, setNextMoves] = useState<any[]>([])
 
     const [explorerData, setExplorerData] = useState<any>(initialExplorerData)
     const [showData, setShowData] = useState<boolean>(false)
+    const [moveList, setMoveList] = useState<string[]>([])
+    // @ts-ignore
+    const result = CreateOpeningMatrix(gameData)
 
     useEffect(() => {
         // const getMoveList = async () => {
@@ -43,73 +44,76 @@ const OpeningExplorer = ({gameData}: Props) => {
         //     }
         // }
         // getMoveList()
-
         //@ts-ignore
-        const result = CreateOpeningMatrix(gameData)
         let target = parseInt(explorerData.currIndex)
         setExplorerData({
             ...explorerData,
+            currMove: "",
             possibleNextMoves: result[target]
         })
         setShowData(true)
 
+
     }, [])
 
+    const handleClick = (e: any, key: any) => {
+        // TODO: Figure out a better way to manage state of movelist, currently doesn't work past move 1
+        setExplorerData((prevState: any) => ({
+            currIndex: prevState.currIndex++,
+            currMove: prevState.possibleNextMoves[key].id,
+            possibleNextMoves: prevState.possibleNextMoves[key].variations
+        }))
+
+        setMoveList((prevState: any) => (
+            [...prevState, explorerData.possibleNextMoves[key].id]
+        ))
+    }
+
     return (
-        <S.OpeningExIsland>
-            <thead>
-            <tr>
-                <th>Move</th>
-                <th>Frequency</th>
-            </tr>
-            </thead>
-            <S.MoveList>
-                { showData && explorerData.possibleNextMoves.map((move: any, index: number) => {
-                    return (
-                        <tr key={index} className={"move"}>
-                            <td className={"moveValue"}>
-                                {move.id}
-
-                            </td>
-                            <td className={"moveFreq"}>
-                                <S.MoveBar width={Math.floor((move.freq / gameData.length) * 100)}>
-                                    <p className="moveFreqText">
-                                        {move.freq}
-                                    </p>
-                                </S.MoveBar>
-                            </td>
-                        </tr>
-                    )
-                })}
-            </S.MoveList>
-
-
-            {/*            <thead>
-            <tr>
-                <th>Players</th>
-                <th>Result</th>
-                <th>Moves</th>
-                <th>Date</th>
-            </tr>
-            </thead>
-            <tbody>
-            {games.map((game: IGame) => (
-                <tr key={game.id}>
-                    <td>
-                        <div className={"playerInfo"}>
-                            <span><b>{game.white}</b> ({game.whiteElo})</span>
-                            <span><b>{game.black}</b> ({game.blackElo})</span>
-                        </div>
-                    </td>
-                    <td>{game.result}</td>
-                    <td>{Math.floor(game.moves.length / 2)}</td>
-                    <td>{game.date}</td>
+        <>
+            <S.MovesPlayed>
+                <br/>
+                {moveList.map((move: string, index: number) => (
+                    <span key={index}>
+                        {index + 1}. &nbsp;
+                        {move}
+                    </span>
+                ))}
+                &nbsp;
+                <br/>
+            </S.MovesPlayed>
+            <S.OpeningExIsland>
+                <thead>
+                <tr>
+                    <th>Move</th>
+                    <th>Frequency</th>
                 </tr>
-            ))}
-            </tbody>*/}
-
-
-        </S.OpeningExIsland>
+                </thead>
+                <S.MoveList>
+                    { showData && explorerData.possibleNextMoves.map((move: any, index: number) => {
+                        const id = move.id
+                        return (
+                            <tr
+                                className={"move"}
+                                onClick={(event) => handleClick(event, index)}
+                                key={id}
+                            >
+                                <td className={"moveValue"}>
+                                    {move.id}
+                                </td>
+                                <td className={"moveFreq"}>
+                                    <S.MoveBar width={Math.floor((move.freq / gameData.length) * 100)}>
+                                        <p className="moveFreqText">
+                                            {move.freq}
+                                        </p>
+                                    </S.MoveBar>
+                                </td>
+                            </tr>
+                        )
+                    })}
+                </S.MoveList>
+            </S.OpeningExIsland>
+        </>
     );
 };
 
