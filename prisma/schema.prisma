@@ -52,11 +52,8 @@ model Game {
 }
 
 type SimpleOpening {
-  openingId       String? @db.ObjectId
-  openingName     String?
-  // If the opening name were: 'Sicilian Defense: Lasker-Pelikan Variation, Bird Variation',
-  // the simple name would be Sicilian Defense
-  openingBaseName String?
+  openingECO  String
+  openingName String
 }
 
 model Opening {

@@ -4,9 +4,24 @@ export const formatQuery = (() => {
         [key: string]: string
     }
 
-    const byMoves = (startIndex: number, moveList: string[]): TQueryByMoves[] => {
+    // Query Opening Model
+    const openingByMoves = (startIndex: number, moveList: string[]): TQueryByMoves[] => {
         if (moveList.length === 0) {
-            throw new Error("moveList must be an array of strings")
+            throw new Error("moveList must not be empty")
+        } else {
+            let query = []
+            for (let i = 0; i < moveList.length; i++) {
+                query.push({ [`sequence.${startIndex + i}`]: moveList[i] })
+            }
+            return query
+        }
+    }
+
+    // Query Game Model
+    // TODO: Incorporate this: { $setIntersection: [ <array1>, <array2>, ... ] } into the query?
+    const gameByMoves = (startIndex: number = 0, moveList: string[]): TQueryByMoves[] => {
+        if (moveList.length === 0) {
+            throw new Error("moveList must not be empty")
         } else {
             let query = []
             for (let i = 0; i < moveList.length; i++) {
@@ -17,7 +32,7 @@ export const formatQuery = (() => {
     }
 
     return {
-        byMoves
+        openingByMoves,
+        gameByMoves
     }
-
 })();

@@ -1,6 +1,5 @@
 import React from 'react';
 import { IGame, IGameMeta } from "../types/Game.types";
-import {firstDefined} from "@typescript-eslint/typescript-estree/dist/node-utils";
 
 /**
  *
