@@ -8,6 +8,6 @@ export const AnalysisCont = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  background-color: ${props => props.theme.highlightSecondary};
+  background-color: ${props => props.theme.primary};
   color: ${props => props.theme.secondary};
 `
