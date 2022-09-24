@@ -10,7 +10,7 @@ import OpeningExplorer from "../../components/OpeningExplorer/OpeningExplorer";
 
 type Props = {
     session: Session | null
-    gameData: [IGame]
+    gameData: [IGame] | null
 }
 
 const Analysis = ({gameData, session}: Props) => {
@@ -19,7 +19,7 @@ const Analysis = ({gameData, session}: Props) => {
     return (
         <S.AnalysisCont>
             <h2>Meaningful insights about your chess games</h2>
-            <OpeningExplorer gameData={gameData} />
+            <OpeningExplorer />
         </S.AnalysisCont>
     );
 };
@@ -27,11 +27,11 @@ const Analysis = ({gameData, session}: Props) => {
 export default Analysis;
 
 
-// TODO: Make this api call client side. Data load is too big for page load
+// TODO: Make this api call client side. Data load is too big for page load, -- if i need it?
 
 export const getServerSideProps: GetServerSideProps<{
     session: Session | null
-    gameData: [IGame]
+    gameData: [IGame] | null
 }> = async (context) => {
     type TGameResponse = {
         message: string
@@ -40,17 +40,17 @@ export const getServerSideProps: GetServerSideProps<{
     }
 
     const session = await getSession(context)
-    const getGames = async () => {
-        const res = await axios.get<TGameResponse>(`${process.env.BASE_URL}/api/game/add/${session?.user?.id}`)
-        return res.data.data
-    }
-
-    const gameData = await getGames()
+    // const getGames = async () => {
+    //     const res = await axios.get<TGameResponse>(`${process.env.BASE_URL}/api/game/add/${session?.user?.id}`)
+    //     return res.data.data
+    // }
+    //
+    // const gameData = await getGames()
 
     return {
         props: {
             session: session,
-            gameData: gameData,
+            gameData: null,
         },
     }
 }

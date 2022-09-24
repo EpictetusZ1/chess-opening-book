@@ -13,9 +13,8 @@ export default function (req: NextApiRequest, res: NextApiResponse) {
     }
 
     async function handlePOST(req: NextApiRequest, res: NextApiResponse) {
-        const { startIndex, moveList } = req.body
-        const pipeline = FormatQuery.matrixPipeline(startIndex, moveList, true)
-        console.log("NOT FIRST MOVE", pipeline)
+        const { startIndex, moveList, isFirstMove } = req.body
+        const pipeline = FormatQuery.matrixPipeline(startIndex, moveList, isFirstMove)
         const result = await prisma.game.aggregateRaw({
             pipeline: pipeline
         })

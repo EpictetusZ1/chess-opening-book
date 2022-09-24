@@ -28,15 +28,12 @@ export const FormatQuery = (() => {
     }
 
     // Building a Matrix
-    const matrixPipeline = (startIndex: number = 0, moveList: string[], notFirstMove = false) => {
+    const matrixPipeline = (startIndex: number = 0, moveList: string[], isFirstMove = false) => {
         const initialQuery = gameByMoves(startIndex, moveList)
         const nextPlyIndex = moveList.length
+        console.log("initalQuery", initialQuery)
 
-        const handleFirstMove = (): any => {
-
-        }
-
-        return [
+        const pipeline = [
             { '$match': { '$and': initialQuery } },
             { '$project': {
                     '_id': 1,
@@ -98,8 +95,18 @@ export const FormatQuery = (() => {
                         '$sum': '$draw'
                     }
                 }
-            }
+            },
+            // Sorting gamesInBranch descending
+            { '$sort': { 'gamesInBranch': -1 } }
         ]
+
+        // Need to not match moveList items if result for first move
+        if (isFirstMove) {
+            pipeline.shift()
+            return pipeline
+        } else {
+            return pipeline
+        }
     }
 
     return {
