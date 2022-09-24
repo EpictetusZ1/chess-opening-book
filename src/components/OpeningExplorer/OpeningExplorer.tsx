@@ -14,7 +14,7 @@ const OpeningExplorer = ({gameData}: Props) => {
         id: string
         freq: number
         prevMove: string
-        variations: [TNextMove]
+        variations: TNextMove[]
     }
 
     type TExplorerData = {
@@ -32,8 +32,14 @@ const OpeningExplorer = ({gameData}: Props) => {
     const [explorerData, setExplorerData] = useState<any>(initialExplorerData)
     const [showData, setShowData] = useState<boolean>(false)
     const [moveList, setMoveList] = useState<string[]>([])
-    // @ts-ignore
-    const result = CreateOpeningMatrix(gameData)
+    const openingMatrix = CreateOpeningMatrix(gameData)
+
+    const getNextMoves = (index: number, currMove: string) => {
+        const nextMoves = openingMatrix[index][currMove].variations
+        const nextMoveArr = Object.values(nextMoves)
+        console.log("nextMoveArr", nextMoveArr)
+        return nextMoveArr
+    }
 
     useEffect(() => {
         // const getMoveList = async () => {
@@ -44,30 +50,40 @@ const OpeningExplorer = ({gameData}: Props) => {
         //     }
         // }
         // getMoveList()
-        //@ts-ignore
         let target = parseInt(explorerData.currIndex)
+        // console.log("target", target)
         setExplorerData({
             ...explorerData,
             currMove: "",
-            possibleNextMoves: result[target]
+            possibleNextMoves: openingMatrix[target]
         })
         setShowData(true)
+        // console.log("Result: ", openingMatrix)
+        // console.log("Init Explorer data: ", explorerData)
 
 
     }, [])
 
     const handleClick = (e: any, key: any) => {
-        // TODO: Figure out a better way to manage state of movelist, currently doesn't work past move 1
-        setExplorerData((prevState: any) => ({
-            currIndex: prevState.currIndex++,
-            currMove: prevState.possibleNextMoves[key].id,
-            possibleNextMoves: prevState.possibleNextMoves[key].variations
-        }))
+        // TODO: Figure out a better way to manage state of moveList, currently doesn't work past move 1
+        // console.log("Object Key: ", key)
+        const test = getNextMoves(explorerData.currIndex, key)
+        // console.log("Test: ", test)
+
+
+        // console.log("new Explorer data: ", explorerData)
 
         setMoveList((prevState: any) => (
             [...prevState, explorerData.possibleNextMoves[key].id]
         ))
     }
+
+    //
+    // setExplorerData((prevState: any) => ({
+    //     currIndex: prevState.currIndex++,
+    //     currMove: prevState.possibleNextMoves[key].id,
+    //     possibleNextMoves: prevState.possibleNextMoves[key].variations
+    // }))
 
     return (
         <>

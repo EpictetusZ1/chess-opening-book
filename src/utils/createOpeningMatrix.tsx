@@ -42,11 +42,12 @@ interface IPlyMatrix {
 }
 
 
-const CreateOpeningMatrix = (gameData: [IGame]) => {
+// TODO: Extract this to be IGame[] so I don't have to deal with the "may have less than 1 item" TS - BS
+const CreateOpeningMatrix = (gameData: IGame[]) => {
     const length = gameData.length
 
     // If there is a winnerProfileId that means you won that game
-    const accessGameMeta = (gameArr: [IGame]) => {
+    const accessGameMeta = (gameArr: IGame[]) => {
         let gameMeta = []
 
         for (let i = 0; i < gameArr.length; i++) {
@@ -58,7 +59,7 @@ const CreateOpeningMatrix = (gameData: [IGame]) => {
         return gameMeta
     }
 
-    const accessMoves = (data1: [IGame]) => {
+    const accessMoves = (data1: IGame[]) => {
         let allMoveList = []
 
         for (let i = 0; i < data1.length; i++) {
