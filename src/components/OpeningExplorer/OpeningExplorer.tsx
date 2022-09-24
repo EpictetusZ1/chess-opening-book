@@ -2,7 +2,6 @@ import * as S from "./OpeningExplorer.styles";
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import {IGame} from "../../types/Game.types";
-import CreateOpeningMatrix from "../../utils/createOpeningMatrix";
 
 
 type Props = {
@@ -32,58 +31,37 @@ const OpeningExplorer = ({gameData}: Props) => {
     const [explorerData, setExplorerData] = useState<any>(initialExplorerData)
     const [showData, setShowData] = useState<boolean>(false)
     const [moveList, setMoveList] = useState<string[]>([])
-    const openingMatrix = CreateOpeningMatrix(gameData)
 
-    const getNextMoves = (index: number, currMove: string) => {
-        const nextMoves = openingMatrix[index][currMove].variations
-        const nextMoveArr = Object.values(nextMoves)
-        console.log("nextMoveArr", nextMoveArr)
-        return nextMoveArr
-    }
 
     useEffect(() => {
-        // const getMoveList = async () => {
-        //     const res = await axios.post(`/api/game/byMoves`, data)
-        //     if (res.data) {
-        //         console.log("Res from game by moves: ", res.data.result)
-        //         setMoveList(res.data.result)
-        //     }
-        // }
-        // getMoveList()
-        let target = parseInt(explorerData.currIndex)
-        // console.log("target", target)
-        setExplorerData({
-            ...explorerData,
-            currMove: "",
-            possibleNextMoves: openingMatrix[target]
-        })
+        const getOpeningMatrix = async () => {
+            const data = {
+                startIndex: 0,
+                moveList: moveList
+            }
+            const res = await axios.post(`/api/aggregateMatrix`, data)
+            console.log("Res from aggregateMatrix: ", res.data)
+        }
+
         setShowData(true)
-        // console.log("Result: ", openingMatrix)
-        // console.log("Init Explorer data: ", explorerData)
+        console.log("Move list: ", moveList)
+        getOpeningMatrix()
 
+    }, [moveList])
 
-    }, [])
-
+    // SAVE FIRST MOVE AGGREGATION PIPELINE.
     const handleClick = (e: any, key: any) => {
-        // TODO: Figure out a better way to manage state of moveList, currently doesn't work past move 1
-        // console.log("Object Key: ", key)
-        const test = getNextMoves(explorerData.currIndex, key)
-        // console.log("Test: ", test)
+        const moveID = explorerData.possibleNextMoves[key].id
+        console.log("Move ID: ", moveID)
 
-
-        // console.log("new Explorer data: ", explorerData)
+        console.log("new explorer data: ", explorerData)
 
         setMoveList((prevState: any) => (
             [...prevState, explorerData.possibleNextMoves[key].id]
         ))
     }
 
-    //
-    // setExplorerData((prevState: any) => ({
-    //     currIndex: prevState.currIndex++,
-    //     currMove: prevState.possibleNextMoves[key].id,
-    //     possibleNextMoves: prevState.possibleNextMoves[key].variations
-    // }))
+
 
     return (
         <>

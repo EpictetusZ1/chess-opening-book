@@ -1,7 +1,7 @@
 import { Opening } from "@prisma/client";
 import {NextApiRequest, NextApiResponse} from "next";
 import {prisma} from "../../lib/connect/prisma";
-import {formatQuery} from "../../utils/formatQuery";
+import {FormatQuery} from "../../utils/formatQuery";
 
 
 export default function (req: NextApiRequest, res: NextApiResponse) {
@@ -33,7 +33,7 @@ export default function (req: NextApiRequest, res: NextApiResponse) {
             for (let i = limit; i > 0; i--) {
                 const clone = [...moveList]
                 const clone2 = clone.splice(0, i)
-                const query = formatQuery.openingByMoves(startIndex, clone2)
+                const query = FormatQuery.openingByMoves(startIndex, clone2)
                 const result = await prisma.opening.findRaw({
                     filter: {
                         $and: query

@@ -1,7 +1,7 @@
-import {NextApiRequest, NextApiResponse} from "next";
-import {prisma} from "../../../lib/connect/prisma";
-import {IGame} from "../../../types/Game.types";
-import {formatQuery} from "../../../utils/formatQuery";
+import { NextApiRequest, NextApiResponse } from "next";
+import { prisma } from "../../../lib/connect/prisma";
+import { IGame } from "../../../types/Game.types";
+import { FormatQuery } from "../../../utils/formatQuery";
 
 
 export default function (req: NextApiRequest, res: NextApiResponse) {
@@ -29,7 +29,7 @@ export default function (req: NextApiRequest, res: NextApiResponse) {
                 return testForCompleteMatch
             } else {
                 for (let i = limit; i >= 0; i--) {
-                    const query = formatQuery.gameByMoves(startIndex, moveList.splice(0, i))
+                    const query = FormatQuery.gameByMoves(startIndex, moveList.splice(0, i))
                     const result = await prisma.game.findRaw({
                         filter: {
                             $and: query
