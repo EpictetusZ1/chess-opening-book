@@ -10,6 +10,12 @@ export const MovesPlayed = styled.div`
   display: flex;
   width: 50%;
   justify-content: flex-start;
+  
+  .moveListItem {
+    :hover {
+      cursor: pointer; 
+    }
+  }
 `
 
 export const MoveList = styled.tbody`
@@ -131,8 +137,6 @@ export const WLDBar = styled.span<WLDProps>`
     color: #FFF;
     padding: 5px 10px;
   }
-
-
 
   :hover {
     opacity: 0.75;

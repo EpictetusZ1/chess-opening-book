@@ -38,11 +38,9 @@ const OpeningExplorer = () => {
             const data = {
                 startIndex: 0,
                 moveList: moveList,
-                isFirstMove: !showData
+                isFirstMove: !showData || moveList.length === 0
             }
-            console.log("data", data)
             const res = await axios.post(`/api/aggregateMatrix`, data)
-            console.log("Res from aggregateMatrix: ", res.data.result)
             setExplorerData(res.data.result)
             setShowData(true)
 
@@ -83,8 +81,18 @@ const OpeningExplorer = () => {
         return (
             <>
                 {wholeMove.map((move: string, index: number) => (
+                    // TODO: Fix this in redesign of analysis page.
+                    // eslint-disable-next-line jsx-a11y/no-static-element-interactions
                     <span key={move}
-                         onClick={(e) => removeMove(e, move)}
+                          className={"moveListItem"}
+                          aria-roledescription={"button"}
+                          aria-label="delete move from here"
+                          onClick={(e) => removeMove(e, move)}
+                          onKeyDown={(e) => {
+                              if (e.key === "Enter") {
+                                  removeMove(e, move)
+                              }
+                          }}
                     >
                         {index + 1}. &nbsp;
                         {move}  &nbsp;
@@ -98,9 +106,7 @@ const OpeningExplorer = () => {
         <>
             <S.MovesPlayed>
                 <br/>
-
                 <RenderMoveList moveList={moveList}/>
-
                 <br/>
             </S.MovesPlayed>
             <S.OpeningExIsland>
