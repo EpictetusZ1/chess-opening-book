@@ -20,8 +20,7 @@ export const Dashboard = styled.div`
     grid-template-areas:
     ". userWelcome userWelcome . uploadGame ."
     ". playerInfo playerInfo playerInfo playerInfo ."
-    ". gameInfo gameInfo gameInfo gameInfo ."
-   ;
+    ". gameInfo gameInfo gameInfo gameInfo .";
     align-content: start;
     align-items: start;
   }

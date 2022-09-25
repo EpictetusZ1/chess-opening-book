@@ -12,7 +12,7 @@ export const ModalPrimaryCont = styled.div`
 export const ModalPrimary = styled.div`
   position:fixed;
   background: ${props => props.theme.modalPrimary};
-  color: ${props => props.theme.tertiary};
+  color: ${props => props.theme.textPrime};
   width: 50%;
   height: auto;
   padding: 15px 10px;

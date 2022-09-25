@@ -2,7 +2,7 @@ import {GetServerSideProps} from "next";
 import {getSession} from "next-auth/react";
 import {useState} from "react";
 import axios from "axios";
-import UploadGameForm from "../../components/UploadGameForm/UploadGameForm";
+import UploadGameForm from "../../components/Inputs/UploadGameForm/UploadGameForm";
 import * as S from "./dasboard.styles"
 import {IGame} from "../../types/Game.types";
 import GamesTable from "../../components/GamesTable/GamesTable";

@@ -19,7 +19,7 @@ export const GamesTable = styled.table`
   
   td {
     padding: 10px 0;
-    background-color: ${props => props.theme.highlightSecondary};
+    background-color: ${props => props.theme.tertiary};
     border-bottom: 1px solid ${props => props.theme.primary};
   }
   

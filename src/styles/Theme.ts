@@ -1,15 +1,19 @@
 export type ThemeType = typeof DefaultHighVis
 
 export const DefaultHighVis = {
+    // COLORS
     primary: "#003B49",
     secondary: "#D6D2C4",
-    tertiary: "#000",
     highlightPrimary: "#00e099",
-    highlightSecondary: "#5d3754",
-    highlightTertiary: "#00bfb2",
+    tertiary: "#5d3754",
+
+    // BUTTONS
     btnPrimary: "#D0D3D4",
     btnSecondary: "#FfC845",
     modalPrimary: "#94a596",
+
+    // TEXT
+    textPrime: "#000",
 }
 
 export const darkTheme = {
