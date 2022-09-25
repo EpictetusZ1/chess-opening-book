@@ -1,4 +1,14 @@
 export type ThemeType = typeof DefaultLight
+export type TypographyType = typeof TypographyNormal
+
+// Need to find a way to "zip" this inside of the ThemeType type.
+export const TypographyNormal = {
+    fontFamily: "Tahoma, Geneva, sans-serif",
+    headerSize: "2.5rem",
+
+    pSize: "1.5rem",
+    subheaderSize: "1.75rem",
+}
 
 export const DefaultLight = {
     // COLOR
@@ -21,7 +31,7 @@ export const DefaultLight = {
 
     // TEXT
     textPrime: "#000",
-    btnText: "#F7F0F0"
+    btnText: "#F7F0F0",
 }
 
 export const DefaultDark = {
@@ -45,7 +55,7 @@ export const DefaultDark = {
 
     // TEXT
     textPrime: "#E4FFF2",
-    btnText: "#F7F0F0"
+    btnText: "#F7F0F0",
 }
 
 export default DefaultLight
