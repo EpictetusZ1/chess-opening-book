@@ -4,7 +4,7 @@ import {DefaultTheme, ThemeProvider} from "styled-components";
 import { DefaultDark  } from "../styles/Theme";
 import { SessionProvider } from "next-auth/react";
 import { NavBar } from "../components/NavBar/NavBar";
-import {useState} from "react";
+import { useState } from "react";
 import ThemeSwitcher from "../components/Inputs/ThemeSwitcher/ThemeSwitcher";
 
 
