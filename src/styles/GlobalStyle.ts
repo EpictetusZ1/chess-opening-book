@@ -25,7 +25,7 @@ export const GlobalStyle = createGlobalStyle`
   .container {
     padding: 0 2rem;
     background-color: ${props => props.theme.primary};
-    color: ${props => props.theme.secondary};
+    color: ${props => props.theme.textPrime};
   }
 
   .main {
@@ -36,13 +36,16 @@ export const GlobalStyle = createGlobalStyle`
     flex-direction: column;
     justify-content: center;
     align-items: center;
+     > h1 {
+       color: ${props => props.theme.tertiary};
+     }
   }
 
   .footer {
     display: flex;
     flex: 1;
     padding: 2rem 0;
-    border-top: 1px solid ${props => props.theme.secondary};
+    border-top: 1px solid ${props => props.theme.textPrime};
     justify-content: center;
     align-items: center;
   }
@@ -91,7 +94,7 @@ export const GlobalStyle = createGlobalStyle`
     text-align: left;
     color: inherit;
     text-decoration: none;
-    border: 1px solid ${props => props.theme.secondary};
+    border: 1px solid ${props => props.theme.textPrime};
     border-radius: 10px;
     transition: color 0.15s ease, border-color 0.15s ease;
     max-width: 300px;

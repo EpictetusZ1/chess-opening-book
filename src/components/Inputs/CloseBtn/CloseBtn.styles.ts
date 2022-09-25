@@ -16,7 +16,8 @@ export const CloseBtn = styled.button`
   backface-visibility: hidden;
   font-family: Tahoma, Geneva, sans-serif;
   font-size: 18px;
-  background: ${props => props.theme.btnSecondary};
+  background: ${props => props.theme.buttonClose};
+  color: ${props => props.theme.btnText};
   border: none;
   border-radius: 50%;
   text-align: center;

@@ -1,27 +1,51 @@
-export type ThemeType = typeof DefaultHighVis
+export type ThemeType = typeof DefaultLight
 
-export const DefaultHighVis = {
-    // COLORS
+export const DefaultLight = {
+    // COLOR
     primary: "#003B49",
     secondary: "#D6D2C4",
-    highlightPrimary: "#00e099",
     tertiary: "#5d3754",
+    
+    // HIGHLIGHT
+    highlightPrimary: "#00E099",
+    highlightSecondary: "#EE6352",
 
-    // BUTTONS
-    btnPrimary: "#D0D3D4",
-    btnSecondary: "#FfC845",
-    modalPrimary: "#94a596",
+    // BUTTON
+    btnPrimary: "#B0413E",
+    btnSecondary: "#210124",
+    buttonClose: "#255F85",
+
+    // MODAL
+    modalPrimary: "#94A596",
+    modalText: "#2F2F2F",
 
     // TEXT
     textPrime: "#000",
+    btnText: "#F7F0F0"
 }
 
-export const darkTheme = {
-    primary: "#2b6777ff",
-    subtle: "#c8d8e4ff",
-    accent: "#7b506fff",
-    bg: "#f2f2f2ff",
-    highlight: "#52ab98ff"
+export const DefaultDark = {
+    // COLOR
+    primary: "#253137",
+    secondary: "#558B6E",
+    tertiary: "#C1666B",
+
+    // HIGHLIGHT
+    highlightPrimary: "#00E099",
+    highlightSecondary: "#EE6352",
+
+    // BUTTON
+    btnPrimary: "#B0413E",
+    btnSecondary: "#37023C",
+    buttonClose: "#255F85",
+
+    // MODAL
+    modalPrimary: "#94A596",
+    modalText: "#000",
+
+    // TEXT
+    textPrime: "#E4FFF2",
+    btnText: "#F7F0F0"
 }
 
-export default DefaultHighVis
+export default DefaultLight

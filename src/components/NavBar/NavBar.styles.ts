@@ -13,7 +13,8 @@ export const NavBar = styled.div`
   list-style: none;
   justify-content: center;
   align-items: center;
-
+  box-shadow: rgba(50, 50, 93, 0.25) 0px 13px 27px -5px, rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;
+  
   .loading {
     opacity: 0;
     transition: all 0.2s ease-in;

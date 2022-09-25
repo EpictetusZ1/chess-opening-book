@@ -10,7 +10,7 @@ export const Dashboard = styled.div`
   flex-direction: column;
   justify-content: center;
   background-color: ${props => props.theme.primary};
-  color: ${props => props.theme.secondary};
+  color: ${props => props.theme.textPrime};
 
   .dashboard {
     display: grid;
