@@ -14,15 +14,7 @@ type TNextMove = {
     prevMove: string
     variations: TNextMove[]
 }
-// {
-//     "nextPlyIndex": 0,
-//     "_id": "e4",
-//     "nextMove": "e4",
-//     "gamesInBranch": 103,
-//     "white": 62,
-//     "black": 37,
-//     "draw": 4
-// }
+
 type TExplorerData = {
     nextPlyIndex: number
     _id: string
@@ -35,7 +27,6 @@ type TExplorerData = {
 
 
 const OpeningExplorer = () => {
-    const initExplorerData: TExplorerData[] = []
     const [explorerData, setExplorerData] = useState<TExplorerData[]>([])
     const [gamesAtPly, setGamesAtPly] = useState<number>(0)
     const [showData, setShowData] = useState<boolean>(false)
@@ -47,11 +38,9 @@ const OpeningExplorer = () => {
             const data = {
                 startIndex: 0,
                 moveList: moveList,
-                isFirstMove: !showData
+                isFirstMove: !showData || moveList.length === 0
             }
-            console.log("data", data)
             const res = await axios.post(`/api/aggregateMatrix`, data)
-            console.log("Res from aggregateMatrix: ", res.data.result)
             setExplorerData(res.data.result)
             setShowData(true)
 
@@ -68,13 +57,19 @@ const OpeningExplorer = () => {
             [...prevState, key]
         ))
     }
+
     type MoveProps = {
         moveList: string[]
     }
 
-    // TODO" Convert something here to be a ply
     const RenderMoveList = ({moveList}: MoveProps) => {
         const wholeMove = []
+
+        const removeMove = (e: any, move: string) => {
+            e.stopPropagation()
+            const index = moveList.indexOf(move)
+            setMoveList(moveList.slice(0, index))
+        }
         for (let i = 0; i < moveList.length; i++) {
             if (moveList[i + 1]) {
                 wholeMove.push(`${moveList[i]} ${moveList[i + 1]}`)
@@ -84,25 +79,34 @@ const OpeningExplorer = () => {
             }
         }
         return (
-            <div>
+            <>
                 {wholeMove.map((move: string, index: number) => (
-                    <span key={move}>
+                    // TODO: Fix this in redesign of analysis page.
+                    // eslint-disable-next-line jsx-a11y/no-static-element-interactions
+                    <span key={move}
+                          className={"moveListItem"}
+                          aria-roledescription={"button"}
+                          aria-label="delete move from here"
+                          onClick={(e) => removeMove(e, move)}
+                          onKeyDown={(e) => {
+                              if (e.key === "Enter") {
+                                  removeMove(e, move)
+                              }
+                          }}
+                    >
                         {index + 1}. &nbsp;
                         {move}  &nbsp;
                     </span>
                 ))}
-            </div>
+            </>
         )
     }
-
 
     return (
         <>
             <S.MovesPlayed>
                 <br/>
-
                 <RenderMoveList moveList={moveList}/>
-
                 <br/>
             </S.MovesPlayed>
             <S.OpeningExIsland>
@@ -138,10 +142,8 @@ const OpeningExplorer = () => {
                                         <p className="moveFreqText">
                                             {move.gamesInBranch}
                                         </p>
-
                                     </S.MoveBar>
                                 </td>
-
                             </tr>
                         )
                     })}

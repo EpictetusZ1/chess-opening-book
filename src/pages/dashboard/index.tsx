@@ -2,15 +2,14 @@ import {GetServerSideProps} from "next";
 import {getSession} from "next-auth/react";
 import {useState} from "react";
 import axios from "axios";
-import UploadGameForm from "../components/UploadGameForm/UploadGameForm";
-import * as S from "../styles/Dasboard.styles"
-import {IGame} from "../types/Game.types";
-import GamesTable from "../components/GamesTable/GamesTable";
-import PlayerStats from "../components/PlayerStats/PlayerStats";
+import UploadGameForm from "../../components/UploadGameForm/UploadGameForm";
+import * as S from "./dasboard.styles"
+import {IGame} from "../../types/Game.types";
+import GamesTable from "../../components/GamesTable/GamesTable";
+import PlayerStats from "../../components/PlayerStats/PlayerStats";
 import {Session} from "next-auth";
-import GetChessCom from "../components/GetChessCom/GetChessCom";
-import PrimaryBtn from "../components/Inputs/PrimaryBtn/PrimaryBtn";
-import OpeningExplorer from "./analysis";
+import GetChessCom from "../../components/GetChessCom/GetChessCom";
+import PrimaryBtn from "../../components/Inputs/PrimaryBtn/PrimaryBtn";
 
 type Props = {
     gameArr: IGame[]
@@ -22,18 +21,6 @@ const Dashboard = ({gameArr, session, stats}: Props ) => {
     const [loading, setLoading] = useState(true)
     const [games, setGames] = useState<IGame[]>(gameArr)
     const [openUploadGame, setOpenUploadGame] = useState(false)
-
-    //TODO: On hold until I figure out best way to combine $all and $size in mongo
-
-    // const testOpeningAPI = async () => {
-    //     const res = await axios.post('/api/opening', {
-    //         sequence: ["e4", "c5", "Nf3", "d6", "d4", "cxd4", "Nxd4", "Nf6", "Nc3", "d6", "a4"]
-    //     })
-    //     console.log("Res, ", res)
-    // }
-    // testOpeningAPI()
-
-
 
     return (
         <S.Dashboard
