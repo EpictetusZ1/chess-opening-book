@@ -18,7 +18,6 @@ export const FormatQuery = (() => {
     }
 
     // Query Game Model
-    // TODO: Incorporate this: { $setIntersection: [ <array1>, <array2>, ... ] } into the query?
     const gameByMoves = (startIndex: number = 0, moveList: string[]): TQueryByMoves[] => {
         let query = []
         for (let i = 0; i < moveList.length; i++) {
@@ -31,7 +30,6 @@ export const FormatQuery = (() => {
     const matrixPipeline = (startIndex: number = 0, moveList: string[], isFirstMove = false) => {
         const initialQuery = gameByMoves(startIndex, moveList)
         const nextPlyIndex = moveList.length
-        console.log("initalQuery", initialQuery)
 
         const pipeline = [
             { '$match': { '$and': initialQuery } },

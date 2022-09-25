@@ -14,15 +14,7 @@ type TNextMove = {
     prevMove: string
     variations: TNextMove[]
 }
-// {
-//     "nextPlyIndex": 0,
-//     "_id": "e4",
-//     "nextMove": "e4",
-//     "gamesInBranch": 103,
-//     "white": 62,
-//     "black": 37,
-//     "draw": 4
-// }
+
 type TExplorerData = {
     nextPlyIndex: number
     _id: string
@@ -35,7 +27,6 @@ type TExplorerData = {
 
 
 const OpeningExplorer = () => {
-    const initExplorerData: TExplorerData[] = []
     const [explorerData, setExplorerData] = useState<TExplorerData[]>([])
     const [gamesAtPly, setGamesAtPly] = useState<number>(0)
     const [showData, setShowData] = useState<boolean>(false)
@@ -68,13 +59,19 @@ const OpeningExplorer = () => {
             [...prevState, key]
         ))
     }
+
     type MoveProps = {
         moveList: string[]
     }
 
-    // TODO" Convert something here to be a ply
     const RenderMoveList = ({moveList}: MoveProps) => {
         const wholeMove = []
+
+        const removeMove = (e: any, move: string) => {
+            e.stopPropagation()
+            const index = moveList.indexOf(move)
+            setMoveList(moveList.slice(0, index))
+        }
         for (let i = 0; i < moveList.length; i++) {
             if (moveList[i + 1]) {
                 wholeMove.push(`${moveList[i]} ${moveList[i + 1]}`)
@@ -84,17 +81,18 @@ const OpeningExplorer = () => {
             }
         }
         return (
-            <div>
+            <>
                 {wholeMove.map((move: string, index: number) => (
-                    <span key={move}>
+                    <span key={move}
+                         onClick={(e) => removeMove(e, move)}
+                    >
                         {index + 1}. &nbsp;
                         {move}  &nbsp;
                     </span>
                 ))}
-            </div>
+            </>
         )
     }
-
 
     return (
         <>
@@ -138,10 +136,8 @@ const OpeningExplorer = () => {
                                         <p className="moveFreqText">
                                             {move.gamesInBranch}
                                         </p>
-
                                     </S.MoveBar>
                                 </td>
-
                             </tr>
                         )
                     })}

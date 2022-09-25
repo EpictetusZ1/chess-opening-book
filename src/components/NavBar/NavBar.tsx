@@ -13,19 +13,28 @@ export const NavBar: NextComponentType = () => {
             aria-label={"Main menu"}
         >
             <li className={"menuItem"}>
-                <Link href={"/dashboard"}
+                <Link href="/"
                       className={"menu-link"}>
                     <S.NavBtn>
-                        Dashboard &rarr;
+                       Home
                     </S.NavBtn>
                 </Link>
             </li>
 
             <li className={"menuItem"}>
-                <Link href="/src/components/UploadGameForm/UploadGameForm"
+                <Link href={"/dashboard"}
                       className={"menu-link"}>
                     <S.NavBtn>
-                        Game Upload &rarr;
+                        Dashboard
+                    </S.NavBtn>
+                </Link>
+            </li>
+
+            <li className={"menuItem"}>
+                <Link href="/analysis"
+                      className={"menu-link"}>
+                    <S.NavBtn>
+                       Explore
                     </S.NavBtn>
                 </Link>
             </li>
@@ -38,7 +47,7 @@ export const NavBar: NextComponentType = () => {
                             e.preventDefault()
                             signIn("github")
                         }}>
-                            Sign In &rarr;
+                            Sign In
                         </S.NavBtn>
                     </Link>
                 )}
