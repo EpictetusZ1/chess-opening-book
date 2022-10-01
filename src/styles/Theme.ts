@@ -1,16 +1,14 @@
-export type ThemeType = typeof DefaultLight
-export type TypographyType = typeof TypographyNormal
+import { IA11yContext, ITypographyContext } from "../types/Main.types";
 
-// Need to find a way to "zip" this inside of the ThemeType type.
-export const TypographyNormal = {
+
+export const TypographyNormal: ITypographyContext = {
     fontFamily: "Tahoma, Geneva, sans-serif",
     headerSize: "2.5rem",
-
     pSize: "1.5rem",
     subheaderSize: "1.75rem",
 }
 
-export const DefaultLight = {
+export const DefaultLight: IA11yContext = {
     // COLOR
     primary: "#003B49",
     secondary: "#D6D2C4",
@@ -34,7 +32,7 @@ export const DefaultLight = {
     btnText: "#F7F0F0",
 }
 
-export const DefaultDark = {
+export const DefaultDark: IA11yContext = {
     // COLOR
     primary: "#253137",
     secondary: "#558B6E",
@@ -57,5 +55,3 @@ export const DefaultDark = {
     textPrime: "#E4FFF2",
     btnText: "#F7F0F0",
 }
-
-export default DefaultLight

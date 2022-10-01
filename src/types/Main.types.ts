@@ -1,5 +1,49 @@
 import { IGame } from "./Game.types"
 
+/*
+  A11y Context Types
+*/
+
+export interface IA11yContext {
+  // COLOR
+  primary: string
+  secondary: string
+  tertiary: string
+
+  // HIGHLIGHT
+  highlightPrimary: string
+  highlightSecondary: string
+
+  // BUTTON
+  btnPrimary: string
+  btnSecondary: string
+  buttonClose: string
+
+  // MODAL
+  modalPrimary: string
+  modalText: string
+
+  // TEXT COLOR
+  textPrime: string
+  btnText: string
+
+  // TYPOGRAPHY
+  typography?: ITypographyContext
+}
+
+export interface ITypographyContext {
+  fontFamily: string
+
+  headerSize: string
+  subheaderSize: string
+  pSize: string
+}
+
+
+
+// TODO: ADD a11y preferences here after.
+
+
 /* 
 Game related data 
 */
@@ -13,12 +57,11 @@ export interface IMoveMatrixProps {
   gameData: [IGame]
 }
 
+
 /*
 USER related data 
 */
 
-// TODO: Add fields to this interface
-// consider adding "C" to WLD for count of games played
 export interface IStats {
   topFirstMove?: string
   mostSuccessfulOpening?: string

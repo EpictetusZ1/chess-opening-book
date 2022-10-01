@@ -1,8 +1,8 @@
 import * as S from "./ThemeSwitcher.styles"
 import {DefaultDark, DefaultLight} from "../../../styles/Theme";
-import {DefaultTheme} from "styled-components";
+import { DefaultTheme } from "styled-components";
 import Image from "next/image";
-import a11yVis from "/public/icons/a11yVis_01.svg";
+import a11yVisIcon from "/public/icons/a11yVis_01.svg";
 import {useState} from "react";
 
 type TProps = {
@@ -69,7 +69,7 @@ const ThemeSwitcher = ({setTheme}: TProps) => {
                     <S.OpenBtn>
                         <Image
                             alt={"accessibility options"}
-                            src={a11yVis}
+                            src={a11yVisIcon}
                             layout={"responsive"}
                             width={95}
                             height={95}

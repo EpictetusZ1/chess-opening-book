@@ -1,10 +1,6 @@
 import {} from 'styled-components';
-import { ThemeType, TypographyType } from './theme';
+import { IA11yContext } from "../types/Main.types";
 
 declare module 'styled-components' {
-    export interface DefaultTheme extends ThemeType {} // extends the global DefaultTheme with our ThemeType.
-}
-
-declare module 'styled-components' {
-    export interface DefaultTypography extends TypographyType {} // extends the global DefaultTheme with our TypographyType.
+    export interface DefaultTheme extends IA11yContext {} // extends the global DefaultTheme with our ThemeType.
 }
