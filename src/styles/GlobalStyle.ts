@@ -21,11 +21,14 @@ export const GlobalStyle = createGlobalStyle`
     color: inherit;
     text-decoration: none;
   }
+  
+  p, a, span, div {
+    font-size: ${props => props.theme.typography.pSize};
+  }
 
   h1, h2, h3, h4, h5, h6, p {
     margin: 0;
   }
-
 
   .container {
     padding: 0 2rem;

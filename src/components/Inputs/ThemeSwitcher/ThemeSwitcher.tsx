@@ -4,33 +4,30 @@ import { DefaultTheme } from "styled-components";
 import Image from "next/image";
 import a11YSettingsIcon from "/public/icons/a11ySettingsIcon.png";
 import closeIcon from "/public/icons/closeIcon.png"
-// import paletteIcon from "/public/icons/paletteIcon.svg"
 import paletteIcon from "../../../../public/icons/paletteIcon.png"
-
+import fontSizeIcon from "../../../../public/icons/fontSizeIcon.png"
 import {ReactNode, useState} from "react";
+import TypographyController from "./TypographyController/TypographyController";
 
 type TProps = {
     setTheme: (theme: DefaultTheme) => void
 }
 
-// TODO: Remember, theme switching might be computationally expensive,
-// so I should only do it on "SAVE" click of this modal.
+type TPrefGroupProps = {
+    header: string
+    description: string
+    icon: any
+    iconBG: string
+    children: ReactNode
+}
+
 
 const ThemeSwitcher = ({setTheme}: TProps) => {
     const [themePreferences, setThemePreferences] = useState("DEFAULT_DARK")
     const [showThemeSwitcher, setShowThemeSwitcher] = useState<boolean>(false)
-    // TODO: Define the normal init theme state, then later add a function to
-    // check if the user has a stored theme preference
-    // Every prefGroup should have a header, and a small description below it explaining the option
 
-    type TPrefGroupProps = {
-        header: string
-        description: string
-        icon: any
-        iconBG: string
-    }
 
-    const PrefGroup = ({header, description, icon, iconBG}: TPrefGroupProps) => {
+    const PrefGroup = ({header, description, icon, iconBG, children}: TPrefGroupProps) => {
         return (
             <S.PrefGroup iconBgColor={iconBG}>
                 <div className="prefHeader">
@@ -45,30 +42,9 @@ const ThemeSwitcher = ({setTheme}: TProps) => {
                         <p className={"prefDesc"}>{description}</p>
                     </div>
                 </div>
+
                 <div className="prefBody">
-                {/*    Figure out children after*/}
-                    <div className="optionGroup">
-                        <input type="radio"
-                               id="defaultDark"
-                               name="theme"
-                               value="DEFAULT_DARK"
-                               checked={themePreferences === "DEFAULT_DARK"}
-                               onChange={() => setThemePreferences("DEFAULT_DARK")}
-                        />
-                        <label htmlFor="defaultDark">Default Dark</label>
-                    </div>
-                    <div className="optionGroup">
-
-                        <input type="radio"
-                               id="light"
-                               name="theme"
-                               value="LIGHT"
-                               checked={themePreferences === "LIGHT"}
-                               onChange={() => setThemePreferences("LIGHT")}
-                        />
-                        <label htmlFor="light">Light</label>
-                    </div>
-
+                    {children}
                 </div>
             </S.PrefGroup>
         )
@@ -79,6 +55,7 @@ const ThemeSwitcher = ({setTheme}: TProps) => {
     // --silver-sand: #c5cbd3ff;
     // --opal: #8cbcb9ff;
     // --sunray: #dda448ff;
+    // #FF8C42 mango tango?
     // --international-orange-golden-gate-bridge: #bb342fff;
 
 
@@ -100,7 +77,35 @@ const ThemeSwitcher = ({setTheme}: TProps) => {
                                description={"Choose a color palette that helps you see better"}
                                icon={paletteIcon}
                                iconBG={"#8D6A9F"}
-                    />
+                    >
+                        <div className="optionGroup">
+                            <input type="radio"
+                                   id="defaultDark"
+                                   name="theme"
+                                   value="DEFAULT_DARK"
+                                   checked={themePreferences === "DEFAULT_DARK"}
+                                   onChange={() => setThemePreferences("DEFAULT_DARK")}
+                            />
+                            <label htmlFor="defaultDark">Default Dark</label>
+                        </div>
+                        <div className="optionGroup">
+                            <input type="radio"
+                                   id="light"
+                                   name="theme"
+                                   value="LIGHT"
+                                   checked={themePreferences === "LIGHT"}
+                                   onChange={() => setThemePreferences("LIGHT")}
+                            />
+                            <label htmlFor="light">Light</label>
+                        </div>
+                    </PrefGroup>
+                    <PrefGroup header={"Font Scaling"}
+                               description={"Scale the font sizes until you can see everything crystal clear"}
+                               icon={fontSizeIcon}
+                               iconBG={"#FF8C42"}
+                    >
+                        <TypographyController/>
+                    </PrefGroup>
 
 
                 </S.ThemeController>

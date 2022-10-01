@@ -130,7 +130,11 @@ export const PrefGroup = styled.div<{ iconBgColor: string }>`
     border-radius: 1rem;
     padding: 25px;
     margin-top: 10px;
-    box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
+    box-shadow: rgba(0, 0, 0, 0.1) 0 4px 12px;
+
+    input:hover, button:hover {
+      cursor: pointer;
+    }
   }
 
   .optionGroup {

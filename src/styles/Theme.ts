@@ -3,11 +3,11 @@ import { IA11yContext, ITypographyContext } from "../types/Main.types";
 
 export const TypographyNormal: ITypographyContext = {
     fontFamily: "Tahoma, Geneva, sans-serif",
-    headerSize: "2.5rem",
-    subHeaderSize: "1.75rem",
+    headerSize: "44px",
+    subHeaderSize: "28px",
     subHeaderWeight: 600,
-    pSize: "1.5rem",
-    accentTextSize: "1rem",
+    pSize: "19px",
+    accentTextSize: "16px",
 }
 
 export const DefaultDark: IA11yContext = {
