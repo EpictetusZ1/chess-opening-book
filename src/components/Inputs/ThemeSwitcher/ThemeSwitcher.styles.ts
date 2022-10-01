@@ -52,7 +52,7 @@ export const ThemeController = styled.div`
 
   > h2 {
     margin: 0;
-    padding-bottom: 25px;
+    padding-bottom: 15px;
   }
   
   .btnContainer {
@@ -75,10 +75,72 @@ export const ThemeController = styled.div`
 `
 
 
-export const PrefGroup = styled.div`
+export const PrefGroup = styled.div<{ iconBgColor: string }>`
   width: 100%;
+  display: flex;
+  flex-direction: column;
+  padding: 15px 25px;
 
+  > p {
+    padding: 5px 0;
+  }
 
+  .prefHeader {
+    width: 100%;
+    padding: 5px 12px;
+    display: flex;
+    align-items: start;
 
+    .iconBackground {
+      height: 60px;
+      width: 60px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background-color: ${props => props.iconBgColor};
+      border-radius: 1rem;
+    }
 
+    .prefText {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: start;
+      text-align: left;
+      padding: 0 0 0 25px;
+    }
+
+    .prefTitle {
+      padding-bottom: 7px;
+      line-height: ${props => props.theme.typography.subHeaderSize};
+      font-size: ${props => props.theme.typography.subHeaderSize};
+      font-weight: ${props => props.theme.typography.subHeaderWeight};
+    }
+
+    .prefDesc {
+      color: ${props => props.theme.accentTextColor};
+      font-size: ${props => props.theme.typography.accentTextSize};
+    }
+  }
+
+  .prefBody {
+    display: flex;
+    justify-content: center;
+    border: 3px solid ${props => props.iconBgColor};
+    border-radius: 1rem;
+    padding: 25px;
+    margin-top: 10px;
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
+  }
+
+  .optionGroup {
+    width: 33%;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+
+    > label {
+      padding: 0 0 0 5px;
+    }
+  }
 `

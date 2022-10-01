@@ -29,15 +29,16 @@ export interface IA11yContext {
   accentTextColor: string
 
   // TYPOGRAPHY
-  typography?: ITypographyContext
+  typography: ITypographyContext
 }
 
 export interface ITypographyContext {
   fontFamily: string
 
   headerSize: string
-  subheaderSize: string
+  subHeaderSize: string
   subHeaderWeight: number
+
   pSize: string
   accentTextSize: string
 }

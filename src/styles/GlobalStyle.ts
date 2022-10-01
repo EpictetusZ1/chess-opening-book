@@ -13,14 +13,19 @@ export const GlobalStyle = createGlobalStyle`
     overflow-y: auto;
   }
 
+  * {
+    box-sizing: border-box;
+  }
+
   a {
     color: inherit;
     text-decoration: none;
   }
 
-  * {
-    box-sizing: border-box;
+  h1, h2, h3, h4, h5, h6, p {
+    margin: 0;
   }
+
 
   .container {
     padding: 0 2rem;
