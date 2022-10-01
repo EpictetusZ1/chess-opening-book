@@ -31,7 +31,7 @@ export const ThemeControllerContainer = styled.div`
   background: rgba(0, 0, 0, 0.7);
   position: fixed;
   width: 100vw;
-  height: 100vh;
+  min-height: 100vh;
   top: 0;
   right: 0;
   z-index: 9;

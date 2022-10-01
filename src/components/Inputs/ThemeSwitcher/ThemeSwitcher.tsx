@@ -6,6 +6,7 @@ import a11YSettingsIcon from "/public/icons/a11ySettingsIcon.png";
 import closeIcon from "/public/icons/closeIcon.png"
 import paletteIcon from "../../../../public/icons/paletteIcon.png"
 import fontSizeIcon from "../../../../public/icons/fontSizeIcon.png"
+import typographyIcon from "../../../../public/icons/typographyIcon.png"
 import {ReactNode, useState} from "react";
 import FontSizeController from "./FontSizeController/FontSizeController";
 
@@ -105,6 +106,14 @@ const ThemeSwitcher = ({setTheme}: TProps) => {
                                iconBG={"#FF8C42"}
                     >
                         <FontSizeController/>
+                    </PrefGroup>
+
+                    <PrefGroup header={"Typography"}
+                               description={"Choose a font that helps you see better"}
+                               icon={typographyIcon}
+                               iconBG={"#8CBCB9"}
+                    >
+                        <p>Here is some text</p>
                     </PrefGroup>
 
 
