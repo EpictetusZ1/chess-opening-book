@@ -72,6 +72,11 @@ export const ThemeController = styled.div`
       }
     }
   }
+  
+  .saveThemeContainer {
+    width: 100%;
+    padding: 0 25px;
+  }
 `
 
 

@@ -12,7 +12,6 @@ export const FontSizeController = styled.div`
   
   > h4 {
     padding: 10px 0 0 0;
-    text-align: left;
   }
 
   hr {

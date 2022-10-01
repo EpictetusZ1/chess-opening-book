@@ -1,5 +1,5 @@
 import * as S from "./ThemeSwitcher.styles"
-import {DefaultDark, DefaultLight} from "../../../styles/Theme";
+import {DefaultDark, DefaultLight, TypographyNormal} from "../../../styles/Theme";
 import { DefaultTheme } from "styled-components";
 import Image from "next/image";
 import a11YSettingsIcon from "/public/icons/a11ySettingsIcon.png";
@@ -7,8 +7,11 @@ import closeIcon from "/public/icons/closeIcon.png"
 import paletteIcon from "../../../../public/icons/paletteIcon.png"
 import fontSizeIcon from "../../../../public/icons/fontSizeIcon.png"
 import typographyIcon from "../../../../public/icons/typographyIcon.png"
-import {ReactNode, useState} from "react";
+import {ReactNode, useState, useReducer} from "react";
 import FontSizeController from "./FontSizeController/FontSizeController";
+import TypographyController from "./TypographyController/TypographyController";
+import PrimaryBtn from "../PrimaryBtn/PrimaryBtn";
+import {IA11yContext, ITypographyContext} from "../../../types/Main.types";
 
 type TProps = {
     setTheme: (theme: DefaultTheme) => void
@@ -22,10 +25,51 @@ type TPrefGroupProps = {
     children: ReactNode
 }
 
+// TODO: Put these in their own file, See Jack Herrington vid to remember how to do this.
+
+enum ThemeActionKind {
+    TYPOGRAPHY_CHANGE = "TYPOGRAPHY_CHANGE",
+}
+
+interface ThemeAction {
+    type: ThemeActionKind
+    payload: any
+}
+
+interface ThemeContext {
+    theme: IA11yContext,
+    typography: ITypographyContext
+}
+
+const initialState = {
+    theme: DefaultDark,
+    typography: TypographyNormal,
+}
+
+function reducer(state: ThemeContext, action: ThemeAction) {
+    switch (action.type) {
+        case ThemeActionKind.TYPOGRAPHY_CHANGE:
+            console.log("Dispatched typography change")
+            return {
+                ...state,
+                typography: {
+                    ...state.typography,
+                    fontFamily: action.payload.fontFamily
+                }
+            }
+        default:
+            return state;
+    }
+}
+
+
 
 const ThemeSwitcher = ({setTheme}: TProps) => {
     const [themePreferences, setThemePreferences] = useState("DEFAULT_DARK")
     const [showThemeSwitcher, setShowThemeSwitcher] = useState<boolean>(false)
+    const [state, dispatch] = useReducer(reducer, initialState)
+    console.log("state", state)
+
 
 
     const PrefGroup = ({header, description, icon, iconBG, children}: TPrefGroupProps) => {
@@ -50,15 +94,6 @@ const ThemeSwitcher = ({setTheme}: TProps) => {
             </S.PrefGroup>
         )
     }
-
-    // /* CSS HEX */
-    // --french-lilac: #8d6a9fff;
-    // --silver-sand: #c5cbd3ff;
-    // --opal: #8cbcb9ff;
-    // --sunray: #dda448ff;
-    // #FF8C42 mango tango?
-    // --international-orange-golden-gate-bridge: #bb342fff;
-
 
     const ThemeController = () => {
         return (
@@ -113,15 +148,29 @@ const ThemeSwitcher = ({setTheme}: TProps) => {
                                icon={typographyIcon}
                                iconBG={"#8CBCB9"}
                     >
-                        <p>Here is some text</p>
+                        <TypographyController dispatch={dispatch}/>
                     </PrefGroup>
 
+
+                    <div className="saveThemeContainer">
+                        <PrimaryBtn text={"apply settings"}
+
+                                    />
+                    </div>
 
                 </S.ThemeController>
             </S.ThemeControllerContainer>
         )
     }
 
+
+    // /* CSS HEX */
+    // --french-lilac: #8d6a9fff;
+    // --silver-sand: #c5cbd3ff;
+    // --opal: #8cbcb9ff;
+    // --sunray: #dda448ff;
+    // #FF8C42 mango tango?
+    // --international-orange-golden-gate-bridge: #bb342fff;
 
 
     return (

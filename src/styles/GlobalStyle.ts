@@ -5,6 +5,7 @@ export const GlobalStyle = createGlobalStyle`
   body {
     padding: 0;
     margin: 0;
+    // TODO: Replace with theme font
     font-family: Tahoma, Geneva, sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
@@ -28,6 +29,13 @@ export const GlobalStyle = createGlobalStyle`
 
   h1, h2, h3, h4, h5, h6, p {
     margin: 0;
+  }
+  
+  @font-face {
+    font-family: "Open Dyslexic";
+    src: url("/fonts/OpenDyslexic-Regular.otf");
+    font-weight: 300;
+    font-style: normal;
   }
 
   .container {
