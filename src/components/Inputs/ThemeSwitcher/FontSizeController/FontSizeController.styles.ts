@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-export const TypographyController = styled.div`
+export const FontSizeController = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -20,13 +20,20 @@ export const TypographyController = styled.div`
   }
 `
 
-export const TypographyPreview = styled.div<{
+export const FontSizePreview = styled.div<{
     pSize: number,
     headerSize: number,
     subHeaderSize: number,
     accentTextSize: number,
 }>`
   display: flex;
+  justify-content: center;
+  align-items: center;
+  
+  p {
+    padding-right: 15px;
+    margin: auto 0;
+  }
   
   .header {
     font-size: ${props => props.headerSize}px;

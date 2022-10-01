@@ -1,10 +1,7 @@
-import * as S from "./TypographyController.styles"
-import {useState} from "react";
+import * as S from "./FontSizeController.styles"
+import { useState } from "react";
 
-const TypographyController = () => {
-    // TODO: Pass in which typography settings are currently in use.
-    // TODO: Add font family options?
-
+const FontSizeController = () => {
     const small = {
         headerSize: 29,
         subHeaderSize: 18,
@@ -34,14 +31,33 @@ const TypographyController = () => {
     }
 
     const [currentSize, setCurrentSize] = useState(normal)
+    const handleFontChange = (e: any) => {
+        const size = e.target.value
+        switch (size) {
+            case "small":
+                setCurrentSize(small)
+                break
+            case "normal":
+                setCurrentSize(normal)
+                break
+            case "large":
+                setCurrentSize(large)
+                break
+            case "extraLarge":
+                setCurrentSize(extraLarge)
+                break
+        }
+    }
 
     return (
-        <S.TypographyController>
+        <S.FontSizeController>
             <div>
                 <label htmlFor="fontScaleSize" aria-label={"Font Scale Size"}>
                     Choose a font size:
                 </label>
-                <select name="font scale" id="fontScaleSize">
+                <select name="font scale" id="fontScaleSize"
+                        onChange={handleFontChange}
+                >
                     <option value="normal">Normal</option>
                     <option value="small">Small</option>
                     <option value="large">Large</option>
@@ -52,20 +68,19 @@ const TypographyController = () => {
             <h4>Preview</h4>
             <hr/>
 
-            <S.TypographyPreview pSize={currentSize.pSize}
-                                 headerSize={currentSize.headerSize}
-                                 subHeaderSize={currentSize.subHeaderSize}
-                                 accentTextSize={currentSize.accentTextSize}
+            <S.FontSizePreview pSize={currentSize.pSize}
+                               headerSize={currentSize.headerSize}
+                               subHeaderSize={currentSize.subHeaderSize}
+                               accentTextSize={currentSize.accentTextSize}
             >
                 <p className={"header"}>Header</p>
                 <p className={"subHeader"}>Sub Header</p>
                 <p className={"p"}>Paragraph</p>
                 <p className={"accentText"}>Accent Text</p>
-            </S.TypographyPreview>
+            </S.FontSizePreview>
 
-
-        </S.TypographyController>
+        </S.FontSizeController>
     );
 };
 
-export default TypographyController;
+export default FontSizeController;

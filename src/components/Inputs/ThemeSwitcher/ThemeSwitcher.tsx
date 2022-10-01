@@ -7,7 +7,7 @@ import closeIcon from "/public/icons/closeIcon.png"
 import paletteIcon from "../../../../public/icons/paletteIcon.png"
 import fontSizeIcon from "../../../../public/icons/fontSizeIcon.png"
 import {ReactNode, useState} from "react";
-import TypographyController from "./TypographyController/TypographyController";
+import FontSizeController from "./FontSizeController/FontSizeController";
 
 type TProps = {
     setTheme: (theme: DefaultTheme) => void
@@ -104,7 +104,7 @@ const ThemeSwitcher = ({setTheme}: TProps) => {
                                icon={fontSizeIcon}
                                iconBG={"#FF8C42"}
                     >
-                        <TypographyController/>
+                        <FontSizeController/>
                     </PrefGroup>
 
 
