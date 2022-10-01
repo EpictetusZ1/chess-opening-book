@@ -4,8 +4,10 @@ import { IA11yContext, ITypographyContext } from "../types/Main.types";
 export const TypographyNormal: ITypographyContext = {
     fontFamily: "Tahoma, Geneva, sans-serif",
     headerSize: "2.5rem",
-    pSize: "1.5rem",
     subheaderSize: "1.75rem",
+    subHeaderWeight: 600,
+    pSize: "1.5rem",
+    accentTextSize: "1.25rem",
 }
 
 export const DefaultLight: IA11yContext = {
@@ -30,6 +32,9 @@ export const DefaultLight: IA11yContext = {
     // TEXT
     textPrime: "#000",
     btnText: "#F7F0F0",
+    accentTextColor: "#C2C2C2",
+
+    typography: TypographyNormal
 }
 
 export const DefaultDark: IA11yContext = {
@@ -54,4 +59,5 @@ export const DefaultDark: IA11yContext = {
     // TEXT
     textPrime: "#E4FFF2",
     btnText: "#F7F0F0",
+    accentTextColor: "#C2C2C2",
 }

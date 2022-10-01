@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 
-export const ThemeSwitcher = styled.div`
+
+export const ThemeSwitcherBtn = styled.div`
   position: fixed;
   right: 0;
   top: 0;
@@ -25,29 +26,59 @@ export const OpenBtn = styled.button`
   }
 `
 
+
+export const ThemeControllerContainer = styled.div`
+  background: rgba(0, 0, 0, 0.7);
+  position: fixed;
+  width: 100vw;
+  height: 100vh;
+  top: 0;
+  right: 0;
+  z-index: 9;
+  display: flex;
+  justify-content: flex-end;
+`
+
 export const ThemeController = styled.div`
-  background: ${props => props.theme.btnPrimary};
+  background: ${props => props.theme.modalPrimary};
   height: 100vh;
   width: 50vw;
-  padding: 10vh 15px 0 15px;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
   align-items: center;
+  text-align: center;
+  color: ${props => props.theme.modalText};
+
+  > h2 {
+    margin: 0;
+    padding-bottom: 25px;
+  }
   
   .btnContainer {
     width: 100%;
     display: flex;
     flex-direction: row;
-    justify-content: flex-end;
-  }
-  
-  .closeThemeSwitcher {
-    width: 30px;
-    height: 30px;
+    justify-content: flex-start;
     
-    :hover {
+    .closeThemeSwitcher {
+      width: 60px;
+      height: 60px;
+      background: none;
+      border: none;
+
+      :hover {
         cursor: pointer;
+      }
     }
   }
+`
+
+
+export const PrefGroup = styled.div`
+  width: 100%;
+
+
+
+
 `

@@ -26,6 +26,7 @@ export interface IA11yContext {
   // TEXT COLOR
   textPrime: string
   btnText: string
+  accentTextColor: string
 
   // TYPOGRAPHY
   typography?: ITypographyContext
@@ -36,7 +37,9 @@ export interface ITypographyContext {
 
   headerSize: string
   subheaderSize: string
+  subHeaderWeight: number
   pSize: string
+  accentTextSize: string
 }
 
 
