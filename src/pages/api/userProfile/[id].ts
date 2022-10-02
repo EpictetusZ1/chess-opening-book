@@ -12,6 +12,11 @@ const formatUserProfile = (body: NextApiRequest["body"]): IUserProfile => {
             stats: body.stats,
             ratings: body.ratings,
             userNames: body.userNames || {},
+            a11yPrefs: body.a11yPrefs || {
+                theme: "DEFAULT_DARK",
+                typography: "Tahoma",
+                fontScale: "NORMAL"
+            },
         }
     } else {
         throw new Error(`The body of the request is not valid.`)

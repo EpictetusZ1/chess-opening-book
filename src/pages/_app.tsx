@@ -1,11 +1,11 @@
 import type { AppProps } from 'next/app'
 import { GlobalStyle } from "../styles/GlobalStyle";
-import { DefaultTheme, ThemeProvider} from "styled-components";
+import {  ThemeProvider} from "styled-components";
 import {DefaultDark, TypographyNormal} from "../styles/Theme";
 import { SessionProvider } from "next-auth/react";
 import { NavBar } from "../components/NavBar/NavBar";
-import {useReducer, useState} from "react";
-import ThemeSwitcher from "../components/ThemeSwitcher/ThemeSwitcher";
+import {useReducer} from "react";
+import ThemeSwitcher from "../components/ThemeSwitcher/ThemeSwitcher"
 import {ITheme} from "../types/Main.types";
 import {themeReducer} from "../Theme/themeReducer";
 
