@@ -5,13 +5,15 @@ import closeIcon from "/public/icons/closeIcon.png"
 import paletteIcon from "../../../public/icons/paletteIcon.png"
 import fontSizeIcon from "../../../public/icons/fontSizeIcon.png"
 import typographyIcon from "../../../public/icons/typographyIcon.png"
-import {ReactNode, useState, useRef} from "react";
+import {ReactNode, useState, useRef, useEffect} from "react";
 import FontSizeController from "./FontSizeController/FontSizeController";
 import TypographyController from "./TypographyController/TypographyController";
 import PrimaryBtn from "../Inputs/PrimaryBtn/PrimaryBtn";
 import {ITheme} from "../../types/Main.types";
 // Reducer
 import { setDefaultDark, setDefaultLight, setDefaultColorBlind, setCurrFontFamily, setCurrTypography } from "../../Theme/themeActions";
+import axios from "axios";
+import {useSession} from "next-auth/react";
 
 type TProps = {
     dispatch: any
@@ -29,10 +31,47 @@ type TPrefGroupProps = {
 
 const ThemeSwitcher = ({dispatch, theme}: TProps) => {
     const [showThemeSwitcher, setShowThemeSwitcher] = useState<boolean>(false)
-    // const [themeColors, setThemeColors] = useState(theme.colors.name)
     const themeColors = useRef(theme.colors.name)
     const fontRef = useRef(theme.fontFamily)
     const fontSizeRef = useRef(theme.typography)
+    const { data: session, status } = useSession()
+
+    const updatePreferences = async(color: string, font: string, fontSize: string) => {
+        await axios.post(`/api/userProfile/preferences/${session?.user?.id}`, {
+            preferences: {
+                theme: color,
+                typography: font,
+                fontScale: fontSize
+            }
+        })
+    }
+
+    const applyFoundTheme = async () => {
+       const themeFound = await axios.get(`/api/userProfile/preferences/${session?.user?.id}`)
+        if (themeFound.status === 200) {
+            const {theme, typography, fontScale} = themeFound.data.data
+            dispatch(setCurrFontFamily(typography))
+            dispatch(setCurrTypography(fontScale))
+            switch (theme) {
+                case "DEFAULT_DARK":
+                    dispatch(setDefaultDark())
+                    break
+                case "DEFAULT_LIGHT":
+                    dispatch(setDefaultLight())
+                    break
+                case "DEFAULT_COLORBLIND":
+                    dispatch(setDefaultColorBlind())
+                    break
+            }
+        }
+    }
+
+    useEffect(() => {
+        if (status === "authenticated") {
+            applyFoundTheme()
+        }
+
+    }, [status])
 
     const applyTheme = () => {
         // Update theme colors
@@ -49,13 +88,16 @@ const ThemeSwitcher = ({dispatch, theme}: TProps) => {
                 dispatch(setDefaultColorBlind())
                 break
         }
-
         // Update font family
         dispatch(setCurrFontFamily(fontRef.current))
-
         // Font scaling
         dispatch(setCurrTypography(fontSizeRef.current))
 
+        try {
+          updatePreferences(themeColors.current, fontRef.current, fontSizeRef.current.fontScaling)
+        } catch (error) {
+            console.log("Error: ", error)
+        }
         setShowThemeSwitcher(false)
     }
 

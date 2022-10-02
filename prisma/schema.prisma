@@ -82,6 +82,12 @@ type IUserNames {
   chessCom String?
 }
 
+type A11yPrefs {
+  theme      String
+  typography String
+  fontScale  String
+}
+
 model UserProfile {
   id        String      @id @default(auto()) @map("_id") @db.ObjectId
   userId    String      @unique
@@ -90,6 +96,7 @@ model UserProfile {
   stats     IStats
   ratings   IRatings?
   userNames IUserNames?
+  a11yPrefs A11yPrefs
 }
 
 // SCHEMA FOR PRISMA NextAuth ADAPTER

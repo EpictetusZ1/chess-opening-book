@@ -91,11 +91,18 @@ export interface IUserNames {
   chessCom: string | undefined
 }
 
+export interface IA11yPrefs {
+  theme: string
+  typography: string
+  fontScale: string
+}
+
 export interface IUserProfile {
   userId: string
   email: string
   games: string[]
   stats: IStats
+  a11yPrefs: IA11yPrefs
   ratings?: IRatings
   userNames?: IUserNames
 }
