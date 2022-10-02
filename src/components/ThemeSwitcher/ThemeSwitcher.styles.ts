@@ -125,7 +125,6 @@ export const PrefGroup = styled.div<{ iconBgColor: string }>`
       padding-bottom: 7px;
       line-height: ${props => props.theme.typography.subHeaderSize};
       font-size: ${props => props.theme.typography.subHeaderSize};
-      font-weight: ${props => props.theme.typography.subHeaderWeight};
     }
 
     .prefDesc {
@@ -138,10 +137,10 @@ export const PrefGroup = styled.div<{ iconBgColor: string }>`
     display: flex;
     justify-content: center;
     border: 3px solid ${props => props.iconBgColor};
+    box-shadow: inset 0 1px 4px 0 rgba(0, 0, 0, 0.35);
     border-radius: 1rem;
     padding: 25px;
     margin-top: 10px;
-    box-shadow: rgba(0, 0, 0, 0.1) 0 4px 12px;
 
     input:hover, button:hover {
       cursor: pointer;

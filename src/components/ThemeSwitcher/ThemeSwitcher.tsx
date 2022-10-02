@@ -11,7 +11,7 @@ import TypographyController from "./TypographyController/TypographyController";
 import PrimaryBtn from "../Inputs/PrimaryBtn/PrimaryBtn";
 import {ITheme} from "../../types/Main.types";
 // Reducer
-import { setDefaultDark, setDefaultLight, setCurrFontFamily, setCurrTypography } from "../../Theme/themeActions";
+import { setDefaultDark, setDefaultLight, setDefaultColorBlind, setCurrFontFamily, setCurrTypography } from "../../Theme/themeActions";
 
 type TProps = {
     dispatch: any
@@ -29,15 +29,26 @@ type TPrefGroupProps = {
 
 const ThemeSwitcher = ({dispatch, theme}: TProps) => {
     const [showThemeSwitcher, setShowThemeSwitcher] = useState<boolean>(false)
-
-    const [themeColors, setThemeColors] = useState(theme.colors.name)
+    // const [themeColors, setThemeColors] = useState(theme.colors.name)
+    const themeColors = useRef(theme.colors.name)
     const fontRef = useRef(theme.fontFamily)
     const fontSizeRef = useRef(theme.typography)
 
-
     const applyTheme = () => {
         // Update theme colors
-        themeColors === "DEFAULT_DARK" ? dispatch(setDefaultDark()) : dispatch(setDefaultLight())
+        switch (themeColors.current) {
+            default:
+                break
+            case "DEFAULT_DARK":
+                dispatch(setDefaultDark())
+                break
+            case "DEFAULT_LIGHT":
+                dispatch(setDefaultLight())
+                break
+            case "DEFAULT_COLORBLIND":
+                dispatch(setDefaultColorBlind())
+                break
+        }
 
         // Update font family
         dispatch(setCurrFontFamily(fontRef.current))
@@ -95,8 +106,8 @@ const ThemeSwitcher = ({dispatch, theme}: TProps) => {
                                    id="defaultDark"
                                    name="theme"
                                    value="DEFAULT_DARK"
-                                   checked={themeColors === "DEFAULT_DARK"}
-                                   onChange={() => setThemeColors("DEFAULT_DARK")}
+                                   defaultChecked={true}
+                                   onChange={() => themeColors.current = "DEFAULT_DARK"}
                             />
                             <label htmlFor="defaultDark">Default Dark</label>
                         </div>
@@ -105,10 +116,20 @@ const ThemeSwitcher = ({dispatch, theme}: TProps) => {
                                    id="DEFAULT_LIGHT"
                                    name="theme"
                                    value="DEFAULT_LIGHT"
-                                   checked={themeColors === "DEFAULT_LIGHT"}
-                                   onChange={() => setThemeColors("DEFAULT_LIGHT")}
+                                   // checked={themeColors.current === "DEFAULT_LIGHT"}
+                                   onChange={() => themeColors.current = "DEFAULT_LIGHT"}
                             />
                             <label htmlFor="DEFAULT_LIGHT">Light</label>
+                        </div>
+                        <div className="optionGroup">
+                            <input type="radio"
+                                   id="DEFAULT_COLORBLIND"
+                                   name="theme"
+                                   value="DEFAULT_COLORBLIND"
+                                   // checked={themeColors.current === "DEFAULT_COLORBLIND"}
+                                   onChange={() => themeColors.current = "DEFAULT_COLORBLIND"}
+                            />
+                            <label htmlFor="DEFAULT_COLORBLIND">Color Blind</label>
                         </div>
                     </PrefGroup>
                     <PrefGroup header={"Font Scaling"}

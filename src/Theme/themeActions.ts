@@ -4,8 +4,7 @@ export const SET_FONT_FAMILY = "SET_FONT_FAMILY"
 export const SET_TYPOGRAPHY = "SET_TYPOGRAPHY"
 export const SET_DEFAULT_DARK = "SET_DEFAULT_DARK"
 export const SET_DEFAULT_LIGHT = "SET_DEFAULT_LIGHT"
-
-// TODO: Add quick dispatches to set theme to pre defined themes.
+export const SET_DEFAULT_COLORBLIND = "SET_DEFAULT_COLORBLIND"
 
 
 export type ActionTypes =
@@ -13,6 +12,7 @@ export type ActionTypes =
     | { type: typeof SET_TYPOGRAPHY; payload: ITypography }
     | { type: typeof SET_DEFAULT_DARK }
     | { type: typeof SET_DEFAULT_LIGHT }
+    | { type: typeof SET_DEFAULT_COLORBLIND }
 
 
 export const setCurrFontFamily = (fontFamily: string): ActionTypes => ({
@@ -31,4 +31,8 @@ export const setDefaultDark = (): ActionTypes => ({
 
 export const setDefaultLight = (): ActionTypes => ({
     type: SET_DEFAULT_LIGHT
+})
+
+export const setDefaultColorBlind = (): ActionTypes => ({
+    type: SET_DEFAULT_COLORBLIND
 })

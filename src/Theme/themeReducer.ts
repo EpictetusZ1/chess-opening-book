@@ -4,9 +4,10 @@ import {
     SET_FONT_FAMILY,
     SET_DEFAULT_DARK,
     SET_DEFAULT_LIGHT,
+    SET_DEFAULT_COLORBLIND,
 } from "./themeActions"
 import {ITheme} from "../types/Main.types"
-import {DefaultDark, DefaultLight, TypographyNormal} from "../styles/Theme";
+import {DefaultDark, DefaultLight, DefaultColorBlind, TypographyNormal} from "../styles/Theme";
 
 
 export const themeReducer = (state: ITheme, action: ActionTypes) => {
@@ -38,6 +39,11 @@ export const themeReducer = (state: ITheme, action: ActionTypes) => {
             return {
                 ...state,
                 colors: DefaultLight
+            }
+        case "SET_DEFAULT_COLORBLIND":
+            return {
+                ...state,
+                colors: DefaultColorBlind
             }
     }
 }

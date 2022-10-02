@@ -62,3 +62,30 @@ export const DefaultLight: IColors = {
     btnText: "#F7F0F0",
     accentTextColor: "#C2C2C2",
 }
+
+export const DefaultColorBlind: IColors = {
+    name: "DEFAULT_COLORBLIND",
+
+    // COLOR
+    primary: "#FFF",
+    secondary: "#DDAA33",
+    tertiary: "#BB5566",
+
+    // HIGHLIGHT
+    highlightPrimary: "#BB5566",
+    highlightSecondary: "#004488",
+
+    // BUTTON
+    btnPrimary: "#004488",
+    btnSecondary: "#DDAA33",
+    buttonClose: "#000",
+
+    // MODAL
+    modalPrimary: "#BB5566",
+    modalText: "#000",
+
+    // TEXT
+    textPrime: "#000",
+    btnText: "#FFF",
+    accentTextColor: "#000",
+}
