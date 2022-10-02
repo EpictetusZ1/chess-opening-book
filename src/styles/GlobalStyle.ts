@@ -5,8 +5,7 @@ export const GlobalStyle = createGlobalStyle`
   body {
     padding: 0;
     margin: 0;
-    // TODO: Replace with theme font
-    font-family: Tahoma, Geneva, sans-serif;
+    font-family: ${props => props.theme.fontFamily};
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     vertical-align: baseline;
@@ -40,8 +39,8 @@ export const GlobalStyle = createGlobalStyle`
 
   .container {
     padding: 0 2rem;
-    background-color: ${props => props.theme.primary};
-    color: ${props => props.theme.textPrime};
+    background-color: ${props => props.theme.colors.primary};
+    color: ${props => props.theme.colors.textPrime};
   }
 
   .main {
@@ -53,7 +52,7 @@ export const GlobalStyle = createGlobalStyle`
     justify-content: center;
     align-items: center;
      > h1 {
-       color: ${props => props.theme.tertiary};
+       color: ${props => props.theme.colors.tertiary};
      }
   }
 
@@ -61,7 +60,7 @@ export const GlobalStyle = createGlobalStyle`
     display: flex;
     flex: 1;
     padding: 2rem 0;
-    border-top: 1px solid ${props => props.theme.textPrime};
+    border-top: 1px solid ${props => props.theme.colors.textPrime};
     justify-content: center;
     align-items: center;
   }
@@ -110,7 +109,7 @@ export const GlobalStyle = createGlobalStyle`
     text-align: left;
     color: inherit;
     text-decoration: none;
-    border: 1px solid ${props => props.theme.textPrime};
+    border: 1px solid ${props => props.theme.colors.textPrime};
     border-radius: 10px;
     transition: color 0.15s ease, border-color 0.15s ease;
     max-width: 300px;
@@ -119,8 +118,8 @@ export const GlobalStyle = createGlobalStyle`
   .card:hover,
   .card:focus,
   .card:active {
-    color: ${props => props.theme.highlightPrimary};
-    border-color:  ${props => props.theme.highlightPrimary};
+    color: ${props => props.theme.colors.highlightPrimary};
+    border-color:  ${props => props.theme.colors.highlightPrimary};
     cursor: pointer;
   }
 

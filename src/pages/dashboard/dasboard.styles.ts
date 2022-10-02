@@ -9,8 +9,8 @@ export const Dashboard = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
-  background-color: ${props => props.theme.primary};
-  color: ${props => props.theme.textPrime};
+  background-color: ${props => props.theme.colors.primary};
+  color: ${props => props.theme.colors.textPrime};
 
   .dashboard {
     display: grid;

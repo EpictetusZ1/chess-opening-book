@@ -1,7 +1,7 @@
-import { IA11yContext, ITypographyContext } from "../types/Main.types";
+import { IColors, ITypography } from "../types/Main.types";
 
 
-export const TypographyNormal: ITypographyContext = {
+export const TypographyNormal: ITypography = {
     fontFamily: "Tahoma, Geneva, sans-serif",
     headerSize: "44px",
     subHeaderSize: "28px",
@@ -10,7 +10,7 @@ export const TypographyNormal: ITypographyContext = {
     accentTextSize: "16px",
 }
 
-export const DefaultDark: IA11yContext = {
+export const DefaultDark: IColors = {
     // COLOR
     primary: "#253137",
     secondary: "#558B6E",
@@ -35,10 +35,11 @@ export const DefaultDark: IA11yContext = {
     accentTextColor: "#141414",
 
     // TYPOGRAPHY
-    typography: TypographyNormal
+    // typography: TypographyNormal,
+    // fontFamily: "Tahoma, Geneva, sans-serif",
 }
 
-export const DefaultLight: IA11yContext = {
+export const DefaultLight: IColors = {
     // COLOR
     primary: "#003B49",
     secondary: "#D6D2C4",
@@ -62,5 +63,6 @@ export const DefaultLight: IA11yContext = {
     btnText: "#F7F0F0",
     accentTextColor: "#C2C2C2",
 
-    typography: TypographyNormal
+    // typography: TypographyNormal,
+    // fontFamily: "Tahoma, Geneva, sans-serif",
 }

@@ -1,13 +1,11 @@
 import type { AppProps } from 'next/app'
 import { GlobalStyle } from "../styles/GlobalStyle";
 import { DefaultTheme, ThemeProvider} from "styled-components";
-import { DefaultDark, TypographyNormal  } from "../styles/Theme";
+import { DefaultDark } from "../styles/Theme";
 import { SessionProvider } from "next-auth/react";
 import { NavBar } from "../components/NavBar/NavBar";
-import { useState, useReducer } from "react";
-import ThemeSwitcher from "../components/Inputs/ThemeSwitcher/ThemeSwitcher";
-import {IA11yContext, ITypographyContext} from "../types/Main.types";
-
+import { useState } from "react";
+import ThemeSwitcher from "../components/ThemeSwitcher/ThemeSwitcher";
 
 
 function MyApp({ Component, pageProps }: AppProps) {

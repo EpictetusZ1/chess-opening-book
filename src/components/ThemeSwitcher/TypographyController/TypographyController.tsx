@@ -14,9 +14,6 @@ const TypographyController = ({dispatch}: TTypographyController) => {
     const handleTypographyChange = (e: any) => {
         const font = e.target.value
         setFontFamily(font)
-
-        // TODO: Extract into save button
-        return dispatch({type: "TYPOGRAPHY_CHANGE", payload: {fontFamily: font}})
     }
 
     return (

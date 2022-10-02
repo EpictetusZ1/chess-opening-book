@@ -4,7 +4,7 @@ import styled from "styled-components";
 export const MainContainer = styled.div`
   width: 35vw;
   height: 80vh;
-  background-color: ${props => props.theme.primary};
+  background-color: ${props => props.theme.colors.primary};
   border-radius: 0.5rem;
   margin: 10px;
   padding: 5px;
@@ -25,7 +25,7 @@ export const MenuTabCont = styled.div`
     background: none;
     font: inherit;
     font-weight: bold;
-    color: ${props => props.theme.tertiary};
+    color: ${props => props.theme.colors.tertiary};
   }
   
   button:hover {
@@ -64,7 +64,7 @@ export const MovesList = styled.div`
     }
 
     .ply {
-      color: ${props => props.theme.tertiary};
+      color: ${props => props.theme.colors.tertiary};
       font-weight: bold;
       font-size: 0.9rem;
       text-align: left;

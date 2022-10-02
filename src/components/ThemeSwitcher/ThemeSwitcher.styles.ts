@@ -40,7 +40,7 @@ export const ThemeControllerContainer = styled.div`
 `
 
 export const ThemeController = styled.div`
-  background: ${props => props.theme.modalPrimary};
+  background: ${props => props.theme.colors.modalPrimary};
   height: 100vh;
   width: 50vw;
   display: flex;
@@ -48,7 +48,7 @@ export const ThemeController = styled.div`
   justify-content: flex-start;
   align-items: center;
   text-align: center;
-  color: ${props => props.theme.modalText};
+  color: ${props => props.theme.colors.modalText};
 
   > h2 {
     margin: 0;
@@ -125,7 +125,7 @@ export const PrefGroup = styled.div<{ iconBgColor: string }>`
     }
 
     .prefDesc {
-      color: ${props => props.theme.accentTextColor};
+      color: ${props => props.theme.colors.accentTextColor};
       font-size: ${props => props.theme.typography.accentTextSize};
     }
   }

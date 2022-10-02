@@ -6,7 +6,7 @@ export const NavBar = styled.div`
   right: 0;
   height: 8vh;
   width: 100%;
-  background-color: ${props => props.theme.secondary};
+  background-color: ${props => props.theme.colors.secondary};
   z-index: 10;
   display: flex;
   flex-direction: row;
@@ -46,7 +46,7 @@ export const NavBtn = styled.button`
   padding: 8px 8px 8px 32px;
   text-decoration: none;
   font-size: 25px;
-  color: ${props => props.theme.textPrime};
+  color: ${props => props.theme.colors.textPrime};
   transition: 0.3s;
 
   :hover {

@@ -4,7 +4,16 @@ import { IGame } from "./Game.types"
   A11y Context Types
 */
 
-export interface IA11yContext {
+// Create the actual object that tracks saved DB state after.
+
+export interface ITheme {
+  colors: IColors
+  typography: ITypography
+  fontFamily: string
+}
+
+
+export interface IColors {
   // COLOR
   primary: string
   secondary: string
@@ -28,13 +37,11 @@ export interface IA11yContext {
   btnText: string
   accentTextColor: string
 
-  // TYPOGRAPHY
-  typography: ITypographyContext
+  // // TYPOGRAPHY
+  // typography: ITypography
 }
 
-export interface ITypographyContext {
-  fontFamily: string
-
+export interface ITypography {
   headerSize: string
   subHeaderSize: string
   subHeaderWeight: number

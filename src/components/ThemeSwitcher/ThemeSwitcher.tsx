@@ -1,17 +1,18 @@
 import * as S from "./ThemeSwitcher.styles"
-import {DefaultDark, DefaultLight, TypographyNormal} from "../../../styles/Theme";
 import { DefaultTheme } from "styled-components";
 import Image from "next/image";
 import a11YSettingsIcon from "/public/icons/a11ySettingsIcon.png";
 import closeIcon from "/public/icons/closeIcon.png"
-import paletteIcon from "../../../../public/icons/paletteIcon.png"
-import fontSizeIcon from "../../../../public/icons/fontSizeIcon.png"
-import typographyIcon from "../../../../public/icons/typographyIcon.png"
+import paletteIcon from "../../../public/icons/paletteIcon.png"
+import fontSizeIcon from "../../../public/icons/fontSizeIcon.png"
+import typographyIcon from "../../../public/icons/typographyIcon.png"
 import {ReactNode, useState, useReducer} from "react";
 import FontSizeController from "./FontSizeController/FontSizeController";
 import TypographyController from "./TypographyController/TypographyController";
-import PrimaryBtn from "../PrimaryBtn/PrimaryBtn";
-import {IA11yContext, ITypographyContext} from "../../../types/Main.types";
+import PrimaryBtn from "../Inputs/PrimaryBtn/PrimaryBtn";
+import { themeReducer } from "../../Theme/themeReducer";
+import {ITheme} from "../../types/Main.types";
+import {DefaultDark, TypographyNormal} from "../../styles/Theme";
 
 type TProps = {
     setTheme: (theme: DefaultTheme) => void
@@ -25,52 +26,17 @@ type TPrefGroupProps = {
     children: ReactNode
 }
 
-// TODO: Put these in their own file, See Jack Herrington vid to remember how to do this.
-
-enum ThemeActionKind {
-    TYPOGRAPHY_CHANGE = "TYPOGRAPHY_CHANGE",
-}
-
-interface ThemeAction {
-    type: ThemeActionKind
-    payload: any
-}
-
-interface ThemeContext {
-    theme: IA11yContext,
-    typography: ITypographyContext
-}
-
-const initialState = {
-    theme: DefaultDark,
+const initialState: ITheme = {
+    colors: DefaultDark,
     typography: TypographyNormal,
+    fontFamily: "Tahoma, sans-serif"
 }
-
-function reducer(state: ThemeContext, action: ThemeAction) {
-    switch (action.type) {
-        case ThemeActionKind.TYPOGRAPHY_CHANGE:
-            console.log("Dispatched typography change")
-            return {
-                ...state,
-                typography: {
-                    ...state.typography,
-                    fontFamily: action.payload.fontFamily
-                }
-            }
-        default:
-            return state;
-    }
-}
-
 
 
 const ThemeSwitcher = ({setTheme}: TProps) => {
     const [themePreferences, setThemePreferences] = useState("DEFAULT_DARK")
     const [showThemeSwitcher, setShowThemeSwitcher] = useState<boolean>(false)
-    const [state, dispatch] = useReducer(reducer, initialState)
-    console.log("state", state)
-
-
+    const [state, dispatch] = useReducer(themeReducer, initialState)
 
     const PrefGroup = ({header, description, icon, iconBG, children}: TPrefGroupProps) => {
         return (
