@@ -1,5 +1,59 @@
 import { IGame } from "./Game.types"
 
+/*
+  A11y Context Types
+*/
+
+// Create the actual object that tracks saved DB state after.
+
+export interface ITheme {
+  colors: IColors
+  typography: ITypography
+  fontFamily: string
+}
+
+
+export interface IColors {
+  name: string
+  // COLOR
+  primary: string
+  secondary: string
+  tertiary: string
+
+  // HIGHLIGHT
+  highlightPrimary: string
+  highlightSecondary: string
+
+  // BUTTON
+  btnPrimary: string
+  btnSecondary: string
+  buttonClose: string
+
+  // MODAL
+  modalPrimary: string
+  modalText: string
+
+  // TEXT COLOR
+  textPrime: string
+  btnText: string
+  accentTextColor: string
+
+}
+
+export interface ITypography {
+  fontScaling: string
+  headerSize: string
+  subHeaderSize: string
+
+  pSize: string
+  accentTextSize: string
+}
+
+
+
+// TODO: ADD a11y preferences here after.
+
+
 /* 
 Game related data 
 */
@@ -13,12 +67,11 @@ export interface IMoveMatrixProps {
   gameData: [IGame]
 }
 
+
 /*
 USER related data 
 */
 
-// TODO: Add fields to this interface
-// consider adding "C" to WLD for count of games played
 export interface IStats {
   topFirstMove?: string
   mostSuccessfulOpening?: string

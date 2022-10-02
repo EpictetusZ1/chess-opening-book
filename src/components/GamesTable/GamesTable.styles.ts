@@ -19,8 +19,8 @@ export const GamesTable = styled.table`
   
   td {
     padding: 10px 0;
-    background-color: ${props => props.theme.highlightSecondary};
-    border-bottom: 1px solid ${props => props.theme.primary};
+    background-color: ${props => props.theme.colors.tertiary};
+    border-bottom: 1px solid ${props => props.theme.colors.primary};
   }
   
   .playerInfo {

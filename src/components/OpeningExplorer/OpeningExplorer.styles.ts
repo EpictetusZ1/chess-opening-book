@@ -69,7 +69,7 @@ type Props = {
 export const MoveBar = styled.span<Props>`
   width: ${(props) => `${props.width}%`};
   min-width: 20px;
-  background-color:  ${(props) => `${(props.theme.highlightPrimary)};`};
+  background-color:  ${(props) => `${(props.theme.colors.highlightPrimary)};`};
   border-radius: 1rem 0 0 1rem;
   padding-right:  ${(props) => `${(props.width) + 10}%`};
   color: #000;

@@ -1,11 +1,11 @@
 import React, {useState} from 'react';
 import axios from "axios"
-import ShowGameData from "../ShowGameData/ShowGameData";
-import { IGame } from "../../types/Game.types";
+import ShowGameData from "../../ShowGameData/ShowGameData";
+import { IGame } from "../../../types/Game.types";
 import { NextComponentType } from "next";
 import * as S from "./UploadGameForm.styles"
 import { useSession } from "next-auth/react";
-import CloseBtn from "../Inputs/CloseBtn/CloseBtn";
+import CloseBtn from "../CloseBtn/CloseBtn";
 
 type TProps = {
     closeForm: () => void

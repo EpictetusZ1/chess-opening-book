@@ -5,7 +5,7 @@ export const GlobalStyle = createGlobalStyle`
   body {
     padding: 0;
     margin: 0;
-    font-family: Tahoma, Geneva, sans-serif;
+    font-family: ${props => props.theme.fontFamily};
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     vertical-align: baseline;
@@ -13,19 +13,34 @@ export const GlobalStyle = createGlobalStyle`
     overflow-y: auto;
   }
 
-  a {
-    color: inherit;
-    text-decoration: none;
-  }
-
   * {
     box-sizing: border-box;
   }
 
+  a {
+    color: inherit;
+    text-decoration: none;
+  }
+  
+  p, a, span, div {
+    font-size: ${props => props.theme.typography.pSize};
+  }
+
+  h1, h2, h3, h4, h5, h6, p {
+    margin: 0;
+  }
+  
+  @font-face {
+    font-family: "Open Dyslexic";
+    src: url("/fonts/OpenDyslexic-Regular.otf");
+    font-weight: 300;
+    font-style: normal;
+  }
+
   .container {
     padding: 0 2rem;
-    background-color: ${props => props.theme.primary};
-    color: ${props => props.theme.secondary};
+    background-color: ${props => props.theme.colors.primary};
+    color: ${props => props.theme.colors.textPrime};
   }
 
   .main {
@@ -36,13 +51,16 @@ export const GlobalStyle = createGlobalStyle`
     flex-direction: column;
     justify-content: center;
     align-items: center;
+     > h1 {
+       color: ${props => props.theme.colors.tertiary};
+     }
   }
 
   .footer {
     display: flex;
     flex: 1;
     padding: 2rem 0;
-    border-top: 1px solid ${props => props.theme.secondary};
+    border-top: 1px solid ${props => props.theme.colors.textPrime};
     justify-content: center;
     align-items: center;
   }
@@ -74,7 +92,7 @@ export const GlobalStyle = createGlobalStyle`
   .description {
     margin: 4rem 0;
     line-height: 1.5;
-    font-size: 1.5rem;
+    font-size: ${props => props.theme.typography.subHeaderSize};
   }
 
   .grid {
@@ -91,7 +109,7 @@ export const GlobalStyle = createGlobalStyle`
     text-align: left;
     color: inherit;
     text-decoration: none;
-    border: 1px solid ${props => props.theme.secondary};
+    border: 1px solid ${props => props.theme.colors.textPrime};
     border-radius: 10px;
     transition: color 0.15s ease, border-color 0.15s ease;
     max-width: 300px;
@@ -100,19 +118,19 @@ export const GlobalStyle = createGlobalStyle`
   .card:hover,
   .card:focus,
   .card:active {
-    color: ${props => props.theme.highlightPrimary};
-    border-color:  ${props => props.theme.highlightPrimary};
+    color: ${props => props.theme.colors.highlightPrimary};
+    border-color:  ${props => props.theme.colors.highlightPrimary};
     cursor: pointer;
   }
 
   .card h2 {
     margin: 0 0 1rem 0;
-    font-size: 1.5rem;
+    font-size: ${props => props.theme.typography.subHeaderSize};
   }
 
   .card p {
     margin: 0;
-    font-size: 1.25rem;
+    font-size: ${props => props.theme.typography.pSize};
     line-height: 1.5;
   }
 

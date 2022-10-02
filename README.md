@@ -34,3 +34,7 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
 #### Opening book data:
 
 [LiChess - chess openings](https://github.com/lichess-org/chess-openings)
+
+
+#### Open Dyslexic Font:
+[Abbie Gonzalez](https://github.com/antijingoist) [OpenDyslexic](https://opendyslexic.org/)

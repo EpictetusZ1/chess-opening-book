@@ -9,8 +9,8 @@ export const Dashboard = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
-  background-color: ${props => props.theme.primary};
-  color: ${props => props.theme.secondary};
+  background-color: ${props => props.theme.colors.primary};
+  color: ${props => props.theme.colors.textPrime};
 
   .dashboard {
     display: grid;
@@ -20,8 +20,7 @@ export const Dashboard = styled.div`
     grid-template-areas:
     ". userWelcome userWelcome . uploadGame ."
     ". playerInfo playerInfo playerInfo playerInfo ."
-    ". gameInfo gameInfo gameInfo gameInfo ."
-   ;
+    ". gameInfo gameInfo gameInfo gameInfo .";
     align-content: start;
     align-items: start;
   }
