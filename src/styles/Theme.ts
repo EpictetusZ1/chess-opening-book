@@ -3,8 +3,8 @@ import { IColors, ITypography } from "../types/Main.types";
 
 export const TypographyNormal: ITypography = {
     fontScaling: "NORMAL",
-    headerSize: "44px",
-    subHeaderSize: "28px",
+    headerSize: "26px",
+    subHeaderSize: "21px",
     pSize: "19px",
     accentTextSize: "16px",
 }

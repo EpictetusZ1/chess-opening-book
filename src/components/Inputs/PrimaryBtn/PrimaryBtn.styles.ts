@@ -7,7 +7,7 @@ export const PrimaryBtnCont = styled.div`
 export const PrimaryBtn = styled.button`
     backface-visibility: hidden;
     font-family: Tahoma, Geneva, sans-serif;
-    font-size: 18px;
+    font-size:  ${props => props.theme.typography.subHeaderSize};
     font-weight: bolder;
     letter-spacing: 0.4px;
     background-color: ${props => props.theme.colors.btnPrimary};

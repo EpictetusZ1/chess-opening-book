@@ -44,8 +44,7 @@ export const UploadGameForm = styled.form`
   input[type="file"]::-webkit-file-upload-button,
   button {
     backface-visibility: hidden;
-    font-family: Tahoma, Geneva, sans-serif;
-    font-size: 18px;
+    font-size: ${props => props.theme.typography.subHeaderSize};
     font-weight: bolder;
     letter-spacing: 0.4px;
     background-color: ${props => props.theme.colors.btnPrimary};

@@ -66,7 +66,7 @@ export const MovesList = styled.div`
     .ply {
       color: ${props => props.theme.colors.tertiary};
       font-weight: bold;
-      font-size: 0.9rem;
+      font-size: ${props => props.theme.typography.accentTextSize};
       text-align: left;
     }
   }

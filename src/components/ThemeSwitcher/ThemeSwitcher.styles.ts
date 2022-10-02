@@ -6,7 +6,6 @@ export const ThemeSwitcherBtn = styled.div`
   right: 0;
   top: 0;
   z-index: 11;
-  font-size: 1.5rem;
   overflow-y: auto;
   
   .a11yBtnContainer {

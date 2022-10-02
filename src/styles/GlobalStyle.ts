@@ -92,7 +92,7 @@ export const GlobalStyle = createGlobalStyle`
   .description {
     margin: 4rem 0;
     line-height: 1.5;
-    font-size: 1.5rem;
+    font-size: ${props => props.theme.typography.subHeaderSize};
   }
 
   .grid {
@@ -125,12 +125,12 @@ export const GlobalStyle = createGlobalStyle`
 
   .card h2 {
     margin: 0 0 1rem 0;
-    font-size: 1.5rem;
+    font-size: ${props => props.theme.typography.subHeaderSize};
   }
 
   .card p {
     margin: 0;
-    font-size: 1.25rem;
+    font-size: ${props => props.theme.typography.pSize};
     line-height: 1.5;
   }
 

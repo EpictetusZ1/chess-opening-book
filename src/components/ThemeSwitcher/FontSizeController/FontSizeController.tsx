@@ -17,8 +17,8 @@ const FontSizeController = ({currFontSize}: TFontSizeController) => {
 
     const normal = {
         fontScaling: "NORMAL",
-        headerSize: "44px",
-        subHeaderSize: "28px",
+        headerSize: "25px",
+        subHeaderSize: "21px",
         pSize: "19px",
         accentTextSize: "16px"
     }

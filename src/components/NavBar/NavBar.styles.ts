@@ -29,7 +29,6 @@ export const NavBar = styled.div`
     position: absolute;
     top: 0;
     right: 25px;
-    font-size: 36px;
     margin-left: 50px;
   }
 
@@ -46,13 +45,11 @@ export const NavBtn = styled.button`
   font-family: inherit;
   padding: 8px 8px 8px 32px;
   text-decoration: none;
-  font-size: 25px;
+  font-size: ${props => props.theme.typography.headerSize};
   color: ${props => props.theme.colors.textPrime};
   transition: 0.3s;
 
   :hover {
-    font-size: 26px;
-    transition: all 0.2s ease-in;
     cursor: pointer;
   }
 `
