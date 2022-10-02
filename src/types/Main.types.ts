@@ -14,6 +14,7 @@ export interface ITheme {
 
 
 export interface IColors {
+  name: string
   // COLOR
   primary: string
   secondary: string
@@ -37,14 +38,12 @@ export interface IColors {
   btnText: string
   accentTextColor: string
 
-  // // TYPOGRAPHY
-  // typography: ITypography
 }
 
 export interface ITypography {
+  fontScaling: string
   headerSize: string
   subHeaderSize: string
-  subHeaderWeight: number
 
   pSize: string
   accentTextSize: string

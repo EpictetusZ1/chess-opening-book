@@ -20,33 +20,34 @@ export const FontSizeController = styled.div`
 `
 
 export const FontSizePreview = styled.div<{
-    pSize: number,
-    headerSize: number,
-    subHeaderSize: number,
-    accentTextSize: number,
+    pSize: string,
+    headerSize: string,
+    subHeaderSize: string,
+    accentTextSize: string,
 }>`
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
   
   p {
     padding-right: 15px;
-    margin: auto 0;
+    margin: 0;
   }
   
   .header {
-    font-size: ${props => props.headerSize}px;
+    font-size: ${props => props.headerSize};
   }
   
   .subHeader {
-    font-size: ${props => props.subHeaderSize}px;
+    font-size: ${props => props.subHeaderSize};
   }
   
   .p {
-    font-size: ${props => props.pSize}px;
+    font-size: ${props => props.pSize};
   }
   
   .accentText {
-    font-size: ${props => props.accentTextSize}px;
+    font-size: ${props => props.accentTextSize};
   }
 `

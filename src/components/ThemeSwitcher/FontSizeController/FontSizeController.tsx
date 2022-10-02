@@ -1,50 +1,64 @@
 import * as S from "./FontSizeController.styles"
-import { useState } from "react";
+import {MutableRefObject, useState} from "react";
 
-const FontSizeController = () => {
+
+type TFontSizeController = {
+    currFontSize: MutableRefObject<any>
+}
+
+const FontSizeController = ({currFontSize}: TFontSizeController) => {
     const small = {
-        headerSize: 29,
-        subHeaderSize: 18,
-        pSize: 12,
-        accentTextSize: 10
+        fontScaling: "SMALL",
+        headerSize: "29px",
+        subHeaderSize: "18px",
+        pSize: "12px",
+        accentTextSize: "10px"
     }
 
     const normal = {
-        headerSize: 44,
-        subHeaderSize: 28,
-        pSize: 19,
-        accentTextSize: 16
+        fontScaling: "NORMAL",
+        headerSize: "44px",
+        subHeaderSize: "28px",
+        pSize: "19px",
+        accentTextSize: "16px"
     }
 
     const large = {
-        headerSize: 59,
-        subHeaderSize: 38,
-        pSize: 26,
-        accentTextSize: 22
+        fontScaling: "LARGE",
+        headerSize: "50px",
+        subHeaderSize: "38px",
+        pSize: "26px",
+        accentTextSize: "22px"
     }
 
     const extraLarge = {
-        headerSize: 74,
-        subHeaderSize: 48,
-        pSize: 33,
-        accentTextSize: 28
+        fontScaling: "EXTRA_LARGE",
+        headerSize: "74px",
+        subHeaderSize: "48px",
+        pSize: "33px",
+        accentTextSize: "28px"
     }
 
-    const [currentSize, setCurrentSize] = useState(normal)
+    const [currentSize, setCurrentSize] = useState(currFontSize.current)
+
     const handleFontChange = (e: any) => {
         const size = e.target.value
         switch (size) {
-            case "small":
+            case "SMALL":
                 setCurrentSize(small)
+                currFontSize.current = small
                 break
-            case "normal":
+            case "NORMAL":
                 setCurrentSize(normal)
+                currFontSize.current = normal
                 break
-            case "large":
+            case "LARGE":
                 setCurrentSize(large)
+                currFontSize.current = large
                 break
-            case "extraLarge":
+            case "EXTRA_LARGE":
                 setCurrentSize(extraLarge)
+                currFontSize.current = extraLarge
                 break
         }
     }
@@ -57,11 +71,12 @@ const FontSizeController = () => {
                 </label>
                 <select name="font scale" id="fontScaleSize"
                         onChange={handleFontChange}
+                        value={currentSize.fontScaling}
                 >
-                    <option value="normal">Normal</option>
-                    <option value="small">Small</option>
-                    <option value="large">Large</option>
-                    <option value="extraLarge">Extra Large</option>
+                    <option value="SMALL">Small</option>
+                    <option value="NORMAL">Normal</option>
+                    <option value="LARGE">Large</option>
+                    <option value="EXTRA_LARGE">Extra Large</option>
                 </select>
             </div>
 

@@ -7,6 +7,7 @@ export const ThemeSwitcherBtn = styled.div`
   top: 0;
   z-index: 11;
   font-size: 1.5rem;
+  overflow-y: auto;
   
   .a11yBtnContainer {
     padding: 1em;
@@ -31,17 +32,18 @@ export const ThemeControllerContainer = styled.div`
   background: rgba(0, 0, 0, 0.7);
   position: fixed;
   width: 100vw;
-  min-height: 100vh;
+  height: 100vh;
   top: 0;
   right: 0;
-  z-index: 9;
+  z-index: 91;
+  overflow-y: auto;
   display: flex;
   justify-content: flex-end;
 `
 
 export const ThemeController = styled.div`
   background: ${props => props.theme.colors.modalPrimary};
-  height: 100vh;
+  height: 100%;
   width: 50vw;
   display: flex;
   flex-direction: column;
@@ -49,6 +51,8 @@ export const ThemeController = styled.div`
   align-items: center;
   text-align: center;
   color: ${props => props.theme.colors.modalText};
+  overflow-y: auto;
+  padding-bottom: 75px;
 
   > h2 {
     margin: 0;

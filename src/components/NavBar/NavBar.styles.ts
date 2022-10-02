@@ -43,6 +43,7 @@ export const NavBtn = styled.button`
   position: center;
   border: none;
   background-color: transparent;
+  font-family: inherit;
   padding: 8px 8px 8px 32px;
   text-decoration: none;
   font-size: 25px;

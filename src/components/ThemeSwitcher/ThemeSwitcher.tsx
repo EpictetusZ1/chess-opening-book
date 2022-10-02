@@ -1,21 +1,21 @@
 import * as S from "./ThemeSwitcher.styles"
-import { DefaultTheme } from "styled-components";
 import Image from "next/image";
 import a11YSettingsIcon from "/public/icons/a11ySettingsIcon.png";
 import closeIcon from "/public/icons/closeIcon.png"
 import paletteIcon from "../../../public/icons/paletteIcon.png"
 import fontSizeIcon from "../../../public/icons/fontSizeIcon.png"
 import typographyIcon from "../../../public/icons/typographyIcon.png"
-import {ReactNode, useState, useReducer} from "react";
+import {ReactNode, useState, useRef} from "react";
 import FontSizeController from "./FontSizeController/FontSizeController";
 import TypographyController from "./TypographyController/TypographyController";
 import PrimaryBtn from "../Inputs/PrimaryBtn/PrimaryBtn";
-import { themeReducer } from "../../Theme/themeReducer";
 import {ITheme} from "../../types/Main.types";
-import {DefaultDark, TypographyNormal} from "../../styles/Theme";
+// Reducer
+import { setDefaultDark, setDefaultLight, setCurrFontFamily, setCurrTypography } from "../../Theme/themeActions";
 
 type TProps = {
-    setTheme: (theme: DefaultTheme) => void
+    dispatch: any
+    theme: ITheme
 }
 
 type TPrefGroupProps = {
@@ -26,17 +26,27 @@ type TPrefGroupProps = {
     children: ReactNode
 }
 
-const initialState: ITheme = {
-    colors: DefaultDark,
-    typography: TypographyNormal,
-    fontFamily: "Tahoma, sans-serif"
-}
 
-
-const ThemeSwitcher = ({setTheme}: TProps) => {
-    const [themePreferences, setThemePreferences] = useState("DEFAULT_DARK")
+const ThemeSwitcher = ({dispatch, theme}: TProps) => {
     const [showThemeSwitcher, setShowThemeSwitcher] = useState<boolean>(false)
-    const [state, dispatch] = useReducer(themeReducer, initialState)
+
+    const [themeColors, setThemeColors] = useState(theme.colors.name)
+    const fontRef = useRef(theme.fontFamily)
+    const fontSizeRef = useRef(theme.typography)
+
+
+    const applyTheme = () => {
+        // Update theme colors
+        themeColors === "DEFAULT_DARK" ? dispatch(setDefaultDark()) : dispatch(setDefaultLight())
+
+        // Update font family
+        dispatch(setCurrFontFamily(fontRef.current))
+
+        // Font scaling
+        dispatch(setCurrTypography(fontSizeRef.current))
+
+        setShowThemeSwitcher(false)
+    }
 
     const PrefGroup = ({header, description, icon, iconBG, children}: TPrefGroupProps) => {
         return (
@@ -85,20 +95,20 @@ const ThemeSwitcher = ({setTheme}: TProps) => {
                                    id="defaultDark"
                                    name="theme"
                                    value="DEFAULT_DARK"
-                                   checked={themePreferences === "DEFAULT_DARK"}
-                                   onChange={() => setThemePreferences("DEFAULT_DARK")}
+                                   checked={themeColors === "DEFAULT_DARK"}
+                                   onChange={() => setThemeColors("DEFAULT_DARK")}
                             />
                             <label htmlFor="defaultDark">Default Dark</label>
                         </div>
                         <div className="optionGroup">
                             <input type="radio"
-                                   id="light"
+                                   id="DEFAULT_LIGHT"
                                    name="theme"
-                                   value="LIGHT"
-                                   checked={themePreferences === "LIGHT"}
-                                   onChange={() => setThemePreferences("LIGHT")}
+                                   value="DEFAULT_LIGHT"
+                                   checked={themeColors === "DEFAULT_LIGHT"}
+                                   onChange={() => setThemeColors("DEFAULT_LIGHT")}
                             />
-                            <label htmlFor="light">Light</label>
+                            <label htmlFor="DEFAULT_LIGHT">Light</label>
                         </div>
                     </PrefGroup>
                     <PrefGroup header={"Font Scaling"}
@@ -106,7 +116,7 @@ const ThemeSwitcher = ({setTheme}: TProps) => {
                                icon={fontSizeIcon}
                                iconBG={"#FF8C42"}
                     >
-                        <FontSizeController/>
+                        <FontSizeController currFontSize={fontSizeRef} />
                     </PrefGroup>
 
                     <PrefGroup header={"Typography"}
@@ -114,13 +124,13 @@ const ThemeSwitcher = ({setTheme}: TProps) => {
                                icon={typographyIcon}
                                iconBG={"#8CBCB9"}
                     >
-                        <TypographyController dispatch={dispatch}/>
+                        <TypographyController currFontFamily={fontRef} />
                     </PrefGroup>
 
 
                     <div className="saveThemeContainer">
                         <PrimaryBtn text={"apply settings"}
-
+                                    onClick={applyTheme}
                                     />
                     </div>
 

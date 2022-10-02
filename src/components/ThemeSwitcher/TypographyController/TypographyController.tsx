@@ -1,19 +1,17 @@
 import * as S from "./TypographyController.styles"
-import {useState} from "react";
-
+import {MutableRefObject, useState} from "react";
 
 type TTypographyController = {
-    dispatch: any
+    currFontFamily: MutableRefObject<string>
 }
 
-const TypographyController = ({dispatch}: TTypographyController) => {
-    // TODO: Replace with theme property after
-    const [fontFamily, setFontFamily] = useState("Tahoma")
-
+const TypographyController = ({currFontFamily}: TTypographyController) => {
+    const [fontFamily, setFontFamily] = useState(currFontFamily.current)
 
     const handleTypographyChange = (e: any) => {
         const font = e.target.value
         setFontFamily(font)
+        currFontFamily.current = font
     }
 
     return (
@@ -24,6 +22,7 @@ const TypographyController = ({dispatch}: TTypographyController) => {
                 </label>
                 <select name="font scale" id="typographyFamily"
                         onChange={handleTypographyChange}
+                        value={fontFamily}
                 >
                     <option value="Tahoma">Tahoma</option>
                     <option value="Open Dyslexic">Open Dyslexic</option>
