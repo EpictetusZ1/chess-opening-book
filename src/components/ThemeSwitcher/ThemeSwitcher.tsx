@@ -8,7 +8,7 @@ import typographyIcon from "../../../public/icons/typographyIcon.png"
 import {ReactNode, useState, useRef, useEffect} from "react";
 import FontSizeController from "./FontSizeController/FontSizeController";
 import TypographyController from "./TypographyController/TypographyController";
-import PrimaryBtn from "../Inputs/PrimaryBtn/PrimaryBtn";
+import PrimaryBtn from "../Inputs/Buttons/PrimaryBtn/PrimaryBtn";
 import {ITheme} from "../../types/Main.types";
 // Reducer
 import { setDefaultDark, setDefaultLight, setDefaultColorBlind, setCurrFontFamily, setCurrTypography } from "../../Theme/themeActions";

@@ -2,15 +2,15 @@ import {GetServerSideProps} from "next";
 import {getSession} from "next-auth/react";
 import {useState} from "react";
 import axios from "axios";
-import UploadGameForm from "../../components/Inputs/UploadGameForm/UploadGameForm";
+import UploadGameForm from "../../components/Inputs/Forms/UploadGameForm/UploadGameForm";
 import * as S from "./dasboard.styles"
 import {IGame} from "../../types/Game.types";
 import GamesTable from "../../components/GamesTable/GamesTable";
 import PlayerStats from "../../components/PlayerStats/PlayerStats";
 import {Session} from "next-auth";
-import GetChessCom from "../../components/GetChessCom/GetChessCom";
-import PrimaryBtn from "../../components/Inputs/PrimaryBtn/PrimaryBtn";
+import PrimaryBtn from "../../components/Inputs/Buttons/PrimaryBtn/PrimaryBtn";
 import ModalPrimary from "../../components/Modals/ModalPrimary/ModalPrimary";
+import ImportGames from "../../components/Inputs/Forms/ImportGames/ImportGames";
 
 type Props = {
     gameArr: IGame[]
@@ -22,7 +22,7 @@ const Dashboard = ({gameArr, session, stats}: Props ) => {
     const [loading, setLoading] = useState<boolean>(true)
     const [games, setGames] = useState<IGame[]>(gameArr)
     const [openUploadGame, setOpenUploadGame] = useState<boolean>(false)
-    const [openImportGamesForm, setOpenImportGamesForm] = useState<boolean>(false)
+    const [openImportGames, setOpenImportGames] = useState<boolean>(false)
 
 
     return (
@@ -30,6 +30,12 @@ const Dashboard = ({gameArr, session, stats}: Props ) => {
             {openUploadGame && (
                 <ModalPrimary closeModal={() => setOpenUploadGame(false)}>
                     <UploadGameForm/>
+                </ModalPrimary>
+            )}
+
+            {openImportGames && (
+                <ModalPrimary closeModal={() => setOpenImportGames(false)}>
+                    <ImportGames />
                 </ModalPrimary>
             )}
 
@@ -45,9 +51,8 @@ const Dashboard = ({gameArr, session, stats}: Props ) => {
                     />
                     <PrimaryBtn
                         text={"Import Games"}
-                        onClick={() => setOpenImportGamesForm(true)}
+                        onClick={() => setOpenImportGames(true)}
                     />
-                    {/*<GetChessCom />*/}
                 </div>
 
 

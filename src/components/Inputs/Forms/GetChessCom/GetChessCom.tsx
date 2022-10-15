@@ -2,7 +2,7 @@ import * as S from "./GetChessCom.styles"
 import React, {ReactEventHandler, useState} from "react";
 import axios from "axios";
 import {fakeData} from "./fakeData";
-import {handleFileUpload} from "../../utils/parseGame";
+import {handleFileUpload} from "../../../../utils/parseGame";
 import {useSession} from "next-auth/react";
 
 const GetChessCom = () => {

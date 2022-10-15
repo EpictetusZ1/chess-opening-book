@@ -1,6 +1,6 @@
 import * as S from "./ModalPrimary.styles";
 import React, {ReactNode} from "react";
-import CloseBtn from "../../Inputs/CloseBtn/CloseBtn";
+import CloseBtn from "../../Inputs/Buttons/CloseBtn/CloseBtn";
 
 type ModalPrimaryProps = {
     children: ReactNode
