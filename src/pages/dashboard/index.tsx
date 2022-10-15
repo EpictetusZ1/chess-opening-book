@@ -22,9 +22,10 @@ const Dashboard = ({gameArr, session, stats}: Props ) => {
     const [games, setGames] = useState<IGame[]>(gameArr)
     const [openUploadGame, setOpenUploadGame] = useState(false)
 
+    console.log("session", session)
+
     return (
-        <S.Dashboard
-            aria-label={"Main content"}>
+        <S.Dashboard aria-label={"Main content"}>
 
             <div className="dashboard">
                 {openUploadGame && <UploadGameForm closeForm={() => setOpenUploadGame(false)}/>}
@@ -69,6 +70,16 @@ export const getServerSideProps: GetServerSideProps<{
 
     const session = await getSession(context)
 
+    if (!session) {
+        return {
+            redirect: {
+                destination: "/",
+                permanent: false
+            }
+        }
+    }
+
+    // TODO: Convert this to an API call on Component Mount, instead of here because its data is too large.
     const getGames = async() => {
         const res = await axios.get<TGameResponse>(`${process.env.BASE_URL}/api/game/add/${session?.user?.id}`)
         return res.data.data
