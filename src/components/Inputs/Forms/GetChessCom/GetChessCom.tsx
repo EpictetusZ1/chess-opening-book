@@ -4,8 +4,13 @@ import axios from "axios";
 import {fakeData} from "./fakeData";
 import {handleFileUpload} from "../../../../utils/parseGame";
 import {useSession} from "next-auth/react";
+import FormBtn from "../../Buttons/FormBtn/FormBtn";
 
-const GetChessCom = () => {
+type TGetChessCom = {
+    closeModal: () => void
+}
+
+const GetChessCom = ({closeModal}: TGetChessCom) => {
     const { data: session, status } = useSession()
     const [username, setUsername] = useState("")
 
@@ -24,7 +29,6 @@ const GetChessCom = () => {
     }
 
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-        e.preventDefault()
         // const res = await axios.get(`/api/chessCom/${username}`)
 
         // This is a mock response
@@ -35,12 +39,15 @@ const GetChessCom = () => {
         const res = await axios.post(`/api/game/add/${session?.user?.id}`,
             { data: gameStr, provider: "chessCom" }
         )
+
+        closeModal()
         // const addChessComUserName = await axios.patch(`/api/userProfile/${session?.user?.id}`, { userNames: { chessCom: username }})
     }
 
     return (
         <S.GetChessCom>
-            <form onSubmit={handleSubmit}>
+            <h2>Enter your chess.com user name</h2>
+            <form id={"getChessCom"} onSubmit={handleSubmit}>
                 <input type="text"
                        id="chessComId"
                        name="chessComId"
@@ -49,11 +56,11 @@ const GetChessCom = () => {
                        onChange={handleInput}
                 />
 
-                <button type="submit"
-                        aria-label={"request chess dot com games"}
-                >
-                    Request Games
-                </button>
+                <FormBtn text={"Request Games"}
+                         form={"getChessCom"}
+                         onClick={handleSubmit}
+                         aria-label={"request chess dot com games"}
+                />
             </form>
         </S.GetChessCom>
     )

@@ -12,6 +12,7 @@ const PrimaryBtn = ({ className, onClick, text}: TBtn) => {
             <S.PrimaryBtn
                 className={className}
                 onClick={onClick}
+                role={"button"}
             >
                 {text}
             </S.PrimaryBtn>

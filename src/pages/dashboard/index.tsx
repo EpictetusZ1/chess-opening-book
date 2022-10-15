@@ -29,13 +29,13 @@ const Dashboard = ({gameArr, session, stats}: Props ) => {
         <S.Dashboard aria-label={"Main content"}>
             {openUploadGame && (
                 <ModalPrimary closeModal={() => setOpenUploadGame(false)}>
-                    <UploadGameForm/>
+                    <UploadGameForm />
                 </ModalPrimary>
             )}
 
             {openImportGames && (
                 <ModalPrimary closeModal={() => setOpenImportGames(false)}>
-                    <ImportGames />
+                    <ImportGames closeModal={() => setOpenImportGames(false)} />
                 </ModalPrimary>
             )}
 

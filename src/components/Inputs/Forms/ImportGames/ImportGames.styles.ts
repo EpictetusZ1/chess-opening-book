@@ -5,6 +5,8 @@ export const GetImportGames = styled.div`
   flex-direction: column;
   justify-content: flex-start;
   align-items: center;
-    
-    
+  
+  .contentBody {
+    padding: 25px;
+  }
 `
