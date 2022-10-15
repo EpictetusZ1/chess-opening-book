@@ -36,7 +36,7 @@ const ThemeSwitcher = ({dispatch, theme}: TProps) => {
     const fontSizeRef = useRef(theme.typography)
     const { data: session, status } = useSession()
 
-    const updatePreferences = async(color: string, font: string, fontSize: string) => {
+    const updatePreferences = async (color: string, font: string, fontSize: string) => {
         await axios.post(`/api/userProfile/preferences/${session?.user?.id}`, {
             preferences: {
                 theme: color,
@@ -94,7 +94,10 @@ const ThemeSwitcher = ({dispatch, theme}: TProps) => {
         dispatch(setCurrTypography(fontSizeRef.current))
 
         try {
-          updatePreferences(themeColors.current, fontRef.current, fontSizeRef.current.fontScaling)
+            console.log("font scaling")
+            console.log(fontSizeRef.current)
+          const res = updatePreferences(themeColors.current, fontRef.current, fontSizeRef.current.fontScaling)
+            console.log(res)
         } catch (error) {
             console.log("Error: ", error)
         }

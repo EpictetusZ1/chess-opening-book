@@ -22,7 +22,6 @@ const Dashboard = ({gameArr, session, stats}: Props ) => {
     const [games, setGames] = useState<IGame[]>(gameArr)
     const [openUploadGame, setOpenUploadGame] = useState(false)
 
-    console.log("session", session)
 
     return (
         <S.Dashboard aria-label={"Main content"}>
