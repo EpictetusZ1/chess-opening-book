@@ -10,6 +10,7 @@ import PlayerStats from "../../components/PlayerStats/PlayerStats";
 import {Session} from "next-auth";
 import GetChessCom from "../../components/GetChessCom/GetChessCom";
 import PrimaryBtn from "../../components/Inputs/PrimaryBtn/PrimaryBtn";
+import ModalPrimary from "../../components/Modals/ModalPrimary/ModalPrimary";
 
 type Props = {
     gameArr: IGame[]
@@ -18,16 +19,22 @@ type Props = {
 }
 
 const Dashboard = ({gameArr, session, stats}: Props ) => {
-    const [loading, setLoading] = useState(true)
+    const [loading, setLoading] = useState<boolean>(true)
     const [games, setGames] = useState<IGame[]>(gameArr)
-    const [openUploadGame, setOpenUploadGame] = useState(false)
+    const [openUploadGame, setOpenUploadGame] = useState<boolean>(false)
+    const [openImportGamesForm, setOpenImportGamesForm] = useState<boolean>(false)
 
 
     return (
         <S.Dashboard aria-label={"Main content"}>
+            {openUploadGame && (
+                <ModalPrimary closeModal={() => setOpenUploadGame(false)}>
+                    <UploadGameForm/>
+                </ModalPrimary>
+            )}
+
 
             <div className="dashboard">
-                {openUploadGame && <UploadGameForm closeForm={() => setOpenUploadGame(false)}/>}
                 <div className="userWelcome">
                     <h2>{`Welcome back, ${session?.user.name}`}</h2>
                 </div>
@@ -36,7 +43,11 @@ const Dashboard = ({gameArr, session, stats}: Props ) => {
                         text={"Upload Game"}
                         onClick={() => setOpenUploadGame(true)}
                     />
-                    <GetChessCom />
+                    <PrimaryBtn
+                        text={"Import Games"}
+                        onClick={() => setOpenImportGamesForm(true)}
+                    />
+                    {/*<GetChessCom />*/}
                 </div>
 
 

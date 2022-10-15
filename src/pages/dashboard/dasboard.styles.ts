@@ -18,7 +18,7 @@ export const Dashboard = styled.div`
     grid-template-rows: auto auto 1fr ;
     gap: 0 0;
     grid-template-areas:
-    ". userWelcome userWelcome . uploadGame ."
+    ". userWelcome userWelcome uploadGame uploadGame ."
     ". playerInfo playerInfo playerInfo playerInfo ."
     ". gameInfo gameInfo gameInfo gameInfo .";
     align-content: start;
@@ -27,7 +27,11 @@ export const Dashboard = styled.div`
 
   .userWelcome { grid-area: userWelcome; }
 
-  .uploadGame { grid-area: uploadGame; }
+  .uploadGame { 
+    grid-area: uploadGame; 
+    justify-self: end;
+    padding: 0 25px 10px 25px;
+  }
 
   .gameInfo { grid-area: gameInfo; }
   
