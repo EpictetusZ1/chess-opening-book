@@ -1,10 +1,7 @@
 import {NextApiRequest, NextApiResponse} from "next";
-import axios from "axios";
 
 
 export default function(req: NextApiRequest, res: NextApiResponse) {
-    const { userName } = req.query as { userName: string }
-
     if (req.method === "GET") {
         return handleGET(req, res)
     } else {
@@ -12,41 +9,71 @@ export default function(req: NextApiRequest, res: NextApiResponse) {
     }
 
     async function handleGET(req: NextApiRequest, res: NextApiResponse) {
-        const chessComData = await axios.get(`https://lichess.org/api/games/user/${userName}?max=5&prefType=blitz`,
-            {
-                headers: {
-                    Accept: 'application/x-ndjson'
-                }
-            })
-        const getStuff = () => {
-            fetch(`https://lichess.org/api/games/user/${userName}?max=5&prefType=chess960`).then(async (res) => {
-                // @ts-ignore
-                const reader = res.body.getReader();
-                while(true) {
-                    const {done, value} = await reader.read();
-                    if (done) {
-                        console.log("DONE")
-                        return
+        const { userName } = req.query as { userName: string }
+        const response = await fetch(`https://lichess.org/api/games/user/${userName}?max=5&pgnInJson=true`,
+            { headers: { Accept: 'application/x-ndjson'}})
 
-                    }
-                    console.log(value);
-                    let decoded = new TextDecoder().decode(value);
-                    console.log("decoded", decoded)
-                    console.log("-----------------")
+        const splitStream = (splitOn: string) => {
+            let buffer = ""
+            return new TransformStream({
+                transform(chunk, controller) {
+                    buffer += chunk
+                    const parts = buffer.split(splitOn)
+                    parts.slice(0, -1).forEach(part => controller.enqueue(part))
+                    buffer = parts[parts.length - 1]
+                },
+                flush(controller) {
+                    if (buffer) controller.enqueue(buffer)
                 }
             })
         }
 
-        await getStuff()
+        const parseJSON = () => {
+            return new TransformStream({
+                transform(chunk, controller) {
+                    controller.enqueue(JSON.parse(chunk))
+                }
+            })
+        }
 
+        const results = response.body!
+            // // From bytes to text:
+            .pipeThrough(new TextDecoderStream())
+            // Buffer until newlines:
+            .pipeThrough(splitStream("\n"))
+            // Parse chunks as JSON:
+            .pipeThrough(parseJSON())
 
+        const gameArray: any = []
+        let streamOver = false
 
-        // console.log("chessComData", chessComData)
-        if (chessComData) {
-            res.status(200).json(chessComData.data)
+        const myPromise = new Promise((resolve, reject) => {
+            // Loop through the results and add to array
+            const writer = (reader: ReadableStreamDefaultReader) => {
+                reader.read()
+                    .then(({value, done}: any) => {
+                        if (done) {
+                            streamOver = true
+                            resolve(gameArray)
+                        } else {
+                            gameArray.push(value)
+                            writer(reader)
+                        }
+                    })
+                    .catch((err: any) => {
+                        console.error("Error reading stream:", err)
+                        reject(err)
+                    })
+            }
+            writer(results.getReader())
+        })
+
+        const result = await myPromise
+
+        if (result) {
+            res.status(200).json({gameArray})
         } else {
             res.status(200).json({ message: "No data found" })
         }
-
     }
-    }
+}

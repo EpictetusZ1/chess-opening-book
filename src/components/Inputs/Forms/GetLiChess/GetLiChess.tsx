@@ -20,7 +20,7 @@ const GetLiChess = ({closeModal}: TGetLiChess) => {
             console.log("RES")
             console.log(res.data)
         } catch (err) {
-            console.log("ERR", err)
+            console.log("Error: ", err)
         }
 
 
