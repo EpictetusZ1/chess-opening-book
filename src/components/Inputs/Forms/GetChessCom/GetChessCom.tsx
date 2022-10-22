@@ -1,10 +1,11 @@
 import * as S from "./GetChessCom.styles"
-import React, {ReactEventHandler, useState} from "react";
+import React, {ReactEventHandler, useEffect, useState} from "react";
 import axios from "axios";
 import {fakeData} from "./fakeData";
 import {handleFileUpload} from "../../../../utils/parseGame";
 import {useSession} from "next-auth/react";
 import FormBtn from "../../Buttons/FormBtn/FormBtn";
+import AddUserName from "../AddUserName";
 
 type TGetChessCom = {
     closeModal: () => void
@@ -12,11 +13,28 @@ type TGetChessCom = {
 
 const GetChessCom = ({closeModal}: TGetChessCom) => {
     const { data: session, status } = useSession()
-    const [username, setUsername] = useState("")
+    const [needsToAddUserName, setNeedsToAddUserName] = useState<boolean>(true)
+    const [userName, setUserName] = useState("")
+
+    const handleFindUserName = async () => {
+        const findUserName = await axios.post(`/api/userProfile/userName/${session?.user?.id}`,
+            { provider: "chessCom" }
+        )
+        const userName = findUserName.data.userName
+        if (userName) {
+            setUserName(userName)
+            setNeedsToAddUserName(false)
+        }
+    }
+
+    useEffect(() => {
+        handleFindUserName()
+
+    }, [])
 
     const handleInput = (e: React.ChangeEvent<HTMLInputElement>) => {
         if (e.target.value !== "") {
-            setUsername(e.target.value)
+            setUserName(e.target.value)
         }
     }
 
@@ -47,22 +65,29 @@ const GetChessCom = ({closeModal}: TGetChessCom) => {
 
     return (
         <S.GetChessCom>
-            <h2>Enter your chess.com user name</h2>
-            <form id={"getChessCom"} onSubmit={handleSubmit}>
-                <input type="text"
-                       id="chessComId"
-                       name="chessComId"
-                       aria-label={"enter your chess dot com user name"}
-                       required={true}
-                       onChange={handleInput}
-                />
+            { needsToAddUserName ? (
+                <AddUserName provider={"chessCom"} userName={userName} proceed={() => setNeedsToAddUserName(false)} />
+            ) : (
+                <>
+                    <h2>Enter your chess.com user name</h2>
+                    <form id={"getChessCom"} onSubmit={handleSubmit}>
+                        <input type="text"
+                               id="chessComId"
+                               name="chessComId"
+                               aria-label={"enter your chess dot com user name"}
+                               required={true}
+                               onChange={handleInput}
+                        />
 
-                <FormBtn text={"Request Games"}
-                         form={"getChessCom"}
-                         onClick={handleSubmit}
-                         aria-label={"request chess dot com games"}
-                />
-            </form>
+                        <FormBtn text={"Request Games"}
+                                 form={"getChessCom"}
+                                 onClick={handleSubmit}
+                                 aria-label={"request chess dot com games"}
+                        />
+
+                    </form>
+                </>
+            )}
         </S.GetChessCom>
     )
 };

@@ -72,9 +72,6 @@ export default function(req: NextApiRequest, res: NextApiResponse) {
         const result = await myPromise
 
         if (result) {
-            // TODO: Send this to create game
-
-
             res.status(200).json({gameArray})
         } else {
             res.status(200).json({ message: "No data found" })
