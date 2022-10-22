@@ -29,6 +29,7 @@ const GetChessCom = ({closeModal}: TGetChessCom) => {
     }
 
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault()
         // const res = await axios.get(`/api/chessCom/${username}`)
 
         // This is a mock response

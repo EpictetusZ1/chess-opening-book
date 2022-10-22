@@ -2,12 +2,14 @@ import * as S from "./GetLiChess.styles";
 import FormBtn from "../../Buttons/FormBtn/FormBtn";
 import React from "react";
 import axios from "axios";
+import {useSession} from "next-auth/react";
 
 type TGetLiChess = {
     closeModal: () => void
 }
 
 const GetLiChess = ({closeModal}: TGetLiChess) => {
+    const { data: session, status } = useSession()
     const userName = "EpictetusZ1"
 
     const handleInput = () => {
@@ -15,14 +17,18 @@ const GetLiChess = ({closeModal}: TGetLiChess) => {
     }
 
     const handleClick = async () => {
-        try {
-            const res =  await axios.get(`/api/liChess/${userName}`)
-            console.log("RES")
-            console.log(res.data)
-        } catch (err) {
-            console.log("Error: ", err)
-        }
+        const res = await axios.get(`/api/liChess/${userName}`)
+        console.log("RES")
+        console.log(res.data)
 
+    // Add games to users profiles
+        if (res) {
+            const gameArr = res.data.gameArray.map((game: any) => game.pgn)
+            const addGames = await axios.post(`/api/game/add/${session?.user?.id}`,
+                { data: gameArr, provider: "lichess" }
+            )
+            console.log("Add Games: ", addGames)
+        }
 
     }
 

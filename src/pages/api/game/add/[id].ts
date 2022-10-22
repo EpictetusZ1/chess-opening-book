@@ -12,13 +12,20 @@ export default function (req: NextApiRequest, res: NextApiResponse) {
         return handleGET(req, res)
     } else if (req.method === "POST") {
         let reqData = req.body
-        // Checking if it is coming from a file or from an api like chessCom
-        if (req.body.data) {
-           reqData = req.body.data
-        }
-        const gameArr = handleFileUpload(reqData)
-        if (gameArr.length > 0) {
-            return handlePOST(req, res, gameArr)
+        // Update where data is coming from base on where game is being added from
+        switch (reqData.provider) {
+            default:
+                const gameArr = handleFileUpload(reqData)
+                if (gameArr.length > 0) {
+                    return handlePOST(req, res, gameArr)
+                }
+                return
+            case "lichess":
+                const gameArrLiChess = handleFileUpload(reqData.data[0])
+                return handlePOST(req, res, gameArrLiChess)
+            case "chessCom":
+                const gameArrChessCom = handleFileUpload(reqData.data)
+                return handlePOST(req, res, gameArrChessCom)
         }
     } else {
         throw new Error(`The HTTP method ${req.method} is not supported at this route.`)
