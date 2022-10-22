@@ -2,14 +2,15 @@ import {GetServerSideProps} from "next";
 import {getSession} from "next-auth/react";
 import {useState} from "react";
 import axios from "axios";
-import UploadGameForm from "../../components/Inputs/UploadGameForm/UploadGameForm";
+import UploadGameForm from "../../components/Inputs/Forms/UploadGameForm/UploadGameForm";
 import * as S from "./dasboard.styles"
 import {IGame} from "../../types/Game.types";
 import GamesTable from "../../components/GamesTable/GamesTable";
 import PlayerStats from "../../components/PlayerStats/PlayerStats";
 import {Session} from "next-auth";
-import GetChessCom from "../../components/GetChessCom/GetChessCom";
-import PrimaryBtn from "../../components/Inputs/PrimaryBtn/PrimaryBtn";
+import PrimaryBtn from "../../components/Inputs/Buttons/PrimaryBtn/PrimaryBtn";
+import ModalPrimary from "../../components/Modals/ModalPrimary/ModalPrimary";
+import ImportGames from "../../components/Inputs/Forms/ImportGames/ImportGames";
 
 type Props = {
     gameArr: IGame[]
@@ -18,16 +19,28 @@ type Props = {
 }
 
 const Dashboard = ({gameArr, session, stats}: Props ) => {
-    const [loading, setLoading] = useState(true)
+    const [loading, setLoading] = useState<boolean>(true)
     const [games, setGames] = useState<IGame[]>(gameArr)
-    const [openUploadGame, setOpenUploadGame] = useState(false)
+    const [openUploadGame, setOpenUploadGame] = useState<boolean>(false)
+    const [openImportGames, setOpenImportGames] = useState<boolean>(false)
+
 
     return (
-        <S.Dashboard
-            aria-label={"Main content"}>
+        <S.Dashboard aria-label={"Main content"}>
+            {openUploadGame && (
+                <ModalPrimary closeModal={() => setOpenUploadGame(false)}>
+                    <UploadGameForm />
+                </ModalPrimary>
+            )}
+
+            {openImportGames && (
+                <ModalPrimary closeModal={() => setOpenImportGames(false)}>
+                    <ImportGames closeModal={() => setOpenImportGames(false)} />
+                </ModalPrimary>
+            )}
+
 
             <div className="dashboard">
-                {openUploadGame && <UploadGameForm closeForm={() => setOpenUploadGame(false)}/>}
                 <div className="userWelcome">
                     <h2>{`Welcome back, ${session?.user.name}`}</h2>
                 </div>
@@ -36,7 +49,10 @@ const Dashboard = ({gameArr, session, stats}: Props ) => {
                         text={"Upload Game"}
                         onClick={() => setOpenUploadGame(true)}
                     />
-                    <GetChessCom />
+                    <PrimaryBtn
+                        text={"Import Games"}
+                        onClick={() => setOpenImportGames(true)}
+                    />
                 </div>
 
 
@@ -69,6 +85,16 @@ export const getServerSideProps: GetServerSideProps<{
 
     const session = await getSession(context)
 
+    if (!session) {
+        return {
+            redirect: {
+                destination: "/",
+                permanent: false
+            }
+        }
+    }
+
+    // TODO: Convert this to an API call on Component Mount, instead of here because its data is too large.
     const getGames = async() => {
         const res = await axios.get<TGameResponse>(`${process.env.BASE_URL}/api/game/add/${session?.user?.id}`)
         return res.data.data

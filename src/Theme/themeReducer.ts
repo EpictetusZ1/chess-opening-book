@@ -20,6 +20,13 @@ export const themeReducer = (state: ITheme, action: ActionTypes) => {
                 fontFamily: `${action.payload}, sans-serif`
             }
         case SET_TYPOGRAPHY:
+            //@ts-ignore
+            if (action.payload === "NORMAL") {
+                return {
+                    ...state,
+                    typography: TypographyNormal
+                }
+            }
             return {
                 ...state,
                 typography: {
@@ -40,7 +47,7 @@ export const themeReducer = (state: ITheme, action: ActionTypes) => {
                 ...state,
                 colors: DefaultLight
             }
-        case "SET_DEFAULT_COLORBLIND":
+        case SET_DEFAULT_COLORBLIND:
             return {
                 ...state,
                 colors: DefaultColorBlind

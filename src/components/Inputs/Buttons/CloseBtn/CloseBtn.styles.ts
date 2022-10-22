@@ -2,15 +2,13 @@ import styled from "styled-components";
 
 
 export const CloseBtnCont = styled.div`
-  margin: 0 15px 0 auto;
-  display: flex;
-  align-items: center;
-  align-content: center;
-
+  width: 100%;
+  position: relative;
+  height: 0px;
 `
 
 export const CloseBtn = styled.button`
-  margin: 0 auto;
+  float: right;
   height: 30px;
   width: 30px;
   backface-visibility: hidden;

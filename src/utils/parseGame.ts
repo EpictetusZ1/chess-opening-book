@@ -108,9 +108,13 @@ export const handleFileUpload =  (data: string): IGame[] => {
 
         const formatRound = () => {
             const roundPattern = /(?<round>[0-9]{1,3})/gm
-            const roundValue = gameObj["round"].match(roundPattern)
+            if (gameObj.round) {
+                const roundValue = gameObj["round"].match(roundPattern)
 
-            roundValue ? gameObj["round"] = parseInt(gameObj["round"]) : gameObj["round"] = 0
+                roundValue ? gameObj["round"] = parseInt(gameObj["round"]) : gameObj["round"] = 0
+            } else {
+                gameObj["round"] = 0
+            }
         }
 
         const formatElo = (color: string) => {

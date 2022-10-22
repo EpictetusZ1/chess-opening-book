@@ -78,8 +78,10 @@ type IRatings {
 }
 
 type IUserNames {
-  liChess  String?
-  chessCom String?
+  chessComConfirmed Boolean?
+  chessCom          String?
+    liChessConfirmed Boolean?
+    liChess          String?
 }
 
 type A11yPrefs {
