@@ -9,8 +9,9 @@ export default function(req: NextApiRequest, res: NextApiResponse) {
     }
 
     async function handleGET(req: NextApiRequest, res: NextApiResponse) {
+        // TODO: Add in form for time control, game number limit, etc.
         const { userName } = req.query as { userName: string }
-        const response = await fetch(`https://lichess.org/api/games/user/${userName}?max=5&pgnInJson=true`,
+        const response = await fetch(`https://lichess.org/api/games/user/${userName}?max=5&pgnInJson=true&perfType=blitz`,
             { headers: { Accept: 'application/x-ndjson'}})
 
         const splitStream = (splitOn: string) => {
@@ -37,11 +38,11 @@ export default function(req: NextApiRequest, res: NextApiResponse) {
         }
 
         const results = response.body!
-            // // From bytes to text:
+            // // From bytes to text
             .pipeThrough(new TextDecoderStream())
-            // Buffer until newlines:
+            // Buffer until newlines
             .pipeThrough(splitStream("\n"))
-            // Parse chunks as JSON:
+            // Parse chunks as JSON
             .pipeThrough(parseJSON())
 
         const gameArray: any = []
@@ -71,6 +72,9 @@ export default function(req: NextApiRequest, res: NextApiResponse) {
         const result = await myPromise
 
         if (result) {
+            // TODO: Send this to create game
+
+
             res.status(200).json({gameArray})
         } else {
             res.status(200).json({ message: "No data found" })
