@@ -1,6 +1,6 @@
 import {GetServerSideProps} from "next";
 import {getSession} from "next-auth/react";
-import {useState} from "react";
+import { useState, useEffect} from "react";
 import axios from "axios";
 import UploadGameForm from "../../components/Inputs/Forms/UploadGameForm/UploadGameForm";
 import * as S from "./dasboard.styles"
@@ -13,16 +13,45 @@ import ModalPrimary from "../../components/Modals/ModalPrimary/ModalPrimary";
 import ImportGames from "../../components/Inputs/Forms/ImportGames/ImportGames";
 
 type Props = {
-    gameArr: IGame[]
-    stats: any
     session: Session | null
 }
 
-const Dashboard = ({gameArr, session, stats}: Props ) => {
+type TGameResponse = {
+    message: string
+    data: IGame[]
+    hasErrors: boolean
+}
+
+const Dashboard = ({session}: Props ) => {
     const [loading, setLoading] = useState<boolean>(true)
-    const [games, setGames] = useState<IGame[]>(gameArr)
+    const [games, setGames] = useState<IGame[]>([])
+    const [stats, setStats] = useState<any>(null)
     const [openUploadGame, setOpenUploadGame] = useState<boolean>(false)
     const [openImportGames, setOpenImportGames] = useState<boolean>(false)
+
+    useEffect(() => {
+        const getGames = async() => {
+            const res = await axios.get<TGameResponse>(`/api/game/add/${session?.user?.id}`)
+            if (res) {
+                setGames(res.data.data)
+                setLoading(false)
+            }
+        }
+
+        const getStats = async () => {
+            const res = await axios.get(`/api/stats/${session?.user?.id}`)
+            if (res) {
+                setStats(res.data)
+            }
+        }
+
+        try {
+            getGames()
+            getStats()
+        } catch (error) {
+            console.log("Error:", error)
+        }
+    }, [])
 
 
     return (
@@ -57,7 +86,7 @@ const Dashboard = ({gameArr, session, stats}: Props ) => {
 
 
                 <div className="playerInfo">
-                    <PlayerStats stats={stats}/>
+                    {stats && <PlayerStats stats={stats}/>}
                 </div>
                 <div className="gameInfo">
                     <h2>Your games</h2>
@@ -74,15 +103,7 @@ export default Dashboard;
 
 export const getServerSideProps: GetServerSideProps<{
     session: Session | null
-    gameArr: IGame[]
-    stats: any
 }> = async (context) => {
-    type TGameResponse = {
-        message: string
-        data: IGame[]
-        hasErrors: boolean
-    }
-
     const session = await getSession(context)
 
     if (!session) {
@@ -94,12 +115,6 @@ export const getServerSideProps: GetServerSideProps<{
         }
     }
 
-    // TODO: Convert this to an API call on Component Mount, instead of here because its data is too large.
-    const getGames = async() => {
-        const res = await axios.get<TGameResponse>(`${process.env.BASE_URL}/api/game/add/${session?.user?.id}`)
-        return res.data.data
-    }
-
     const upsertUserProfile = async() => {
         await axios.post(`${process.env.BASE_URL}/api/userProfile/${session?.user?.id}`, {
             userId: session?.user.id,
@@ -108,21 +123,11 @@ export const getServerSideProps: GetServerSideProps<{
         })
     }
 
-    const getStats = async () => {
-        const res = await axios.get(`${process.env.BASE_URL}/api/stats/${session?.user?.id}`)
-        return res.data
-    }
-
     await upsertUserProfile()
-    const gameData = await getGames()
-    const stats = await getStats()
 
     return {
         props: {
             session: session,
-            gameArr: gameData,
-            stats: stats
         },
     }
-
 }

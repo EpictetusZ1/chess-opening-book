@@ -5,10 +5,11 @@ export const Dashboard = styled.div`
   padding: 12vh 0 5vh 0;
   width: 100%;
   height: auto;
+  min-height: 100vh;
   max-height: fit-content;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: flex-start;
   background-color: ${props => props.theme.colors.primary};
   color: ${props => props.theme.colors.textPrime};
 

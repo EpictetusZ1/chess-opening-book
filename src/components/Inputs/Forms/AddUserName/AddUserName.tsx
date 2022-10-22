@@ -1,5 +1,5 @@
 import * as S from "./AddUserName.styles"
-import FormBtn from "../Buttons/FormBtn/FormBtn";
+import FormBtn from "../../Buttons/FormBtn/FormBtn";
 import React, {useState} from "react";
 import axios from "axios";
 import {useSession} from "next-auth/react";

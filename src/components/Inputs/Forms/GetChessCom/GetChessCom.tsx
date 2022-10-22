@@ -1,11 +1,11 @@
 import * as S from "./GetChessCom.styles"
-import React, {ReactEventHandler, useEffect, useState} from "react";
+import React, { useEffect, useState} from "react";
 import axios from "axios";
 import {fakeData} from "./fakeData";
 import {handleFileUpload} from "../../../../utils/parseGame";
 import {useSession} from "next-auth/react";
 import FormBtn from "../../Buttons/FormBtn/FormBtn";
-import AddUserName from "../AddUserName";
+import AddUserName from "../AddUserName/AddUserName";
 
 type TGetChessCom = {
     closeModal: () => void
