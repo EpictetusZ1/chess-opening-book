@@ -4,7 +4,7 @@ import React, {useEffect} from "react";
 import axios from "axios";
 import {useSession} from "next-auth/react";
 import { useState } from "react";
-import AddUserName from "../AddUserName";
+import AddUserName from "../AddUserName/AddUserName";
 
 type TGetLiChess = {
     closeModal: () => void
