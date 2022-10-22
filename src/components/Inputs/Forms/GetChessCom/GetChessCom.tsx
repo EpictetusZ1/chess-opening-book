@@ -84,7 +84,6 @@ const GetChessCom = ({closeModal}: TGetChessCom) => {
                                  onClick={handleSubmit}
                                  aria-label={"request chess dot com games"}
                         />
-
                     </form>
                 </>
             )}

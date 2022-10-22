@@ -1,5 +1,4 @@
 import {NextApiRequest, NextApiResponse} from "next";
-import { IUserProfile } from "../../../../types/Main.types";
 import { prisma } from "../../../../lib/connect/prisma";
 
 export default function(req: NextApiRequest, res: NextApiResponse) {
@@ -30,10 +29,10 @@ export default function(req: NextApiRequest, res: NextApiResponse) {
                 },
                 data: {
                     userNames: {
-                        set: {
-                            [`${provider}Confirmed`]: true,
-                            [provider]: userName
-                        }
+                        // @ts-ignore
+                        ...data.userNames,
+                        [`${provider}Confirmed`]: true,
+                        [provider]: userName
                     }
                 }
             })
@@ -43,10 +42,8 @@ export default function(req: NextApiRequest, res: NextApiResponse) {
         } else if (data) {
             // @ts-ignore
             if (data.userNames[provider]) {
-                console.log("found username for provider")
                 // @ts-ignore
                 const userName = data.userNames[provider]
-                console.log(userName)
                 res.status(200).json({ userName })
             } else {
                 res.status(200).json({ userName: null })

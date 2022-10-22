@@ -73,14 +73,6 @@ const GetLiChess = ({closeModal}: TGetLiChess) => {
                         test api
                     </button>
                     <form id={"getLiChess"} onSubmit={handleSubmit}>
-                        <input type="text"
-                               id="liChessId"
-                               name="liChessId"
-                               aria-label={"enter your li chess user name"}
-                               required={true}
-                               onChange={(e) => setUserName(e.target.value)}
-                               value={userName}
-                        />
 
                         <FormBtn text={"Request Games"}
                                  form={"getLiChess"}
