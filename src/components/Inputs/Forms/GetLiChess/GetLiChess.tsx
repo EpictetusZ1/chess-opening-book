@@ -21,10 +21,8 @@ const GetLiChess = ({closeModal}: TGetLiChess) => {
             { provider: "liChess" }
         )
         const userName = findUserName.data.userName
-        console.log("findUserName: ", findUserName)
 
         if (userName) {
-            console.log("userName found", userName)
             setUserName(userName)
             setNeedsToAddUserName(false)
         }
@@ -32,33 +30,19 @@ const GetLiChess = ({closeModal}: TGetLiChess) => {
 
     // TODO: Put this in getServerSideProps after
     useEffect(() => {
-        console.log("running find userName")
-        console.log("userName")
         handleFindUserName()
 
     }, [])
 
-
-    const handleInput = () => {
-
-    }
-
-    const handleClick = async () => {
+    const handleSubmit = async (e: any) => {
+        e.preventDefault()
         const res = await axios.get(`/api/liChess/${testUserName}`)
-        console.log("RES")
-        console.log(res.data)
-
         if (res) {
             const gameArr = res.data.gameArray.map((game: any) => game.pgn)
             const addGames = await axios.post(`/api/game/add/${session?.user?.id}`,
                 { data: gameArr, provider: "liChess" }
             )
         }
-
-    }
-
-    const handleSubmit = () => {
-
     }
 
 
@@ -69,11 +53,8 @@ const GetLiChess = ({closeModal}: TGetLiChess) => {
             ) : (
                 <>
                     <h2>Request games</h2>
-                    <button onClick={handleClick}>
-                        test api
-                    </button>
                     <form id={"getLiChess"} onSubmit={handleSubmit}>
-
+                        {/* TODO: Later add request config options for user */}
                         <FormBtn text={"Request Games"}
                                  form={"getLiChess"}
                                  onClick={handleSubmit}

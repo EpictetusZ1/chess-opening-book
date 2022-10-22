@@ -29,14 +29,8 @@ const GetChessCom = ({closeModal}: TGetChessCom) => {
 
     useEffect(() => {
         handleFindUserName()
-
     }, [])
 
-    const handleInput = (e: React.ChangeEvent<HTMLInputElement>) => {
-        if (e.target.value !== "") {
-            setUserName(e.target.value)
-        }
-    }
 
     const mockDataFormatter = (games: string[]) => {
         let allGames = ""
@@ -69,16 +63,9 @@ const GetChessCom = ({closeModal}: TGetChessCom) => {
                 <AddUserName provider={"chessCom"} userName={userName} proceed={() => setNeedsToAddUserName(false)} />
             ) : (
                 <>
-                    <h2>Enter your chess.com user name</h2>
+                    <h2>Request Games</h2>
                     <form id={"getChessCom"} onSubmit={handleSubmit}>
-                        <input type="text"
-                               id="chessComId"
-                               name="chessComId"
-                               aria-label={"enter your chess dot com user name"}
-                               required={true}
-                               onChange={handleInput}
-                        />
-
+                        {/* TODO: Later add request config options for user */}
                         <FormBtn text={"Request Games"}
                                  form={"getChessCom"}
                                  onClick={handleSubmit}
