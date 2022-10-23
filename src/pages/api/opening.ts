@@ -13,7 +13,7 @@ export default function (req: NextApiRequest, res: NextApiResponse) {
     }
 
     async function handlePOST(req: NextApiRequest, res: NextApiResponse) {
-        const {startIndex, moveList} = req.body
+        const { moveList, multiGame } = req.body
         const limit = (moveList.length > 28) ? 28 : moveList.length
 
         const testForExact = async (moveListClone: any[]) => {
@@ -33,7 +33,7 @@ export default function (req: NextApiRequest, res: NextApiResponse) {
             for (let i = limit; i > 0; i--) {
                 const clone = [...moveList]
                 const clone2 = clone.splice(0, i)
-                const query = FormatQuery.openingByMoves(startIndex, clone2)
+                const query = FormatQuery.openingByMoves(0, clone2)
                 const result = await prisma.opening.findRaw({
                     filter: {
                         $and: query

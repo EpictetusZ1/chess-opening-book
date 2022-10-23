@@ -17,6 +17,7 @@ const GetChessCom = ({closeModal}: TGetChessCom) => {
     const [userName, setUserName] = useState("")
 
     const handleFindUserName = async () => {
+        // TODO: I should put this in props, and have the parent page pass the value in
         const findUserName = await axios.post(`/api/userProfile/userName/${session?.user?.id}`,
             { provider: "chessCom" }
         )

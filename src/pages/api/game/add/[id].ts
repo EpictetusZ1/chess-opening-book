@@ -53,25 +53,31 @@ export default function (req: NextApiRequest, res: NextApiResponse) {
     async function handlePOST(req: NextApiRequest, res: NextApiResponse, gameArr: IGame[]) {
         const { id } = req.query as { id: string }
 
-        const myGameMap = gameArr.map((game, index) => {
-            // const opening = await axios.post(`${process.env.BASE_URL}/api/opening`,
-            //     {
-            //         startIndex: 0,
-            //         moveList: game.moves
-            //     })
+        const myGameMap = gameArr.map(async (game, index) => {
+            // Unsure of the time complexity of this, there is probably a more efficient way to doing it
+            // I should probably pass the entire gameArr to the function and then do the logic there, then zip it back together
+            const opening = await axios.post(`${process.env.BASE_URL}/api/opening`,
+                {
+                    moveList: game.moves,
+                    multiGame: true
+                })
+
             return {
                 ...game,
                 profileId: id,
                 gameMeta: createMetaData(game, "EpictetusZ1", id),
-                // opening: {
-                //     openingId: opening.data.id,
-                //     openingName: opening.data.name,
-                // }
+                opening: {
+                    id: opening.data.data.id,
+                    openingECO: opening.data.data.eco,
+                    openingName: opening.data.data.name,
+                }
             }
         })
 
+        const resolveAllGames = await Promise.all(myGameMap)
+
         const newGames = await prisma.game.createMany({
-            data: myGameMap,
+            data: resolveAllGames,
         })
 
         const targetUser = await prisma.userProfile.findUnique({

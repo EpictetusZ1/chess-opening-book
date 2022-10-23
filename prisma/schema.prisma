@@ -52,6 +52,7 @@ model Game {
 }
 
 type SimpleOpening {
+  id          String
   openingECO  String
   openingName String
 }
@@ -80,8 +81,8 @@ type IRatings {
 type IUserNames {
   chessComConfirmed Boolean?
   chessCom          String?
-    liChessConfirmed Boolean?
-    liChess          String?
+  liChessConfirmed  Boolean?
+  liChess           String?
 }
 
 type A11yPrefs {
