@@ -96,10 +96,11 @@ export default function (req: NextApiRequest, res: NextApiResponse) {
             }
         })
 
+        let allIds: string[] = []
+
         if (gameIds !== null) {
             const actualIds = gameIds.map(game => game.id)
-            let existingIds = [...actualIds]
-            tempIds.concat(existingIds)
+            allIds = tempIds.concat(actualIds)
         }
 
         const updatedProfile = await prisma.userProfile.update({
@@ -108,12 +109,13 @@ export default function (req: NextApiRequest, res: NextApiResponse) {
             },
             data: {
                 games: {
-                    set: [...tempIds]
+                    set: allIds
                 }
             }
         })
+
         if (updatedProfile !== null) {
-            return res.status(200).json({ message: "Game saved to user profile", hasErrors: false })
+            return res.status(200).json({ message: "Games saved to user profile", hasErrors: false })
         }
         res.status(200).json({ message: "There was a problem adding the games to the user profile", hasErrors: true })
     }

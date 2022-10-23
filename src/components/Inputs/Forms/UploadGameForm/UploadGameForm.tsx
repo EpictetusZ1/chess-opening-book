@@ -21,10 +21,9 @@ const UploadGameForm = () => {
             headers: { 'content-type': 'multipart/form-data' }
         }
 
-        // @ts-ignore
-        const gameObjRaw = await axios.post(`/api/game/add/${session.user.id}`, fileData, config)
-        console.log("gameObjRaw", gameObjRaw)
-        setGameData(gameObjRaw.data) // May need to pass the newly added game back into the dashboard component
+        const res = await axios.post(`/api/game/add/${session?.user?.id}`, fileData, config)
+        // May need to pass the newly added game back into the dashboard component
+        setGameData(res.data)
     }
 
 
