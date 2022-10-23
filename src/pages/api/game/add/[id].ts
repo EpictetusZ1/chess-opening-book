@@ -3,7 +3,7 @@ import {prisma} from "../../../../lib/connect/prisma";
 import {IGame} from "../../../../types/Game.types";
 import {handleFileUpload} from "../../../../utils/parseGame";
 import {createMetaData} from "../../../../utils/createMetaData";
-import axios from "axios";
+import {FormatQuery} from "../../../../utils/formatQuery";
 
 
 export default function (req: NextApiRequest, res: NextApiResponse) {
@@ -14,18 +14,18 @@ export default function (req: NextApiRequest, res: NextApiResponse) {
         let reqData = req.body
         // Update where data is coming from base on where game is being added from
         switch (reqData.provider) {
+            case "liChess":
+                const gameArrLiChess = handleFileUpload(reqData.data)
+                return handlePOST(req, res, gameArrLiChess)
+            case "chessCom":
+                const gameArrChessCom = handleFileUpload(reqData.data)
+                return handlePOST(req, res, gameArrChessCom)
             default:
                 const gameArr = handleFileUpload(reqData)
                 if (gameArr.length > 0) {
                     return handlePOST(req, res, gameArr)
                 }
                 return
-            case "lichess":
-                const gameArrLiChess = handleFileUpload(reqData.data[0])
-                return handlePOST(req, res, gameArrLiChess)
-            case "chessCom":
-                const gameArrChessCom = handleFileUpload(reqData.data)
-                return handlePOST(req, res, gameArrChessCom)
         }
     } else {
         throw new Error(`The HTTP method ${req.method} is not supported at this route.`)
@@ -52,24 +52,65 @@ export default function (req: NextApiRequest, res: NextApiResponse) {
 
     async function handlePOST(req: NextApiRequest, res: NextApiResponse, gameArr: IGame[]) {
         const { id } = req.query as { id: string }
-
+        // CODE TO GET OPENING
         const myGameMap = gameArr.map(async (game, index) => {
-            // Unsure of the time complexity of this, there is probably a more efficient way to doing it
-            // I should probably pass the entire gameArr to the function and then do the logic there, then zip it back together
-            const opening = await axios.post(`${process.env.BASE_URL}/api/opening`,
-                {
-                    moveList: game.moves,
-                    multiGame: true
+            const limit = (game.moves.length > 28) ? 28 : game.moves.length
+            const testForExact = async (moveListClone: any[]) => {
+                const testForCompleteMatch = await prisma.opening.findFirstOrThrow({
+                    where: {
+                        sequence: {
+                            equals: moveListClone
+                        }
+                    }
                 })
+                if (testForCompleteMatch) {
+                    return testForCompleteMatch
+                }
+            }
 
-            return {
-                ...game,
-                profileId: id,
-                gameMeta: createMetaData(game, "EpictetusZ1", id),
-                opening: {
-                    id: opening.data.data.id,
-                    openingECO: opening.data.data.eco,
-                    openingName: opening.data.data.name,
+            const getResult = async () => {
+                for (let i = limit; i > 0; i--) {
+                    const clone = [...game.moves]
+                    const clone2 = clone.splice(0, i)
+                    const query = FormatQuery.openingByMoves(0, clone2)
+                    const result = await prisma.opening.findRaw({
+                        filter: {
+                            $and: query
+                        },
+                        options: { projection: {_id: false} }
+                    })
+                    if (result !== undefined && result !== null && result.length !== 0) {
+                        try {
+                            const isMatch = await testForExact(clone2)
+                            if (isMatch) {
+                                return isMatch
+                            }
+                        } catch (e: any) {
+                            console.log("Error: ", e)
+                            return null
+                        }
+                    }
+                }
+            }
+
+            const data = await getResult()
+
+            if (data !== undefined && data !== null) {
+                return {
+                    ...game,
+                    profileId: id,
+                    gameMeta: createMetaData(game, "EpictetusZ1", id),
+                    opening: {
+                        id: data?.id,
+                        openingECO: data?.eco,
+                        openingName: data?.name,
+                    }
+                }
+            } else {
+                return {
+                    ...game,
+                    profileId: id,
+                    gameMeta: createMetaData(game, "EpictetusZ1", id),
                 }
             }
         })

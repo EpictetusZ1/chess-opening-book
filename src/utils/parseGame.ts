@@ -9,6 +9,10 @@ import {IGame, ITag} from "../types/Game.types";
 export const handleFileUpload =  (data: string): IGame[] => {
     // TODO: Would this not work better if I dealt with the tags first? then removed them then parsed the moves?
     // TODO: answer: yes.
+    console.log("REQUEST DATA FOR PARSING: ", data)
+
+    // TODO: Lichess HTTP STREAM is showing up in NDJSON data format, need to parse that out
+    // I think it has a hard time parsing out the data because of the new line characters (there are 2 or 3 in the NLDJSON data)
 
     const getGamesArr = () => {
         const gamePat = /\[Event ".*"]/gmi
