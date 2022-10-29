@@ -22,7 +22,7 @@ export interface IGame {
     otherTags: ITag[]
     profileId?: string
     gameMeta: IGameMeta
-    opening?: IOpening
+    opening?: ISimpleOpening
 }
 
 export interface IGameMeta {
@@ -34,7 +34,8 @@ export interface IGameMeta {
     winnerProfileId: string | null
 }
 
-export interface IOpening {
+export interface ISimpleOpening {
+    id: string
     openingECO: string
     openingName: string
 }

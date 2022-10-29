@@ -38,13 +38,6 @@ const Home: NextPage = () => {
                 </div>
             </Link>
 
-            <Link href="#" className={"card"}>
-                <div className={"card"}>
-                    <h2> Chess Game &rarr; </h2>
-                    <p>View the Chess Board</p>
-                </div>
-            </Link>
-
         </div>
       </main>
 

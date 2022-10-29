@@ -25,18 +25,18 @@ const FontSizeController = ({currFontSize}: TFontSizeController) => {
 
     const large = {
         fontScaling: "LARGE",
-        headerSize: "50px",
-        subHeaderSize: "38px",
-        pSize: "26px",
-        accentTextSize: "22px"
+        headerSize: "35px",
+        subHeaderSize: "31px",
+        pSize: "25px",
+        accentTextSize: "19px"
     }
 
     const extraLarge = {
         fontScaling: "EXTRA_LARGE",
-        headerSize: "74px",
-        subHeaderSize: "48px",
-        pSize: "33px",
-        accentTextSize: "28px"
+        headerSize: "45px",
+        subHeaderSize: "41px",
+        pSize: "30px",
+        accentTextSize: "22px"
     }
 
     const [currentSize, setCurrentSize] = useState(currFontSize.current)
