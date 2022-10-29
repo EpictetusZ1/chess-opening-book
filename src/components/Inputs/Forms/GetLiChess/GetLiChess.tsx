@@ -38,13 +38,13 @@ const GetLiChess = ({closeModal}: TGetLiChess) => {
         e.preventDefault()
         const res = await axios.get(`/api/liChess/${testUserName}`)
         if (res) {
-            const gameArr = res.data.gameArray.map((game: any) => game.pgn)
+            const gameArr = res.data.gameArray.map((game: any) => (game.pgn))
+            let gameString = gameArr.join(" ")
             const addGames = await axios.post(`/api/game/add/${session?.user?.id}`,
-                { data: gameArr, provider: "liChess" }
+                { data: gameString, provider: "liChess" }
             )
         }
     }
-
 
     return (
         <S.GetLiChess>

@@ -52,11 +52,11 @@ export default function (req: NextApiRequest, res: NextApiResponse) {
 
     async function handlePOST(req: NextApiRequest, res: NextApiResponse, gameArr: IGame[]) {
         const { id } = req.query as { id: string }
-        // CODE TO GET OPENING
+        // GET OPENING data from DB and assign
         const myGameMap = gameArr.map(async (game, index) => {
             const limit = (game.moves.length > 28) ? 28 : game.moves.length
             const testForExact = async (moveListClone: any[]) => {
-                const testForCompleteMatch = await prisma.opening.findFirstOrThrow({
+                const testForCompleteMatch = await prisma.opening.findFirst({
                     where: {
                         sequence: {
                             equals: moveListClone
