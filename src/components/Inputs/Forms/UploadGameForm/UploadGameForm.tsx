@@ -21,6 +21,7 @@ const UploadGameForm = () => {
         }
 
         const res = await axios.post(`/api/game/add/${session?.user?.id}`, fileData, config)
+        console.log("Res:", res)
         // May need to pass the newly added game back into the dashboard component
         setGameData(res.data)
     }
@@ -40,6 +41,9 @@ const UploadGameForm = () => {
                 />
                 <button type="submit"
                         aria-label={"upload now"}
+                        onClick={() => {
+                            console.log("clicking submit?>")
+                        }}
                 >
                     Upload Game
                 </button>

@@ -9,7 +9,6 @@ interface IGamePageProps {
 }
 
 const Game = ({game}: IGamePageProps) => {
-    console.log("Game:", game)
     const formattedDate = new Date(game.date).toLocaleDateString("en-GB", {
         year: "numeric",
         month: "long",
@@ -23,7 +22,7 @@ const Game = ({game}: IGamePageProps) => {
                 moveIndex++
                 return (
                     <div key={index} className={"ply"}>
-                        <p>{moveIndex}.</p>
+                        <b>{moveIndex}.</b>
                         &nbsp;
                         <p>{moves[index]} {moves[index + 1]}</p>
                     </div>
@@ -45,6 +44,22 @@ const Game = ({game}: IGamePageProps) => {
                 return site
             }
         }
+    }
+
+    const renderOtherTags = (tags: IGame["otherTags"]) => {
+        type TTag = {
+            name: string
+            value: string
+        }
+        return tags.map((tag: TTag, index) => {
+            console.log("Tag:", tag)
+            return (
+                <div key={index} className={"stat"}>
+                    <b>{tag.name}</b>
+                    <p>{tag.value}</p>
+                </div>
+            )
+        })
     }
 
 
@@ -119,6 +134,13 @@ const Game = ({game}: IGamePageProps) => {
                             <p>{game.opening.openingName}</p>
                         </span>
 
+                    </div>
+                </div>
+
+                <div className={"statContainer"}>
+                    <h2>Additional Data</h2>
+                    <div className="statsDisplay">
+                        {renderOtherTags(game.otherTags)}
                     </div>
                 </div>
 
