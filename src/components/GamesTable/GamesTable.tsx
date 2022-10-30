@@ -1,11 +1,13 @@
 import * as S from './GamesTable.styles';
 import {IGame} from "../../types/Game.types";
+import Link from "next/link";
 
 type TProps = {
     games: IGame[]
 }
 
 const GamesTable = ({games}: TProps) => {
+    console.log("game data (single): ", games[0])
     return (
         <S.GamesTable>
             <thead>
@@ -18,6 +20,7 @@ const GamesTable = ({games}: TProps) => {
             </thead>
             <tbody>
             {games.map((game: IGame) => (
+                <Link href={`/game/${game.id}`} key={game.id}>
                 <tr key={game.id}>
                     <td>
                         <div className={"playerInfo"}>
@@ -29,6 +32,7 @@ const GamesTable = ({games}: TProps) => {
                     <td>{Math.floor(game.moves.length / 2)}</td>
                     <td>{game.date}</td>
                 </tr>
+                </Link>
             ))}
             </tbody>
 

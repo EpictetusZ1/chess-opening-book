@@ -1,6 +1,5 @@
 import React, {useState} from 'react';
 import axios from "axios"
-import ShowGameData from "../../../ShowGameData/ShowGameData";
 import { IGame } from "../../../../types/Game.types";
 import * as S from "./UploadGameForm.styles"
 import { useSession } from "next-auth/react";

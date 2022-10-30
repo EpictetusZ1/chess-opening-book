@@ -4,6 +4,7 @@ export interface ITag {
 }
 
 export interface IGame {
+    data: any
     id: string
     event: string
     site: string

@@ -8,7 +8,6 @@ const Home: NextPage = () => {
       <Head>
         <title>Accessibility first chess game analysis - Arcadia Chess</title>
         <meta name="description" content="A chess game analysis app for the visually impaired"/>
-        {/*<link rel="icon" href="/favicon.ico" />*/}
       </Head>
       <main className={"main"}
             aria-label={`Main content`}
@@ -30,13 +29,13 @@ const Home: NextPage = () => {
                 </div>
             </Link>
 
-            {/* Temp assign these two hrefs until structure is more built out*/}
             <Link href="/analysis" className={"card"}>
                 <div className={"card"}>
                     <h2> Analysis &rarr; </h2>
                     <p>Get insight into how your openings play out</p>
                 </div>
             </Link>
+
 
         </div>
       </main>
