@@ -17,16 +17,6 @@ type TImportGames = {
 const ImportGames = ({closeModal}: TImportGames) => {
     const [chessProvider, setChessProvider] = useState<E>(E.NONE)
 
-    const handleInput = () => {
-
-    }
-
-    // Notes:
-    // Here will be a control flow point about which component to display, either
-    // display LiChess or chess com games.
-    // Don't forget to add a step to make sure the user confirms their username (if possible?).
-
-
     return (
         <S.GetImportGames>
             <h1>Import Chess Games</h1>
@@ -46,18 +36,3 @@ const ImportGames = ({closeModal}: TImportGames) => {
 };
 
 export default ImportGames;
-{/*<form onSubmit={handleSubmit}>*/}
-{/*    <input type="text"*/}
-{/*           id="liChessId"*/}
-{/*           name="liChessId"*/}
-{/*           aria-label={"enter your li chess user name"}*/}
-{/*           required={true}*/}
-{/*           onChange={handleInput}*/}
-{/*    />*/}
-
-{/*    <button type="submit"*/}
-{/*            aria-label={"request li chess games"}*/}
-{/*    >*/}
-{/*        Request Games*/}
-{/*    </button>*/}
-{/*</form>*/}

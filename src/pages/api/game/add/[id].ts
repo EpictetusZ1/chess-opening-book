@@ -95,6 +95,9 @@ export default function (req: NextApiRequest, res: NextApiResponse) {
 
             const data = await getResult()
 
+            // TODO: Add logic to get the users actual user name from their account if they have added it,
+            //  if not just add the ones from the game. Maybe look to see if there is a user
+
             if (data !== undefined && data !== null) {
                 return {
                     ...game,
