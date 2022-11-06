@@ -8,7 +8,6 @@ type ModalPrimaryProps = {
 }
 
 
-
 const ModalPrimary = ({children, closeModal}: ModalPrimaryProps) => {
     return (
         <S.ModalPrimaryCont>

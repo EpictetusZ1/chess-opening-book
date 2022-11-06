@@ -4,8 +4,11 @@ import { IGame } from "../../../../types/Game.types";
 import * as S from "./UploadGameForm.styles"
 import { useSession } from "next-auth/react";
 
+type TUplodGameFormProps = {
+    closeModal: () => void
+}
 
-const UploadGameForm = () => {
+const UploadGameForm = ({closeModal}: TUplodGameFormProps) => {
     const { data: session, status } = useSession()
     const [fileData, setFileData] = useState()
     const [gameData, setGameData] = useState<IGame>()
@@ -24,6 +27,7 @@ const UploadGameForm = () => {
         console.log("Res:", res)
         // May need to pass the newly added game back into the dashboard component
         setGameData(res.data)
+        closeModal()
     }
 
 
