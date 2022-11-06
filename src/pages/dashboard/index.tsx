@@ -58,7 +58,7 @@ const Dashboard = ({session}: Props ) => {
         <S.Dashboard aria-label={"Main content"}>
             {openUploadGame && (
                 <ModalPrimary closeModal={() => setOpenUploadGame(false)}>
-                    <UploadGameForm />
+                    <UploadGameForm closeModal={() => setOpenUploadGame(false)} />
                 </ModalPrimary>
             )}
 
