@@ -1,8 +1,6 @@
 import * as S from "./GetChessCom.styles"
 import React, { useEffect, useState} from "react";
 import axios from "axios";
-import {fakeData} from "./fakeData";
-import {handleFileUpload} from "../../../../utils/parseGame";
 import {useSession} from "next-auth/react";
 import FormBtn from "../../Buttons/FormBtn/FormBtn";
 import AddUserName from "../AddUserName/AddUserName";
@@ -17,11 +15,11 @@ const GetChessCom = ({closeModal}: TGetChessCom) => {
     const [userName, setUserName] = useState("")
 
     const handleFindUserName = async () => {
-        // TODO: I should put this in props, and have the parent page pass the value in
         const findUserName = await axios.post(`/api/userProfile/userName/${session?.user?.id}`,
             { provider: "chessCom" }
         )
         const userName = findUserName.data.userName
+
         if (userName) {
             setUserName(userName)
             setNeedsToAddUserName(false)
@@ -32,7 +30,7 @@ const GetChessCom = ({closeModal}: TGetChessCom) => {
         handleFindUserName()
     }, [])
 
-
+    // Apparently this is needed to keep the gameArray as a bunch of strings.
     const mockDataFormatter = (games: string[]) => {
         let allGames = ""
         games.forEach(game => {
@@ -43,13 +41,10 @@ const GetChessCom = ({closeModal}: TGetChessCom) => {
 
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault()
-        // const res = await axios.get(`/api/chessCom/${username}`)
-
-        // This is a mock response
-        const gameArr = fakeData.games
-        const pgnArray = gameArr.map(game => game.pgn)
+        const chessComGames = await axios.get(`/api/chessCom/${userName}`)
+        const gameArr = chessComGames.data
+        const pgnArray = gameArr.map((game: { pgn: any; }) => game.pgn)
         const gameStr = mockDataFormatter(pgnArray)
-
         const res = await axios.post(`/api/game/add/${session?.user?.id}`,
             { data: gameStr, provider: "chessCom" }
         )
@@ -61,12 +56,11 @@ const GetChessCom = ({closeModal}: TGetChessCom) => {
     return (
         <S.GetChessCom>
             { needsToAddUserName ? (
-                <AddUserName provider={"chessCom"} userName={userName} proceed={() => setNeedsToAddUserName(false)} />
+                <AddUserName provider={"chessCom"} userName={userName} setUserName={setUserName} proceed={() => setNeedsToAddUserName(false)} />
             ) : (
                 <>
                     <h2>Request Games</h2>
                     <form id={"getChessCom"} onSubmit={handleSubmit}>
-                        {/* TODO: Later add request config options for user */}
                         <FormBtn text={"Request Games"}
                                  form={"getChessCom"}
                                  onClick={handleSubmit}
