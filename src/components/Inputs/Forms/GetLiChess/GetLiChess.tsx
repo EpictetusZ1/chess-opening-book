@@ -14,21 +14,18 @@ const GetLiChess = ({closeModal}: TGetLiChess) => {
     const { data: session, status } = useSession()
     const [userName, setUserName] = useState<string>('')
     const [needsToAddUserName, setNeedsToAddUserName] = useState<boolean>(true)
-    const testUserName = "EpictetusZ1"
 
     const handleFindUserName = async () => {
         const findUserName = await axios.post(`/api/userProfile/userName/${session?.user?.id}`,
             { provider: "liChess" }
         )
-        const userName = findUserName.data.userName
 
-        if (userName) {
-            setUserName(userName)
+        if (findUserName.data.userName !== "") {
+            setUserName(findUserName.data.userName)
             setNeedsToAddUserName(false)
         }
     }
 
-    // TODO: Put this in getServerSideProps after
     useEffect(() => {
         handleFindUserName()
 
@@ -36,20 +33,24 @@ const GetLiChess = ({closeModal}: TGetLiChess) => {
 
     const handleSubmit = async (e: any) => {
         e.preventDefault()
-        const res = await axios.get(`/api/liChess/${testUserName}`)
+        const res = await axios.get(`/api/liChess/${userName}`)
         if (res) {
             const gameArr = res.data.gameArray.map((game: any) => (game.pgn))
             let gameString = gameArr.join(" ")
             const addGames = await axios.post(`/api/game/add/${session?.user?.id}`,
                 { data: gameString, provider: "liChess" }
             )
+            if (addGames) closeModal()
         }
     }
 
     return (
         <S.GetLiChess>
             { needsToAddUserName ? (
-                <AddUserName provider={"liChess"} userName={userName} proceed={() => setNeedsToAddUserName(false)} />
+                <AddUserName provider={"liChess"}
+                             userName={userName}
+                             setUserName={setUserName}
+                             proceed={() => setNeedsToAddUserName(false)} />
             ) : (
                 <>
                     <h2>Request games</h2>

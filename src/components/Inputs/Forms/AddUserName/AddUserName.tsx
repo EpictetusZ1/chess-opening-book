@@ -7,10 +7,11 @@ import {useSession} from "next-auth/react";
 type TAddUserName = {
     provider: "liChess" | "chessCom"
     userName: string
+    setUserName: (userName: string) => void
     proceed: () => void
 }
 
-const AddUserName = ({provider, userName, proceed}: TAddUserName) => {
+const AddUserName = ({provider, userName, setUserName, proceed}: TAddUserName) => {
     const { data: session, status } = useSession()
     const [newUserName, setNewUserName] = useState<string>(userName)
 
@@ -35,7 +36,10 @@ const AddUserName = ({provider, userName, proceed}: TAddUserName) => {
                        name={`${provider}Id`}
                        aria-label={`enter your ${provider} user name`}
                        required={true}
-                       onChange={(e) => setNewUserName(e.target.value)}
+                       onChange={(e) => {
+                           setNewUserName(e.target.value)
+                           setUserName(e.target.value)
+                       }}
                 />
 
                 <FormBtn text={"Add User Name"}
