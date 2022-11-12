@@ -81,7 +81,6 @@ const OpeningExplorer = () => {
         return (
             <>
                 {wholeMove.map((move: string, index: number) => (
-                    // TODO: Fix this in redesign of analysis page.
                     // eslint-disable-next-line jsx-a11y/no-static-element-interactions
                     <span key={move}
                           className={"moveListItem"}
@@ -113,8 +112,8 @@ const OpeningExplorer = () => {
                 <thead>
                 <tr>
                     <th>Move</th>
-                    <th>Frequency</th>
                     <th>Win Rates</th>
+                    <th>Frequency</th>
                 </tr>
                 </thead>
                 <S.MoveList>

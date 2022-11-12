@@ -14,7 +14,8 @@ const Analysis = ({session}: Props) => {
     return (
         <S.AnalysisCont>
             <h2>Meaningful insights about your chess games</h2>
-            <OpeningExplorer />
+            {/* @ts-ignore */}
+            <OpeningExplorer role={"main"} aria-roledescription={"meaningful insights about your chess games"} />
         </S.AnalysisCont>
     );
 };
