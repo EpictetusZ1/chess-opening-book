@@ -113,12 +113,12 @@ export default function (req: NextApiRequest, res: NextApiResponse) {
 
             const data = await getResult()
 
-
             if (data !== undefined && data !== null) {
                 return {
                     ...game,
                     profileId: id,
-                    gameMeta: createMetaData(game, game.site, id),
+                    // @ts-ignore
+                    gameMeta: createMetaData(game, getUserName(game.site), id),
                     opening: {
                         id: data?.id,
                         openingECO: data?.eco,
@@ -129,7 +129,8 @@ export default function (req: NextApiRequest, res: NextApiResponse) {
                 return {
                     ...game,
                     profileId: id,
-                    gameMeta: createMetaData(game, game.site, id),
+                    // @ts-ignore
+                    gameMeta: createMetaData(game,  getUserName(game.site), id),
                 }
             }
         })
