@@ -11,7 +11,7 @@ export default function(req: NextApiRequest, res: NextApiResponse) {
     async function handleGET(req: NextApiRequest, res: NextApiResponse) {
         // TODO: Add in form for time control, game number limit, etc.
         const { userName } = req.query as { userName: string }
-        const response = await fetch(`https://lichess.org/api/games/user/${userName}?max=5&pgnInJson=true&perfType=blitz`,
+        const response = await fetch(`https://lichess.org/api/games/user/${userName}?max=25&pgnInJson=true&perfType=blitz`,
             { headers: { Accept: 'application/x-ndjson'}})
 
         const splitStream = (splitOn: string) => {

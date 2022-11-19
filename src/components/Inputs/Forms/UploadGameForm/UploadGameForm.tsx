@@ -26,7 +26,8 @@ const UploadGameForm = ({closeModal}: TUplodGameFormProps) => {
         const res = await axios.post(`/api/game/add/${session?.user?.id}`, fileData, config)
         console.log("Res:", res)
         // May need to pass the newly added game back into the dashboard component
-        setGameData(res.data)
+        // setGameData(res.data)
+
         closeModal()
     }
 

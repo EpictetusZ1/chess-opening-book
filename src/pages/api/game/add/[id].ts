@@ -52,6 +52,24 @@ export default function (req: NextApiRequest, res: NextApiResponse) {
 
     async function handlePOST(req: NextApiRequest, res: NextApiResponse, gameArr: IGame[]) {
         const { id } = req.query as { id: string }
+
+        const targetUser = await prisma.userProfile.findUnique({
+            where: {
+                userId: id
+            }
+        })
+
+        const getUserName = (site: string) => {
+            switch (site) {
+                case "chess.com":
+                    return targetUser?.userNames?.chessCom || ""
+                case "liChess":
+                    return targetUser?.userNames?.liChess || ""
+                default:
+                    return
+            }
+        }
+
         // GET OPENING data from DB and assign
         const myGameMap = gameArr.map(async (game, index) => {
             const limit = (game.moves.length > 28) ? 28 : game.moves.length
@@ -102,7 +120,8 @@ export default function (req: NextApiRequest, res: NextApiResponse) {
                 return {
                     ...game,
                     profileId: id,
-                    gameMeta: createMetaData(game, "EpictetusZ1", id),
+                    // @ts-ignore
+                    gameMeta: createMetaData(game, getUserName(game.site), id),
                     opening: {
                         id: data?.id,
                         openingECO: data?.eco,
@@ -113,7 +132,8 @@ export default function (req: NextApiRequest, res: NextApiResponse) {
                 return {
                     ...game,
                     profileId: id,
-                    gameMeta: createMetaData(game, "EpictetusZ1", id),
+                    // @ts-ignore
+                    gameMeta: createMetaData(game,  getUserName(game.site), id),
                 }
             }
         })
@@ -124,11 +144,6 @@ export default function (req: NextApiRequest, res: NextApiResponse) {
             data: resolveAllGames,
         })
 
-        const targetUser = await prisma.userProfile.findUnique({
-            where: {
-                userId: id
-            }
-        })
 
         let tempIds = [...targetUser?.games || []]
         const gameIds = await prisma.game.findMany({

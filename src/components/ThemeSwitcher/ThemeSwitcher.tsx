@@ -94,12 +94,8 @@ const ThemeSwitcher = ({dispatch, theme}: TProps) => {
         dispatch(setCurrTypography(fontSizeRef.current))
 
         try {
-            console.log("font scaling")
-            console.log(fontSizeRef.current)
           const res = updatePreferences(themeColors.current, fontRef.current, fontSizeRef.current.fontScaling)
-            console.log(res)
         } catch (error) {
-            console.log("Error: ", error)
         }
         setShowThemeSwitcher(false)
     }
@@ -127,6 +123,7 @@ const ThemeSwitcher = ({dispatch, theme}: TProps) => {
         )
     }
 
+
     const ThemeController = () => {
         return (
             <S.ThemeControllerContainer>
@@ -151,7 +148,7 @@ const ThemeSwitcher = ({dispatch, theme}: TProps) => {
                                    id="defaultDark"
                                    name="theme"
                                    value="DEFAULT_DARK"
-                                   defaultChecked={true}
+                                   defaultChecked={themeColors.current === "DEFAULT_DARK"}
                                    onChange={() => themeColors.current = "DEFAULT_DARK"}
                             />
                             <label htmlFor="defaultDark">Default Dark</label>
@@ -161,7 +158,7 @@ const ThemeSwitcher = ({dispatch, theme}: TProps) => {
                                    id="DEFAULT_LIGHT"
                                    name="theme"
                                    value="DEFAULT_LIGHT"
-                                   // checked={themeColors.current === "DEFAULT_LIGHT"}
+                                   defaultChecked={themeColors.current === "DEFAULT_LIGHT"}
                                    onChange={() => themeColors.current = "DEFAULT_LIGHT"}
                             />
                             <label htmlFor="DEFAULT_LIGHT">Light</label>
@@ -171,7 +168,7 @@ const ThemeSwitcher = ({dispatch, theme}: TProps) => {
                                    id="DEFAULT_COLORBLIND"
                                    name="theme"
                                    value="DEFAULT_COLORBLIND"
-                                   // checked={themeColors.current === "DEFAULT_COLORBLIND"}
+                                   defaultChecked={themeColors.current === "DEFAULT_COLORBLIND"}
                                    onChange={() => themeColors.current = "DEFAULT_COLORBLIND"}
                             />
                             <label htmlFor="DEFAULT_COLORBLIND">Color Blind</label>
@@ -205,7 +202,6 @@ const ThemeSwitcher = ({dispatch, theme}: TProps) => {
         )
     }
 
-
     // /* CSS HEX */
     // --french-lilac: #8d6a9fff;
     // --silver-sand: #c5cbd3ff;
@@ -214,14 +210,19 @@ const ThemeSwitcher = ({dispatch, theme}: TProps) => {
     // #FF8C42 mango tango?
     // --international-orange-golden-gate-bridge: #bb342fff;
 
-
     return (
-        <S.ThemeSwitcherBtn>
+        <S.ThemeSwitcherBtn tabIndex={-1}>
             { showThemeSwitcher ?
                 <ThemeController />
                 :
-                <div className={"a11yBtnContainer"}>
-                    <S.OpenBtn>
+                <div className={"a11yBtnContainer"} tabIndex={-1}>
+                    <S.OpenBtn
+                        onClick={() => setShowThemeSwitcher(true)}
+                        onKeyDown={(e) => {
+                            if (e.key === "Enter" || e.key === " ") {
+                                setShowThemeSwitcher(true)
+                            }
+                        }}>
                         <Image
                             alt={"accessibility options"}
                             src={a11YSettingsIcon}

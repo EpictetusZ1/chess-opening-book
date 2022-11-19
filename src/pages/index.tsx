@@ -31,8 +31,8 @@ const Home: NextPage = () => {
 
             <Link href="/analysis" className={"card"}>
                 <div className={"card"}>
-                    <h2> Analysis &rarr; </h2>
-                    <p>Get insight into how your openings play out</p>
+                    <h2> Explore &rarr; </h2>
+                    <p>Explore how your openings play out</p>
                 </div>
             </Link>
 
