@@ -3,7 +3,7 @@ import {getSession} from "next-auth/react";
 import { useState, useEffect} from "react";
 import axios from "axios";
 import UploadGameForm from "../../components/Inputs/Forms/UploadGameForm/UploadGameForm";
-import * as S from "./dasboard.styles"
+import * as S from "../../styles/pageStyles/dasboard.styles"
 import {IGame} from "../../types/Game.types";
 import GamesTable from "../../components/GamesTable/GamesTable";
 import PlayerStats from "../../components/PlayerStats/PlayerStats";

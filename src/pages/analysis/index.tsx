@@ -1,4 +1,4 @@
-import * as S from "./analysis.styles"
+import * as S from "../../styles/pageStyles/analysis.styles"
 import {Session} from "next-auth";
 import {GetServerSideProps} from "next";
 import {getSession} from "next-auth/react";

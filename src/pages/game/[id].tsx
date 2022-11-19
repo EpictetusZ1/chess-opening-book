@@ -1,4 +1,4 @@
-import * as S from "./Game.styles"
+import * as S from "../../styles/pageStyles/Game.styles"
 import {IGame} from "../../types/Game.types";
 import {GetServerSideProps} from "next";
 import axios from "axios";
