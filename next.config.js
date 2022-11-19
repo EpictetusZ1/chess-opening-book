@@ -9,5 +9,6 @@ const nextConfig = {
     locales: ['en'],
     defaultLocale: 'en',
   },
+  pageExtensions: ['page.tsx'],
 }
 module.exports = nextConfig
