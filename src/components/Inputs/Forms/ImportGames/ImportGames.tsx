@@ -17,10 +17,6 @@ type TImportGames = {
 const ImportGames = ({closeModal}: TImportGames) => {
     const [chessProvider, setChessProvider] = useState<E>(E.NONE)
 
-    const handleInput = () => {
-
-    }
-
     return (
         <S.GetImportGames>
             <h1>Import Chess Games</h1>

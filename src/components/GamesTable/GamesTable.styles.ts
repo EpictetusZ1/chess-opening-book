@@ -15,6 +15,14 @@ export const GamesTable = styled.table`
   
   tr {
     display: contents;
+    
+    :hover {
+      cursor: pointer;
+
+      > td {
+        opacity: 0.9;
+      }
+    }
   }
   
   td {

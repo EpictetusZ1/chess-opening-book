@@ -1,6 +1,5 @@
 import React, {useState} from 'react';
 import axios from "axios"
-import ShowGameData from "../../../ShowGameData/ShowGameData";
 import { IGame } from "../../../../types/Game.types";
 import * as S from "./UploadGameForm.styles"
 import { useSession } from "next-auth/react";
@@ -25,8 +24,10 @@ const UploadGameForm = ({closeModal}: TUplodGameFormProps) => {
         }
 
         const res = await axios.post(`/api/game/add/${session?.user?.id}`, fileData, config)
+        console.log("Res:", res)
         // May need to pass the newly added game back into the dashboard component
         // setGameData(res.data)
+
         closeModal()
     }
 
@@ -45,6 +46,9 @@ const UploadGameForm = ({closeModal}: TUplodGameFormProps) => {
                 />
                 <button type="submit"
                         aria-label={"upload now"}
+                        onClick={() => {
+                            console.log("clicking submit?>")
+                        }}
                 >
                     Upload Game
                 </button>
