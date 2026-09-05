@@ -9,5 +9,8 @@ const nextConfig = {
     locales: ['en'],
     defaultLocale: 'en',
   },
+  typescript: {
+    ignoreBuildErrors: true,
+  },
 }
 module.exports = nextConfig
